@@ -1,0 +1,6 @@
+
+::: {.footnote .crunch-math style="font-size: 1.2rem !important; margin-top: 16px !important;"}
+
+*Note: In the future I'll use the notation $\mathbf{X}_{[a \times b]}$ to denote the dimensions of the vectors/matrices, like $\mathbf{X}_{[k \times 1]} \sim \boldsymbol{\mathcal{N}}_k(\boldsymbol{\mu}_{[k \times 1]}, \mathbf{\Sigma}_{[k \times k]})$*
+
+:::

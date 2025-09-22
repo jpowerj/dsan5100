@@ -1,0 +1,96 @@
+project:
+  type: website
+  output-dir: docs
+  preview:
+    port: 4321
+  pre-render:
+    - _pre-set-updated.py
+  # post-render:
+  #   - _post_fix_figures.py
+  #   - _post_pw_protect.py
+  #   - _post_recording_pages.py
+
+website:
+  title: "DSAN 5100-01"
+  favicon: "favicon.png"
+  repo-url: "https://github.com/jpowerj/dsan5100"
+  repo-actions: [source]
+  repo-link-target: "_blank"
+  sidebar:
+    title: "DSAN 5100: Probabilistic Modeling and Statistical Computing"
+    id: mainnav
+    footer: "*Updated {{< env DSAN5100_LAST_UPDATED \"2024-08-28\" >}}*"
+    contents:
+      - href: "https://dsan.georgetown.domains/dsan5100/"
+        text: "<i class='bi bi-arrow-left pe-1'></i> Main Course Page"
+      - "---"
+      # - href: index.qmd
+      #   text: "<i class='bi bi-house pe-1'></i> Section 03 Home"
+      - href: w01/index.qmd
+        text: "Week 1: Aug 30"
+      - href: w02/index.qmd
+        text: "Week 2: Sep 3"
+      - href: w03/index.qmd
+        text: "Week 3: Sep 10"
+      - href: w04/index.qmd
+        text: "Week 4: Sep 17"
+      - href: w05/index.qmd
+        text: "Week 5: Sep 24"
+      - href: w06/index.qmd
+        text: "Week 6: Oct 1"
+      - href: w07/index.qmd
+        text: "Week 7: Oct 8"
+      - href: w08/index.qmd
+        text: "Week 8: Oct 15"
+      - href: w09/index.qmd
+        text: "Week 9: Oct 22"
+      - href: w10/index.qmd
+        text: "Week 10: Oct 29"
+      - href: w11/index.qmd
+        text: "Week 11: Nov 5"
+      - href: w12/index.qmd
+        text: "Week 12: Nov 12"
+      # - href: w13/index.qmd
+      #   text: "Week 13: Nov 16"
+      # - href: w14/index.qmd
+      #   text: "Week 14: Nov 30"
+      - "---"
+      - href: "https://georgetown.zoom.us/j/92478089466?pwd=cSBmcjACL6EJJW0vHbzIqimH7imkVx.1"
+        text: "Zoom Link <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 75%;'></i>"
+        target: "_blank"
+      - href: "https://georgetown.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=98022271-76d6-457f-83ee-b1dd00143dbc"
+        text: "Recordings <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 75%;'></i>"
+        target: "_blank"
+      # - href: extra-videos/index.qmd
+      #   text: "Extra Videos"
+      - href: writeups/index.qmd
+        text: "Extra Writeups"
+      - href: cheatsheet-math.qmd
+        text: "Math Cheatsheet"
+      # - href: final-presentations.qmd
+      #   text: "Final Presentations"
+      - "---"
+      # - href: "https://georgetown.instructure.com/courses/193275"
+      #   text: "S03 Canvas Page <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 85%;'></i>"
+      #   target: "_blank"
+      # - href: "https://jjacobs.me/meet"
+      #   text: "Book Office Hours <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 85%;'></i>"
+      #   target: "_blank"
+      # - href: "https://forms.gle/3CYWo8xHUxMvvowbA"
+      #   text: "Suggestion Box <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 85%;'></i>"
+      #   target: "_blank"
+      - href: "https://jjacobs.me/dsps"
+        text: "Textbook <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 75%;'></i>"
+        target: "_blank"
+
+format:
+  html:
+    theme:
+      light: default
+      dark: darkly
+    css: "./dsan-globals/jjstyles.css"
+    toc: true
+    link-external-icon: true
+    link-external-newwindow: true
+    include-in-header:
+      text: "<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js' integrity='sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=='' crossorigin='anonymous' referrerpolicy='no-referrer'></script><link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css'><script src='/sidebar.js'></script>"

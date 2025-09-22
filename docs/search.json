@@ -1,0 +1,562 @@
+[
+  {
+    "objectID": "w05/slides.html#discrete-vs.-continuous",
+    "href": "w05/slides.html#discrete-vs.-continuous",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Discrete vs. Continuous",
+    "text": "Discrete vs. Continuous\n\n\n\nDiscrete = “Easy mode”: Based (intuitively) on sets\n\\(\\Pr(A)\\): Four equally-likely marbles \\(\\{A, B, C, D\\}\\) in box, what is probability I pull out \\(A\\)?\n\n\n\n\n\n\n\n\n\n\n\\[\n\\Pr(A) = \\underset{\\mathclap{\\small \\text{Probability }\\textbf{mass}}}{\\boxed{\\frac{|\\{A\\}|}{|\\Omega|}}} = \\frac{1}{|\\{A,B,C,D\\}|} = \\frac{1}{4}\n\\]\n\n\nContinuous = “Hard mode”: Based (intuitively) on areas\n\\(\\Pr(A)\\): Throw dart at random point in square, what is probability I hit \\(\\require{enclose}\\enclose{circle}{\\textsf{A}}\\)?\n\n\n\n\n\n\n\n\n\n\n\\[\n\\Pr(A) = \\underset{\\mathclap{\\small \\text{Probability }\\textbf{density}}}{\\boxed{\\frac{\\text{Area}(\\{A\\})}{\\text{Area}(\\Omega)}}} = \\frac{\\pi r^2}{s^2} = \\frac{\\pi \\left(\\frac{1}{4}\\right)^2}{4} = \\frac{\\pi}{64}\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#the-technical-difference-tldr",
+    "href": "w05/slides.html#the-technical-difference-tldr",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Technical Difference tl;dr",
+    "text": "The Technical Difference tl;dr\n\nCountable Sets: Can be put into 1-to-1 correspondence with natural numbers \\(\\mathbb{N}\\)\n\nWhat are you doing when you’re counting? Saying “first”, “second”, “third”, …\nYou’re pairing each object with a natural number! \\(\\{(\\texttt{a},1),(\\texttt{b},2),\\ldots,(\\texttt{z},26)\\}\\) \n\nUncountable Sets: Can’t be put into 1-to-1 correspondence with natural numbers.\n\\(\\mathbb{R}\\) is uncountable. Intuition: Try counting the real numbers. Proof \\[\n\\text{Assume }\\exists \\, (f: \\mathbb{R} \\leftrightarrow \\mathbb{N}):\n\\begin{array}{|c|c|c|c|c|c|c|}\\hline\n\\mathbb{R} & & & & & & \\Leftrightarrow \\mathbb{N} \\\\ \\hline\n\\color{orange}{3} & . & 1 & 4 & 1 & \\cdots & \\Leftrightarrow 1 \\\\\\hline\n4 & . & \\color{orange}{9} & 9 & 9 & \\cdots & \\Leftrightarrow 2 \\\\\\hline\n0 & . & 1 & \\color{orange}{2} & 3 & \\cdots &\\Leftrightarrow 3 \\\\\\hline\n1 & . & 2 & 3 & \\color{orange}{4} & \\cdots & \\Leftrightarrow 4 \\\\\\hline\n\\vdots & \\vdots & \\vdots & \\vdots & \\vdots & \\ddots & \\vdots \\\\\\hline\n\\end{array} \\overset{\\color{blue}{y_{[i]}} = \\color{orange}{x_{[i]}} \\overset{\\mathbb{Z}_{10}}{+} 1}{\\underset{😈}{\\longrightarrow}} \\color{blue}{y = 4.035 \\ldots} \\Leftrightarrow \\; ?\n\\]\n\n\n\nFun math challenge: Is \\(\\mathbb{Q}\\) countable? See this appendix slide for why the answer is yes, despite the fact that \\(\\forall x, y \\in \\mathbb{Q} \\left[ \\frac{x+y}{2} \\in \\mathbb{Q} \\right]\\)❗️ The method used in the above proof is called Cantor diagonalization"
+  },
+  {
+    "objectID": "w05/slides.html#the-practical-difference",
+    "href": "w05/slides.html#the-practical-difference",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Practical Difference",
+    "text": "The Practical Difference\n\nThis part of the course (discrete probability): \\(\\Pr(X = v), v \\in \\mathcal{R}_X \\subseteq \\mathbb{N}\\)\n\nExample: \\(\\Pr(\\)\\() = \\Pr(X = 3), 3 \\in \\{1,2,3,4,5,6\\} \\subseteq \\mathbb{N}\\)\n\nNext part of the course (continuous probability): \\(\\Pr(X \\in V), V \\subseteq \\mathbb{R}\\)\n\nExample: \\(\\Pr(X \\geq 2\\pi) = \\Pr(X \\in [\\pi,\\infty)), [\\pi,\\infty) \\subseteq \\mathbb{R}\\)\n\nWhy do they have to be in separate parts?\n\n\\[\n\\Pr(X \\underset{\\substack{\\uparrow \\\\ 🚩}}{=} 2\\pi) = \\frac{\\text{Area}(\\overbrace{2\\pi}^{\\mathclap{\\small \\text{Single point}}})}{\\text{Area}(\\underbrace{\\mathbb{R}}_{\\mathclap{\\small \\text{(Uncountably) Infinite set of points}}})} = 0\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#the-cdf-unifies-the-two-worlds",
+    "href": "w05/slides.html#the-cdf-unifies-the-two-worlds",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The CDF Unifies the Two Worlds!",
+    "text": "The CDF Unifies the Two Worlds!\n\nCumulative Distribution Function (CDF): \\(F_X(v) = \\Pr(X \\leq v)\\)1\nFor discrete RV \\(X\\) (\\(\\mathcal{R}_X \\cong \\mathbb{N}\\)), Probability Mass Function (pmf) \\(p_X(v)\\): \\[\n\\begin{align*}\np_X(v) &\\definedas \\Delta F_X(v) \\definedas F_X(v) - F_X(v - 1) = \\underset{\\text{Meaningful}}{\\boxed{\\Pr(X = v)}} \\\\\n\\implies F_X(v) &= \\sum_{\\{w \\in \\mathcal{R}_X: \\; w \\leq v\\}}p_X(w) = \\underset{\\text{Meaningful}}{\\boxed{\\Pr(X \\leq v)}}\n\\end{align*}\n\\]\nFor continuous RV \\(X\\) (\\(\\mathcal{R}_X \\subseteq \\mathbb{R}\\)), Probability Density Function (pdf) \\(f_X(v)\\): \\[\n\\begin{align*}\nf_X(v) &\\definedas \\frac{d}{dx}F_X(v) \\definedas \\lim_{h \\rightarrow 0}\\frac{F(x + h) - F(x)}{h} = \\underset{\\text{Not Meaningful}}{\\boxed{\\; ? \\;}} \\\\\n\\implies F_X(v) &= \\int_{-\\infty}^v f_X(w)dw = \\underset{\\text{Meaningful}}{\\boxed{\\Pr(X \\leq v)}}\n\\end{align*}\n\\]\n\nTextbooks sometimes write \\(F(x) = \\Pr(X \\leq x)\\), where capital \\(X\\) is a RV while lowercase \\(x\\) is a particular value, like \\(3\\). To reduce confusion, I use \\(X\\) for the RV and \\(v\\) for the value at which we’re checking the CDF. Also note capitalized CDF but lowercase pmf/pdf, matching mathematical notation: \\(f_X(v)\\) is the derivative of \\(F_X(v)\\)."
+  },
+  {
+    "objectID": "w05/slides.html#probability-density-neq-probability",
+    "href": "w05/slides.html#probability-density-neq-probability",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Probability Density \\(\\neq\\) Probability",
+    "text": "Probability Density \\(\\neq\\) Probability\n\n☠️BEWARE☠️: \\(f_X(v) \\neq \\Pr(X = v)\\)!\nLong story short, for continuous variables, \\(\\Pr(X = v)\\) is just always \\(0\\)[^measurezero]\nHence, we instead construct a pdf \\(f_X(v)\\) whose sole purpose is to allow us to calculate \\(\\Pr(X \\in [a,b])\\) by integrating!\n\n\\(f_X(v)\\) is whatever satisfies \\(\\Pr(X \\in [a,b]) = \\int_{a}^bf_X(v)dv\\), and nothing more\n\ni.e., instead of \\(p_X(v) = \\Pr(X = v)\\) from discrete world, the relevant function here is \\(f_X(v)\\), the probability density of \\(X\\) at \\(v\\).\n\n\n\nScary math zone\n\n\n\nFor intuition: think of \\(X \\sim \\mathcal{U}(0,10) \\implies \\Pr(X = \\pi) = \\frac{|\\{v \\in \\mathbb{R}:\\; v = \\pi\\}|}{|\\mathbb{R}|} = \\frac{1}{2^{\\aleph_0}} \\approx 0\\). That is, finding the \\(\\pi\\) needle in the \\(\\mathbb{R}\\) haystack is a one-in-\\(\\left(\\infty^\\infty\\right)\\) event.\nIssue even if \\(\\mathcal{R}_X\\) countably infinite, like \\(\\mathcal{R}_X = \\mathbb{N}\\): \\(\\Pr(X = 3) = \\frac{|\\{x \\in \\mathbb{N} : \\; x = 3\\}|}{|\\mathbb{N}|} = \\frac{1}{\\aleph_0}\\). Finding the \\(3\\) needle in the \\(\\mathbb{N}\\) haystack is a one-in-\\(\\infty\\) event"
+  },
+  {
+    "objectID": "w05/slides.html#bernoulli-distribution",
+    "href": "w05/slides.html#bernoulli-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Bernoulli Distribution",
+    "text": "Bernoulli Distribution\n\nSingle trial with two outcomes, “success” (1) or “failure” (0): basic model of a coin flip (heads = 1, tails = 0)\n\\(X \\sim \\text{Bern}({\\color{purple} p}) \\implies \\mathcal{R}_X = \\{0,1\\}, \\; \\Pr(X = 1) = {\\color{purple}p}\\)."
+  },
+  {
+    "objectID": "w05/slides.html#binomial-distribution",
+    "href": "w05/slides.html#binomial-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Binomial Distribution",
+    "text": "Binomial Distribution\n\nNumber of successes in \\({\\color{purple}N}\\) Bernoulli trials. \\(X \\sim \\text{Binom}({\\color{purple}N},{\\color{purple}k},{\\color{purple}p}) \\implies \\mathcal{R}_X = \\{0, 1, \\ldots, N\\}\\)\n\n\\(\\Pr(X = k)  = \\binom{N}{k}p^k(1-p)^{N-k}\\): probability of \\(k\\) successes out of \\(N\\) trials.\n\\(\\binom{N}{k} = \\frac{N!}{k!(N-k)!}\\): “Binomial coefficient”. How many groups of size \\(k\\) can be formed?1\n\n\n\n\n\nFun way to avoid memorizing! Imagine a pyramid like \\(\\genfrac{}{}{0pt}{}{}{\\boxed{\\phantom{1}}}\\genfrac{}{}{0pt}{}{\\boxed{\\phantom{1}}}{}\\genfrac{}{}{0pt}{}{}{\\boxed{\\phantom{1}}}\\), where boxes are slots for numbers. Put a \\(1\\) in box at the top. In bottom row, fill each slot with the sum of the two numbers above-left and above-right of it. Since \\(1 + \\text{(nothing)} = 1\\), this looks like: \\(\\genfrac{}{}{0pt}{}{}{1}\\genfrac{}{}{0pt}{}{1}{}\\genfrac{}{}{0pt}{}{}{1}\\). Continue filling in rows this way, so next row looks like \\(\\genfrac{}{}{0pt}{}{}{1}\\genfrac{}{}{0pt}{}{1}{}\\genfrac{}{}{0pt}{}{}{2}\\genfrac{}{}{0pt}{}{1}{}\\genfrac{}{}{0pt}{}{}{1}\\), then \\(\\genfrac{}{}{0pt}{}{}{1}\\genfrac{}{}{0pt}{}{1}{}\\genfrac{}{}{0pt}{}{}{3}\\genfrac{}{}{0pt}{}{2}{}\\genfrac{}{}{0pt}{}{}{3}\\genfrac{}{}{0pt}{}{1}{}\\genfrac{}{}{0pt}{}{}{1}\\), etc. The \\(k\\)th number in the \\(N\\)th row (counting from \\(0\\)) is \\(\\binom{N}{k}\\). Appendix shows triangle written out to 7th row!"
+  },
+  {
+    "objectID": "w05/slides.html#visualizing-the-binomial",
+    "href": "w05/slides.html#visualizing-the-binomial",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Visualizing the Binomial",
+    "text": "Visualizing the Binomial\n\n\nCode\nk &lt;- seq(0, 10)\nprob &lt;- dbinom(k, 10, 0.5)\nbar_data &lt;- tibble(k, prob)\nggplot(bar_data, aes(x=k, y=prob)) +\n  geom_bar(stat=\"identity\", fill=cbPalette[1]) +\n  labs(\n    title=\"Binomial Distribution, N = 10, p = 0.5\",\n    y=\"Probability Mass\"\n  ) +\n  scale_x_continuous(breaks=seq(0,10)) +\n  dsan_theme(\"half\")\n\n\n\n\nSo who can tell me, from this plot, the approximate probability of getting 4 heads when flipping a coin 10 times?"
+  },
+  {
+    "objectID": "w05/slides.html#multiple-classes-multinomial-distribution",
+    "href": "w05/slides.html#multiple-classes-multinomial-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Multiple Classes: Multinomial Distribution",
+    "text": "Multiple Classes: Multinomial Distribution\n\nBernoulli only allows two outcomes: success or failure.\nWhat if we’re predicting soccer match outcomes?\n\n\\(X_i \\in \\{\\text{Win}, \\text{Loss}, \\text{Draw}\\}\\)\n\nCategorical Distribution: Generalizes Bernoulli to \\(k\\) possible outcomes. \\(X \\sim \\text{Categorical}(\\mathbf{p} = \\{p_1, p_2, \\ldots, p_k\\}), \\sum_{i=1}^kp_i = 1\\).\n\n\\(\\Pr(X = k) = p_k\\)\n\nMultinomial Distribution: Generalizes Binomial to \\(k\\) possible outcomes.\n\\(\\mathbf{X} \\sim \\text{Multinom}(N,k,\\mathbf{p}=\\{p_1,p_2,\\ldots,p_k\\}), \\sum_{i=1}^kp_i=1\\)\n\n\\(\\Pr(\\mathbf{X} = \\{x_1,x_2\\ldots,x_k\\}) = \\frac{N!}{x_1!x_2!\\cdots x_k!}p_1^{x_1}p_2^{x_2}\\cdots p_k^{x_k}\\)\n\\(\\Pr(\\text{30 wins}, \\text{4 losses}, \\text{4 draws}) = \\frac{38!}{30!4!4!}p_{\\text{win}}^{30}p_{\\text{lose}}^4p_{\\text{draw}}^4\\).\n\\(\\leadsto\\) “Multinomial Coefficient”: \\(\\binom{38}{30,4,4} = \\frac{38!}{30!4!4!}\\)"
+  },
+  {
+    "objectID": "w05/slides.html#geometric-distribution",
+    "href": "w05/slides.html#geometric-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Geometric Distribution",
+    "text": "Geometric Distribution\n\nLikelihood that we need \\({\\color{purple}k}\\) trials to get our first success. \\(X \\sim \\text{Geom}({\\color{purple}k},{\\color{purple}p}) \\implies \\mathcal{R}_X = \\{1, 2, \\ldots\\}\\)\n\n\\(\\Pr(X = k) = \\underbrace{(1-p)^{k-1}}_{\\small k - 1\\text{ failures}}\\cdot \\underbrace{p}_{\\mathclap{\\small \\text{success}}}\\)\nProbability of \\(k\\) trials before first success"
+  },
+  {
+    "objectID": "w05/slides.html#less-common-but-important-distributions",
+    "href": "w05/slides.html#less-common-but-important-distributions",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Less Common (But Important) Distributions",
+    "text": "Less Common (But Important) Distributions\n\nDiscrete Uniform: \\(N\\) equally-likely outcomes\n\n\\(X \\sim U\\{{\\color{purple}a},{\\color{purple}b}\\} \\implies \\mathcal{R}_X = \\{a, a+1, \\ldots, b\\}, \\Pr(X = k) = \\frac{1}{{\\color{purple}b} - {\\color{purple}a} + 1}\\)\n\nBeta: \\(X \\sim \\text{Beta}({\\color{purple}\\alpha}, {\\color{purple}\\beta})\\): conjugate prior for Bernoulli, Binomial, and Geometric dists.\n\nIntuition: If we use Beta to encode our prior hypothesis, then observe data drawn from Binomial, distribution of our updated hypothesis is still Beta.\n\\(\\underbrace{\\Pr(\\text{biased}) = \\Pr(\\text{unbiased})}_{\\text{Prior: }\\text{Beta}({\\color{purple}\\alpha}, {\\color{purple}\\beta})} \\rightarrow\\) Observe \\(\\underbrace{\\frac{8}{10}\\text{ heads}}_{\\text{Data}} \\rightarrow \\underbrace{\\Pr(\\text{biased}) = 0.65}_{\\text{Posterior: }\\text{Beta}({\\color{purple}\\alpha + 8}, {\\color{purple}\\beta + 2})}\\)\n\nDirichlet: \\(\\mathbf{X} = (X_1, X_2, \\ldots, X_K) \\sim \\text{Dir}({\\color{purple} \\boldsymbol\\alpha})\\)\n\n\\(K\\)-dimensional extension of Beta (thus, conjugate prior for Multinomial)\n\n\n\n\nWe can now use \\(\\text{Beta}(\\alpha + 8, \\beta + 2)\\) as a prior for our next set of trials (encoding our knowledge up to that point), and update further once we know the results (to yet another Beta distribution)."
+  },
+  {
+    "objectID": "w05/slides.html#interactive-visualizations",
+    "href": "w05/slides.html#interactive-visualizations",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Interactive Visualizations!",
+    "text": "Interactive Visualizations!\nSeeing Theory, Brown University"
+  },
+  {
+    "objectID": "w05/slides.html#what-things-have-distributions",
+    "href": "w05/slides.html#what-things-have-distributions",
+    "title": "Week 5: Continuous Distributions",
+    "section": "What Things Have Distributions?",
+    "text": "What Things Have Distributions?\n\nAnswer: Random Variables\nMeaning: \\(\\mathcal{N}(0, 1)\\) on its own is a “template”, an exhibit at a museum within a glass case\nTo start using it, e.g., to generate random values, we need to consider a particular RV \\(X \\sim \\mathcal{N}(0,1)\\), then generate values on basis of this template:\n\n\\(X = 0\\) more likely than \\(X = 1\\) or \\(X = -1\\),\n\\(X = 1\\) more likely than \\(X = 2\\) or \\(X = -2\\),\nand so on"
+  },
+  {
+    "objectID": "w05/slides.html#cdfspdfspmfs-what-are-they",
+    "href": "w05/slides.html#cdfspdfspmfs-what-are-they",
+    "title": "Week 5: Continuous Distributions",
+    "section": "CDFs/pdfs/pmfs: What Are They?",
+    "text": "CDFs/pdfs/pmfs: What Are They?\n\nFunctions which answer questions about a Random Variable (\\(X\\) in this case) with respect to a non-random value (\\(v\\) in this case, for “value”)\nCDF: What is probability that \\(X\\) takes on a value less than or equal to \\(v\\)?\n\n\\[\nF_X(v) \\definedas \\Pr(X \\leq v)\n\\]\n\npmf: What is the probability of this exact value? (Discrete only)\n\n\\[\np_X(v) \\definedas \\Pr(X = v)\n\\]\n\npdf: 🙈 …It’s the thing you integrate to get the CDF\n\n\\[\nf_X(v) \\definedas \\frac{d}{dv}F_X(v) \\iff \\int_{-\\infty}^{v} f_X(v)dv = F_X(v)\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#cdfspdfspmfs-why-do-we-use-them",
+    "href": "w05/slides.html#cdfspdfspmfs-why-do-we-use-them",
+    "title": "Week 5: Continuous Distributions",
+    "section": "CDFs/pdfs/pmfs: Why Do We Use Them?",
+    "text": "CDFs/pdfs/pmfs: Why Do We Use Them?\n\nCDF is like the “API” that allows you to access all of the information about the distribution (pdf/pmf is derived from the CDF)\nExample: we know there’s some “thing” called the Exponential Distribution…\nHow do we use this distribution to understand a random variable \\(X \\sim \\text{Exp}(\\lambda)\\)?\n\nAnswer: the CDF of \\(X\\)!\nSince all exponentially-distributed RVs have the same pdf (with different \\(\\lambda\\) values plugged in), we can call this pdf “the” exponential distribution\n\nSay we want to find the median of \\(X\\): The median is the number(s) \\(m\\) satisfying\n\n\\[\n\\Pr(X \\leq m) = \\frac{1}{2}\n\\]\n\nHow can we find this? What “tool” do we use to figure this out about \\(X\\)?"
+  },
+  {
+    "objectID": "w05/slides.html#finding-a-median-via-the-cdf",
+    "href": "w05/slides.html#finding-a-median-via-the-cdf",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Finding a Median via the CDF",
+    "text": "Finding a Median via the CDF\n\n\n\n\n Median of a Random Variable \\(X\\)\n\n\nThe median of a random variable \\(X\\) with some CDF \\(F_X(v_X)\\) is the [set of] numbers \\(m\\) for which the probability that \\(X\\) is lower than \\(m\\) is \\(\\frac{1}{2}\\):\n\\[\n\\begin{align*}\n\\text{Median}(X) &= \\left\\{m \\left| F_X(m) = \\frac{1}{2} \\right. \\right\\} \\\\\n&= \\left\\{m \\left| \\int_{-\\infty}^{m}f_X(v_X)dv_X = \\frac{1}{2} \\right. \\right\\}\n\\end{align*}\n\\]\n\n\n\n\n\n\n(If you’re wondering why we start with the median rather than the more commonly-used mean: it’s specifically because I want you to get used to calculating general functions \\(f(X)\\) of a random variable \\(X\\). It’s easy to just e.g. learn how to compute the mean \\(\\expect{X}\\) and forget that this is only one of many possible choices for \\(f(X)\\).)"
+  },
+  {
+    "objectID": "w05/slides.html#median-via-cdf-example",
+    "href": "w05/slides.html#median-via-cdf-example",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Median via CDF Example",
+    "text": "Median via CDF Example\nExample: If \\(X \\sim \\text{Exp}(\\param{\\lambda})\\),\n\\[\nF_X(v) = 1 - e^{-\\lambda v}\n\\]\nSo we want to solve for \\(m\\) in\n\\[\nF_X(m) = \\frac{1}{2} \\iff 1 - e^{-\\lambda m} = \\frac{1}{2}\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#step-by-step",
+    "href": "w05/slides.html#step-by-step",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Step-by-Step",
+    "text": "Step-by-Step\n\\[\n\\begin{align*}\n1 - e^{-\\lambda m} &= \\frac{1}{2} \\\\\n\\iff e^{-\\lambda m} &= \\frac{1}{2} \\\\\n\\iff \\ln\\left[e^{-\\lambda m}\\right] &= \\ln\\left[\\frac{1}{2}\\right] \\\\\n\\iff -\\lambda m &= -\\ln(2) \\\\\n\\iff m &= \\frac{\\ln(2)}{\\lambda}\n%3x = 19-2y\n\\; \\llap{\\mathrel{\\boxed{\\phantom{m = \\frac{\\ln(2)}{\\lambda}}}}}.\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#top-secret-fun-fact",
+    "href": "w05/slides.html#top-secret-fun-fact",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Top Secret Fun Fact",
+    "text": "Top Secret Fun Fact\n\nEvery Discrete Distribution is [technically, in a weird way] a Continuous Distribution!\n\n\nSame intuition as: every natural number is a real number, but converse not true\nMarbles: Let \\(X\\) be a RV defined s.t. \\(X(A) = 1\\), \\(X(B) = 2\\), \\(X(C) = 3\\), \\(X(D) = 4\\). Then pmf for \\(X\\) is \\(p_X(i) = \\frac{1}{4}\\) for \\(i \\in \\{1, 2, 3, 4\\}\\).\nWe can then use the Dirac delta function \\(\\delta(v)\\) to define a continuous pdf\n\\[\n  f_X(v) = \\sum_{i \\in \\mathcal{R}_X}p_X(i)\\delta(v - i) = \\sum_{i=1}^4p_X(i)\\delta(v-i) = \\frac{1}{4}\\sum_{i=1}^4 \\delta(v - i)\n  \\]\nand use either the (discrete) pmf \\(p_X(v)\\) or (continuous) pdf \\(f_X(v)\\) to describe \\(X\\):\n\n\\[\n\\begin{align*}\n\\overbrace{\\Pr(X \\leq 3)}^{\\text{CDF}} &= \\sum_{i=1}^3\\overbrace{p_X(i)}^{\\text{pmf}} = \\frac{1}{4} + \\frac{1}{4} + \\frac{1}{4} = \\frac{3}{4} \\\\\n\\underbrace{\\Pr(X \\leq 3)}_{\\text{CDF}} &= \\int_{-\\infty}^{3} \\underbrace{f_X(v)}_{\\text{pdf}} = \\frac{1}{4}\\int_{-\\infty}^{3} \\sum_{i = 1}^{4}\\overbrace{\\delta(v-i)}^{\\small 0\\text{ unless }v = i}dv = \\frac{3}{4}\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w05/slides.html#recall-binomial-distribution",
+    "href": "w05/slides.html#recall-binomial-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "[Recall] Binomial Distribution",
+    "text": "[Recall] Binomial Distribution\n\n\nCode\nk &lt;- seq(0, 10)\nprob &lt;- dbinom(k, 10, 0.5)\nbar_data &lt;- tibble(k, prob)\nggplot(bar_data, aes(x=k, y=prob)) +\n  geom_bar(stat=\"identity\", fill=cbPalette[1]) +\n  labs(\n    title=\"Binomial Distribution, N = 10, p = 0.5\",\n    y=\"Probability Mass\"\n  ) +\n  scale_x_continuous(breaks=seq(0,10)) +\n  dsan_theme(\"half\")"
+  },
+  {
+    "objectID": "w05/slides.html#the-emergence-of-order",
+    "href": "w05/slides.html#the-emergence-of-order",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Emergence of Order",
+    "text": "The Emergence of Order\n\n\n\nWho can guess the state of this process after 10 steps, with 1 person?\n10 people? 50? 100? (If they find themselves on the same spot, they stand on each other’s heads)\n100 steps? 1000?"
+  },
+  {
+    "objectID": "w05/slides.html#the-result-16-steps",
+    "href": "w05/slides.html#the-result-16-steps",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Result: 16 Steps",
+    "text": "The Result: 16 Steps"
+  },
+  {
+    "objectID": "w05/slides.html#the-result-64-steps",
+    "href": "w05/slides.html#the-result-64-steps",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Result: 64 Steps",
+    "text": "The Result: 64 Steps"
+  },
+  {
+    "objectID": "w05/slides.html#whats-going-on-here",
+    "href": "w05/slides.html#whats-going-on-here",
+    "title": "Week 5: Continuous Distributions",
+    "section": "What’s Going On Here?",
+    "text": "What’s Going On Here?\n\n(Stay tuned for Markov processes \\(\\overset{t \\rightarrow \\infty}{\\leadsto}\\) Stationary distributions!)"
+  },
+  {
+    "objectID": "w05/slides.html#properties-of-the-normal-distribution",
+    "href": "w05/slides.html#properties-of-the-normal-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Properties of the Normal Distribution",
+    "text": "Properties of the Normal Distribution\n\nIf \\(X \\sim \\mathcal{N}(\\param{\\mu}, \\param{\\theta})\\), then \\(X\\) has pdf \\(f_X(v)\\) defined by\n\n\\[\nf_X(v) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\bigexp{-\\frac{1}{2}\\left(\\frac{v - \\mu}{\\sigma}\\right)^2}\n\\]\n\nI hate memorizing as much as you do, I promise 🥴\nThe important part (imo): this is the most conservative out of all possible (symmetric) prior distributions defined on \\(\\mathbb{R}\\) (defined from \\(-\\infty\\) to \\(\\infty\\))"
+  },
+  {
+    "objectID": "w05/slides.html#most-conservative-how",
+    "href": "w05/slides.html#most-conservative-how",
+    "title": "Week 5: Continuous Distributions",
+    "section": "“Most Conservative” How?",
+    "text": "“Most Conservative” How?\n\nOf all possible distributions with mean \\(\\mu\\), variance \\(\\sigma^2\\), \\(\\mathcal{N}(\\mu, \\sigma^2)\\) is the entropy-maximizing distribution\nRoughly: using any other distribution (implicitly/secretly) imports additional information beyond the fact that mean is \\(\\mu\\) and variance is \\(\\sigma^2\\)\nExample: let \\(X\\) be an RV. If we know mean is \\(\\mu\\), variance is \\(\\sigma^2\\), but then we learn that \\(X \\neq 3\\), or \\(X\\) is even, or the 15th digit of \\(X\\) is 7, can update \\(\\mathcal{N}(\\mu,\\sigma^2)\\) to derive a “better” distribution (incorporating this additional info)"
+  },
+  {
+    "objectID": "w05/slides.html#the-takeaway",
+    "href": "w05/slides.html#the-takeaway",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Takeaway",
+    "text": "The Takeaway\n\nGiven info we know, we can find a distribution that “encodes” only this info\nMore straightforward example: if we only know that the value is something in the range \\([a,b]\\), entropy-maximizing distribution is the Uniform Distribution\n\n\n\n\n\n\n\n\n\nIf We Know\nAnd We Know\n(Max-Entropy) Distribution Is…\n\n\n\n\n\\(\\text{Mean}[X] = \\mu\\)\n\\(\\text{Var}[X] = \\sigma^2\\)\n\\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\)\n\n\n\\(\\text{Mean}[X] = \\lambda\\)\n\\(X \\geq 0\\)\n\\(X \\sim \\text{Exp}\\left(\\frac{1}{\\lambda}\\right)\\)\n\n\n\\(X \\geq a\\)\n\\(X \\leq b\\)\n\\(X \\sim \\mathcal{U}[a,b]\\)"
+  },
+  {
+    "objectID": "w05/slides.html#recall-discrete-uniform-distribution",
+    "href": "w05/slides.html#recall-discrete-uniform-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "[Recall] Discrete Uniform Distribution",
+    "text": "[Recall] Discrete Uniform Distribution\n\n\nCode\nlibrary(tibble)\nbar_data &lt;- tribble(\n  ~x, ~prob,\n  1, 1/6,\n  2, 1/6,\n  3, 1/6,\n  4, 1/6,\n  5, 1/6,\n  6, 1/6\n)\nggplot(bar_data, aes(x=x, y=prob)) +\n  geom_bar(stat=\"identity\", fill=cbPalette[1]) +\n  labs(\n    title=\"Discrete Uniform pmf: a = 1, b = 6\",\n    y=\"Probability Mass\",\n    x=\"Value\"\n  ) +\n  scale_x_continuous(breaks=seq(1,6)) +\n  dsan_theme(\"half\")"
+  },
+  {
+    "objectID": "w05/slides.html#continuous-uniform-distribution",
+    "href": "w05/slides.html#continuous-uniform-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Continuous Uniform Distribution",
+    "text": "Continuous Uniform Distribution\n\nIf \\(X \\sim \\mathcal{U}[a,b]\\), then intuitively \\(X\\) is a value randomly selected from within \\([a,b]\\), with all values equally likely.\nDiscrete case: what we’ve been using all along (e.g., dice): if \\(X \\sim \\mathcal{U}\\{1,6\\}\\), then\n\n\\[\n\\Pr(X = 1) = \\Pr(X = 2) = \\cdots = \\Pr(X = 6) = \\frac{1}{6}\n\\]\n\nFor continuous case… what do we put in the denominator? \\(X \\sim \\mathcal{U}[1,6] \\implies \\Pr(X = \\pi) = \\frac{1}{?}\\)…\n\nAnswer: \\(\\Pr(X = \\pi) = \\frac{1}{|[1,6]|} = \\frac{1}{\\aleph_0} = 0\\)"
+  },
+  {
+    "objectID": "w05/slides.html#constructing-the-uniform-cdf",
+    "href": "w05/slides.html#constructing-the-uniform-cdf",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Constructing the Uniform CDF",
+    "text": "Constructing the Uniform CDF\n\nWe were ready for this! We already knew \\(\\Pr(X = v) = 0\\) for continuous \\(X\\)\nSo, we forget about \\(\\Pr(X = v)\\), and focus on \\(\\Pr(X \\in [v_0, v_1])\\).\nIn 2D (dartboard) we had \\(\\Pr(X \\in \\circ) = \\frac{\\text{Area}(\\circ)}{\\text{Area}(\\Omega)}\\), so here we should have\n\n\\[\nP(X \\in [v_0,v_1]) = \\frac{\\text{Length}([v_0,v_1])}{\\text{Length}([1,6])}\n\\]\n\nAnd indeed, the CDF of \\(X\\) is \\(\\boxed{F_X(v) = \\Pr(X \\leq v) = \\frac{v-a}{b-a}}\\), so that\n\n\\[\n\\Pr(X \\in [v_0,v_1]) = F_X(v_1) - F_X(v_0) = \\frac{v_1-a}{b-a} - \\frac{v_0-a}{b-a} = \\frac{v_1 - v_0}{b-a}\n\\]\n\nSince \\(a = 1\\), \\(b = 6\\) in our example, \\(\\Pr(X \\in [v_0,v_1]) = \\frac{v_1-v_0}{6-1} = \\frac{\\text{Length}([v_0,v_1])}{\\text{Length}([1,6])} \\; ✅\\)"
+  },
+  {
+    "objectID": "w05/slides.html#exponential-distribution",
+    "href": "w05/slides.html#exponential-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Exponential Distribution",
+    "text": "Exponential Distribution\n\nRecall the (discrete) Geometric Distribution:\n\n\n\nCode\nlibrary(ggplot2)\nk &lt;- seq(0, 8)\nprob &lt;- dgeom(k, 0.5)\nbar_data &lt;- tibble(k, prob)\nggplot(bar_data, aes(x = k, y = prob)) +\n    geom_bar(stat = \"identity\", fill = cbPalette[1]) +\n    labs(\n        title = \"Geometric Distribution pmf: p = 0.5\",\n        y = \"Probability Mass\"\n    ) +\n    scale_x_continuous(breaks = seq(0, 8)) +\n    dsan_theme(\"half\")"
+  },
+  {
+    "objectID": "w05/slides.html#now-in-continuous-form",
+    "href": "w05/slides.html#now-in-continuous-form",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Now In Continuous Form!",
+    "text": "Now In Continuous Form!\n\n\nCode\nmy_dexp &lt;- function(x) dexp(x, rate = 1/2)\nggplot(data.frame(x=c(0,8)), aes(x=x)) +\n  stat_function(fun=my_dexp, size=g_linesize, fill=cbPalette[1], alpha=0.8) +\n  stat_function(fun=my_dexp, geom='area', fill=cbPalette[1], alpha=0.75) +\n  dsan_theme(\"half\") +\n  labs(\n    title=\"Exponential Distribution pdf: λ (rate) = 0.5\",\n    x = \"v\",\n    y = \"f_X(v)\"\n  )"
+  },
+  {
+    "objectID": "w05/slides.html#the-dreaded-cauchy-distribution",
+    "href": "w05/slides.html#the-dreaded-cauchy-distribution",
+    "title": "Week 5: Continuous Distributions",
+    "section": "The Dreaded Cauchy Distribution",
+    "text": "The Dreaded Cauchy Distribution\n\n\nCode\nggplot(data.frame(x=c(-4,4)), aes(x=x)) +\n  stat_function(fun=dcauchy, size=g_linesize, fill=cbPalette[1], alpha=0.75) +\n  stat_function(fun=dcauchy, geom='area', fill=cbPalette[1], alpha=0.75) +\n  dsan_theme(\"quarter\") +\n  labs(\n    title=\"PDF of R\",\n    x = \"r\",\n    y = \"f(r)\"\n  )\n\n\n\n\nPaxton is a Houston Rockets fan, while Jeff is a Chicago Bulls fan. Paxton creates a RV \\(H\\) modeling how many games above .500 (wins minus losses) the Rockets will be in a season, while Jeff creates a similar RV \\(C\\) for the Bulls\nThey decide to combine their RVs to create a new RV, \\(R = \\frac{H}{C}\\), which now models how much better the Nuggets will be in a season (\\(R\\) for “Ratio”)\nFor example, if the Rockets are \\(10\\) games above .500, while the Bulls are only \\(5\\) above .500, \\(R = \\frac{10}{5} = 2\\). If they’re both 3 games above .500, \\(R = \\frac{3}{3} = 1\\)."
+  },
+  {
+    "objectID": "w05/slides.html#so-whats-the-issue",
+    "href": "w05/slides.html#so-whats-the-issue",
+    "title": "Week 5: Continuous Distributions",
+    "section": "So What’s the Issue?",
+    "text": "So What’s the Issue?\nSo far so good. It turns out (though Paxton and Jeff don’t know this) the teams are both mediocre: \\(H \\sim \\mathcal{N}(0,10)\\), \\(B \\sim \\mathcal{N}(0,10)\\)… What is the distribution of \\(R\\)?\n\n\n\\[\n\\begin{gather*}\nR \\sim \\text{Cauchy}\\left( 0, 1 \\right)\n\\end{gather*}\n\\]\n\\[\n\\begin{align*}\n\\expect{R} &= ☠️ \\\\\n\\Var{R} &= ☠️ \\\\\nM_R(t) &= ☠️\n\\end{align*}\n\\]\n\n\n\n\nFrom Agnesi (1801) [Internet Archive]\n\n\n\n\nEven worse, this is true regardless of variances: \\(D \\sim \\mathcal{N}(0,d)\\) and \\(W \\sim \\mathcal{N}(0,w)\\) \\(\\implies R \\sim \\text{Cauchy}\\left( 0,\\frac{d}{w} \\right)\\)…"
+  },
+  {
+    "objectID": "w05/slides.html#lab-4-demo",
+    "href": "w05/slides.html#lab-4-demo",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Lab 4 Demo",
+    "text": "Lab 4 Demo\n\nLab 4 Demo Link\nChoose your own adventure:\n\nOfficial lab demo\nMath puzzle lab demo\nMove on to Expectation, Variance, Moments"
+  },
+  {
+    "objectID": "w05/slides.html#lab-4-assignment-prep",
+    "href": "w05/slides.html#lab-4-assignment-prep",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Lab 4 Assignment Prep",
+    "text": "Lab 4 Assignment Prep\nOne of my favorite math puzzles ever:\n\n\n\n\nThe Problem of the Broken Stick (Gardner 2001, 273–85)\n\n\nIf a stick is broken at random into three pieces, what is the probability that the pieces can be put back together into a triangle?\nThis cannot be answered without additional information about the exact method of breaking!\n\nOne method is to select, independently and at random, two points from the points that range uniformly along the stick, then break the stick at these two points\nSuppose, however, that we interpret in a different way the statement “break a stick at random into three pieces”. We break the stick at random, we select randomly one of the two pieces, and we break that piece at random.\n\n\n\n\n\n\nWill these two interpretations result in the same probabilities?\nIf yes, what is that probability?\nIf no, what are the probabilities in each case?"
+  },
+  {
+    "objectID": "w05/slides.html#lab-4-assignment",
+    "href": "w05/slides.html#lab-4-assignment",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Lab 4 Assignment",
+    "text": "Lab 4 Assignment\n\nLab 4 Assignment Link"
+  },
+  {
+    "objectID": "w05/slides.html#references",
+    "href": "w05/slides.html#references",
+    "title": "Week 5: Continuous Distributions",
+    "section": "References",
+    "text": "References\n\n\nAgnesi, Maria Gaetana. 1801. Analytical Institutions in Four Books: Originally Written in Italian. Taylor and Wilks.\n\n\nGardner, Martin. 2001. Colossal Book of Mathematics: Classic Puzzles Paradoxes And Problems. W. W. Norton & Company."
+  },
+  {
+    "objectID": "w05/slides.html#appendix-i-dirac-delta-function",
+    "href": "w05/slides.html#appendix-i-dirac-delta-function",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Appendix I: Dirac Delta Function",
+    "text": "Appendix I: Dirac Delta Function\n\n\\(\\delta(v)\\) from the “Top Secret Fun Fact” slide is called the Dirac Delta function\nEnables conversion of discrete distributions into continuous distributions as it represents an “infinite point mass” at \\(0\\) that can be integrated1:\n\n\\[\n\\delta(v) = \\begin{cases}\\infty & v = 0 \\\\ 0 & v \\neq 0\\end{cases}\n\\]\n\nIts integral also has a name: the Heaviside step function \\(\\theta(v)\\):\n\n\\[\n\\int_{-\\infty}^{\\infty}\\delta(v)dv = \\theta(v) = \\begin{cases} 1 & v = 0 \\\\ 0 & v \\neq 0\\end{cases}\n\\]\nThis is leaving out some of the complexities of defining this function so it “works” in this way: for example, we need to use the Lebesgue integral rather than the (standard) Riemann integral for it to be defined at all, and even then it technically fails the conditions necessary for a fully-well-defined Lebesgue integral. For full details see this section from the Wiki article on PDFs, and follow the links therein."
+  },
+  {
+    "objectID": "w05/slides.html#appendix-ii-countability-of-mathbbq",
+    "href": "w05/slides.html#appendix-ii-countability-of-mathbbq",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Appendix II: Countability of \\(\\mathbb{Q}\\)",
+    "text": "Appendix II: Countability of \\(\\mathbb{Q}\\)\n\nBad definition: “\\(\\mathbb{N}\\) is countable because no \\(x \\in \\mathbb{N}\\) between \\(0\\) and \\(1\\). \\(\\mathbb{R}\\) is uncountable because infinitely-many \\(x \\in \\mathbb{R}\\) between \\(0\\) and \\(1\\).” (\\(\\Rightarrow \\mathbb{Q}\\) uncountable)\nAnd yet, \\(\\mathbb{Q}\\) is countable…\n\n\n\n\n\n\n\n\n\n\\[\n\\begin{align*}\n\\begin{array}{ll}\ns: \\mathbb{N} \\leftrightarrow \\mathbb{Z} & s(n) = (-1)^n \\left\\lfloor \\frac{n+1}{2} \\right\\rfloor \\\\\nh_+: \\mathbb{Z}^+ \\leftrightarrow \\mathbb{Q}^+ & p_1^{a_1}p_2^{a_2}\\cdots \\mapsto p_1^{s(a_1)}p_2^{s(a_2)}\\cdots \\\\\nh: \\mathbb{Z} \\leftrightarrow \\mathbb{Q} & h(n) = \\begin{cases}h_+(n) &n &gt; 0 \\\\ 0 & n = 0 \\\\\n-h_+(-n) & n &lt; 0\\end{cases} \\\\\n(h \\circ s): \\mathbb{N} \\leftrightarrow \\mathbb{Q} & ✅🤯\n\\end{array}\n\\end{align*}\n\\]\n\n\n\nImage credit: Rebecca J. Stones, Math StackExchange. Math credit: Thomas Andrews, Math StackExchange"
+  },
+  {
+    "objectID": "w05/slides.html#appendix-iii-binomial-triangle",
+    "href": "w05/slides.html#appendix-iii-binomial-triangle",
+    "title": "Week 5: Continuous Distributions",
+    "section": "Appendix III: Binomial Triangle",
+    "text": "Appendix III: Binomial Triangle"
+  },
+  {
+    "objectID": "w06/slides.html#the-emergence-of-order",
+    "href": "w06/slides.html#the-emergence-of-order",
+    "title": "Week 6: Moments and Covariance",
+    "section": "The Emergence of Order",
+    "text": "The Emergence of Order\n\n\n\nWho can guess the state of this process after 10 steps, with 1 person?\n10 people? 50? 100? (If they find themselves on the same spot, they stand on each other’s heads)\n100 steps? 1000?"
+  },
+  {
+    "objectID": "w06/slides.html#the-result-16-steps",
+    "href": "w06/slides.html#the-result-16-steps",
+    "title": "Week 6: Moments and Covariance",
+    "section": "The Result: 16 Steps",
+    "text": "The Result: 16 Steps"
+  },
+  {
+    "objectID": "w06/slides.html#the-result-64-steps",
+    "href": "w06/slides.html#the-result-64-steps",
+    "title": "Week 6: Moments and Covariance",
+    "section": "The Result: 64 Steps",
+    "text": "The Result: 64 Steps"
+  },
+  {
+    "objectID": "w06/slides.html#whats-going-on-here",
+    "href": "w06/slides.html#whats-going-on-here",
+    "title": "Week 6: Moments and Covariance",
+    "section": "What’s Going On Here?",
+    "text": "What’s Going On Here?\n\n(Stay tuned for Markov processes \\(\\overset{t \\rightarrow \\infty}{\\leadsto}\\) Stationary distributions!)"
+  },
+  {
+    "objectID": "w06/slides.html#properties-of-the-normal-distribution",
+    "href": "w06/slides.html#properties-of-the-normal-distribution",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Properties of the Normal Distribution",
+    "text": "Properties of the Normal Distribution\n\nIf \\(X \\sim \\mathcal{N}(\\param{\\mu}, \\param{\\theta})\\), then \\(X\\) has pdf \\(f_X(v)\\) defined by\n\n\\[\nf_X(v) = \\frac{1}{\\sigma\\sqrt{2\\pi}}\\bigexp{-\\frac{1}{2}\\left(\\frac{v - \\mu}{\\sigma}\\right)^2}\n\\]\n\nI hate memorizing as much as you do, I promise 🥴\nThe important part (imo): this is the most conservative out of all possible (symmetric) prior distributions defined on \\(\\mathbb{R}\\) (defined from \\(-\\infty\\) to \\(\\infty\\))"
+  },
+  {
+    "objectID": "w06/slides.html#most-conservative-how",
+    "href": "w06/slides.html#most-conservative-how",
+    "title": "Week 6: Moments and Covariance",
+    "section": "“Most Conservative” How?",
+    "text": "“Most Conservative” How?\n\nOf all possible distributions with mean \\(\\mu\\), variance \\(\\sigma^2\\), \\(\\mathcal{N}(\\mu, \\sigma^2)\\) is the entropy-maximizing distribution\nRoughly: using any other distribution (implicitly/secretly) imports additional information beyond the fact that mean is \\(\\mu\\) and variance is \\(\\sigma^2\\)\nExample: let \\(X\\) be an RV. If we know mean is \\(\\mu\\), variance is \\(\\sigma^2\\), but then we learn that \\(X \\neq 3\\), or \\(X\\) is even, or the 15th digit of \\(X\\) is 7, can update \\(\\mathcal{N}(\\mu,\\sigma^2)\\) to derive a “better” distribution (incorporating this additional info)"
+  },
+  {
+    "objectID": "w06/slides.html#the-takeaway",
+    "href": "w06/slides.html#the-takeaway",
+    "title": "Week 6: Moments and Covariance",
+    "section": "The Takeaway",
+    "text": "The Takeaway\n\nGiven info we know, we can find a distribution that “encodes” only this info\nMore straightforward example: if we only know that the value is something in the range \\([a,b]\\), entropy-maximizing distribution is the Uniform Distribution\n\n\n\n\n\n\n\n\n\nIf We Know\nAnd We Know\n(Max-Entropy) Distribution Is…\n\n\n\n\n\\(\\text{Mean}[X] = \\mu\\)\n\\(\\text{Var}[X] = \\sigma^2\\)\n\\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\)\n\n\n\\(\\text{Mean}[X] = \\lambda\\)\n\\(X \\geq 0\\)\n\\(X \\sim \\text{Exp}\\left(\\frac{1}{\\lambda}\\right)\\)\n\n\n\\(X \\geq a\\)\n\\(X \\leq b\\)\n\\(X \\sim \\mathcal{U}[a,b]\\)"
+  },
+  {
+    "objectID": "w06/slides.html#recall-discrete-uniform-distribution",
+    "href": "w06/slides.html#recall-discrete-uniform-distribution",
+    "title": "Week 6: Moments and Covariance",
+    "section": "[Recall] Discrete Uniform Distribution",
+    "text": "[Recall] Discrete Uniform Distribution\n\n\nCode\nlibrary(tibble)\nbar_data &lt;- tribble(\n  ~x, ~prob,\n  1, 1/6,\n  2, 1/6,\n  3, 1/6,\n  4, 1/6,\n  5, 1/6,\n  6, 1/6\n)\nggplot(bar_data, aes(x=x, y=prob)) +\n  geom_bar(stat=\"identity\", fill=cbPalette[1]) +\n  labs(\n    title=\"Discrete Uniform pmf: a = 1, b = 6\",\n    y=\"Probability Mass\",\n    x=\"Value\"\n  ) +\n  scale_x_continuous(breaks=seq(1,6)) +\n  dsan_theme(\"half\")"
+  },
+  {
+    "objectID": "w06/slides.html#continuous-uniform-distribution",
+    "href": "w06/slides.html#continuous-uniform-distribution",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Continuous Uniform Distribution",
+    "text": "Continuous Uniform Distribution\n\nIf \\(X \\sim \\mathcal{U}[a,b]\\), then intuitively \\(X\\) is a value randomly selected from within \\([a,b]\\), with all values equally likely.\nDiscrete case: what we’ve been using all along (e.g., dice): if \\(X \\sim \\mathcal{U}\\{1,6\\}\\), then\n\n\\[\n\\Pr(X = 1) = \\Pr(X = 2) = \\cdots = \\Pr(X = 6) = \\frac{1}{6}\n\\]\n\nFor continuous case… what do we put in the denominator? \\(X \\sim \\mathcal{U}[1,6] \\implies \\Pr(X = \\pi) = \\frac{1}{?}\\)…\n\nAnswer: \\(\\Pr(X = \\pi) = \\frac{1}{|[1,6]|} = \\frac{1}{\\aleph_0} = 0\\)"
+  },
+  {
+    "objectID": "w06/slides.html#constructing-the-uniform-cdf",
+    "href": "w06/slides.html#constructing-the-uniform-cdf",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Constructing the Uniform CDF",
+    "text": "Constructing the Uniform CDF\n\nWe were ready for this! We already knew \\(\\Pr(X = v) = 0\\) for continuous \\(X\\)\nSo, we forget about \\(\\Pr(X = v)\\), and focus on \\(\\Pr(X \\in [v_0, v_1])\\).\nIn 2D (dartboard) we had \\(\\Pr(X \\in \\circ) = \\frac{\\text{Area}(\\circ)}{\\text{Area}(\\Omega)}\\), so here we should have\n\n\\[\nP(X \\in [v_0,v_1]) = \\frac{\\text{Length}([v_0,v_1])}{\\text{Length}([1,6])}\n\\]\n\nAnd indeed, the CDF of \\(X\\) is \\(\\boxed{F_X(v) = \\Pr(X \\leq v) = \\frac{v-a}{b-a}}\\), so that\n\n\\[\n\\Pr(X \\in [v_0,v_1]) = F_X(v_1) - F_X(v_0) = \\frac{v_1-a}{b-a} - \\frac{v_0-a}{b-a} = \\frac{v_1 - v_0}{b-a}\n\\]\n\nSince \\(a = 1\\), \\(b = 6\\) in our example, \\(\\Pr(X \\in [v_0,v_1]) = \\frac{v_1-v_0}{6-1} = \\frac{\\text{Length}([v_0,v_1])}{\\text{Length}([1,6])} \\; ✅\\)"
+  },
+  {
+    "objectID": "w06/slides.html#exponential-distribution",
+    "href": "w06/slides.html#exponential-distribution",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Exponential Distribution",
+    "text": "Exponential Distribution\n\nRecall the (discrete) Geometric Distribution:\n\n\n\nCode\nlibrary(ggplot2)\nk &lt;- seq(0, 8)\nprob &lt;- dgeom(k, 0.5)\nbar_data &lt;- tibble(k, prob)\nggplot(bar_data, aes(x = k, y = prob)) +\n    geom_bar(stat = \"identity\", fill = cbPalette[1]) +\n    labs(\n        title = \"Geometric Distribution pmf: p = 0.5\",\n        y = \"Probability Mass\"\n    ) +\n    scale_x_continuous(breaks = seq(0, 8)) +\n    dsan_theme(\"half\")"
+  },
+  {
+    "objectID": "w06/slides.html#now-in-continuous-form",
+    "href": "w06/slides.html#now-in-continuous-form",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Now In Continuous Form!",
+    "text": "Now In Continuous Form!\n\n\nCode\nmy_dexp &lt;- function(x) dexp(x, rate = 1/2)\nggplot(data.frame(x=c(0,8)), aes(x=x)) +\n  stat_function(fun=my_dexp, size=g_linesize, fill=cbPalette[1], alpha=0.8) +\n  stat_function(fun=my_dexp, geom='area', fill=cbPalette[1], alpha=0.75) +\n  dsan_theme(\"half\") +\n  labs(\n    title=\"Exponential Distribution pdf: λ (rate) = 0.5\",\n    x = \"v\",\n    y = \"f_X(v)\"\n  )"
+  },
+  {
+    "objectID": "w06/slides.html#the-dreaded-cauchy-distribution",
+    "href": "w06/slides.html#the-dreaded-cauchy-distribution",
+    "title": "Week 6: Moments and Covariance",
+    "section": "The Dreaded Cauchy Distribution",
+    "text": "The Dreaded Cauchy Distribution\n\n\nCode\nggplot(data.frame(x=c(-4,4)), aes(x=x)) +\n  stat_function(fun=dcauchy, size=g_linesize, fill=cbPalette[1], alpha=0.75) +\n  stat_function(fun=dcauchy, geom='area', fill=cbPalette[1], alpha=0.75) +\n  dsan_theme(\"quarter\") +\n  labs(\n    title=\"PDF of R\",\n    x = \"r\",\n    y = \"f(r)\"\n  )\n\n\n\n\nPaxton is a Houston Rockets fan, while Jeff is a Chicago Bulls fan. Paxton creates a RV \\(H\\) modeling how many games above .500 (wins minus losses) the Rockets will be in a season, while Jeff creates a similar RV \\(C\\) for the Bulls\nThey decide to combine their RVs to create a new RV, \\(R = \\frac{H}{C}\\), which now models how much better the Nuggets will be in a season (\\(R\\) for “Ratio”)\nFor example, if the Rockets are \\(10\\) games above .500, while the Bulls are only \\(5\\) above .500, \\(R = \\frac{10}{5} = 2\\). If they’re both 3 games above .500, \\(R = \\frac{3}{3} = 1\\)."
+  },
+  {
+    "objectID": "w06/slides.html#so-whats-the-issue",
+    "href": "w06/slides.html#so-whats-the-issue",
+    "title": "Week 6: Moments and Covariance",
+    "section": "So What’s the Issue?",
+    "text": "So What’s the Issue?\n\nSo far so good. It turns out (though Paxton and Jeff don’t know this) the teams are both mediocre: \\(H \\sim \\mathcal{N}(0,10)\\), \\(B \\sim \\mathcal{N}(0,10)\\)… What is the distribution of \\(R\\)?\n\n\n\n\\[\n\\begin{gather*}\nR \\sim \\text{Cauchy}\\left( 0, 1 \\right)\n\\end{gather*}\n\\]\n\\[\n\\begin{align*}\n\\expect{R} &= ☠️ \\\\\n\\Var{R} &= ☠️ \\\\\nM_R(t) &= ☠️\n\\end{align*}\n\\]\n\n\n\n\nFrom Agnesi (1801) [Internet Archive]\n\n\n\n\nEven worse, this is true regardless of variances: \\(D \\sim \\mathcal{N}(0,d)\\) and \\(W \\sim \\mathcal{N}(0,w)\\) \\(\\implies R \\sim \\text{Cauchy}\\left( 0,\\frac{d}{w} \\right)\\)…"
+  },
+  {
+    "objectID": "w06/slides.html#expectations-weighted-means",
+    "href": "w06/slides.html#expectations-weighted-means",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Expectations = Weighted Means",
+    "text": "Expectations = Weighted Means\n\nWe already know how to find the (unweighted) mean of a list of numbers:\n\n\\[\n\\begin{align*}\n\\begin{array}{|p{1cm}||p{1cm}|p{1cm}|p{1cm}|}\\hline X & \\orange{4} & \\orange{10} & \\orange{8} \\\\\\hline\\end{array} \\implies \\overline{X} &= \\frac{\\orange{4} + \\orange{10} + \\orange{8}}{\\purp{3}} = \\purp{\\left(\\frac{1}{3}\\right)} \\cdot \\orange{4} + \\purp{\\left( \\frac{1}{3} \\right)} \\cdot \\orange{10} + \\purp{\\left( \\frac{1}{3} \\right)} \\cdot \\orange{8} \\\\\n&= \\frac{22}{3} \\approx 7.33\n\\end{align*}\n\\]\n\nDiscrete distributions: just lists of numbers and their probability of occurring!\n\n\\[\n\\begin{align*}\n\\begin{array}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}\\hline X & \\orange{4} & \\orange{10} & \\orange{8} \\\\\\hline \\Pr(X) & \\purp{0.01} & \\purp{0.01} & \\purp{0.98}\\\\\\hline\\end{array} \\implies \\overline{X} &= \\purp{\\left( \\frac{1}{100} \\right)} \\cdot \\orange{4} + \\purp{\\left( \\frac{1}{100} \\right)} \\cdot \\orange{10} + \\purp{\\left( \\frac{98}{100} \\right)} \\cdot \\orange{8} \\\\\n&= \\left.\\frac{798}{100}\\right.^{1} \\approx 7.98\n\\end{align*}\n\\]\n\n\n\nIt will be helpful for later/life as a data scientist to notice that this is exactly \\(\\frac{4 + 10 + \\overbrace{8 + \\cdots + 8}^{98\\text{ times}}}{100}\\). That is: weighted mean = normal mean where numbers are repeated proportionally to their probabilities. (See Laplace smoothing!)."
+  },
+  {
+    "objectID": "w06/slides.html#different-types-of-averages",
+    "href": "w06/slides.html#different-types-of-averages",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Different Types of “Averages”",
+    "text": "Different Types of “Averages”\n\n(This will seem like overkill now, but will help us later!)\nTo avoid confusion, we denote the “regular” (arithmetic) mean function as \\(M_1(\\cdot)\\)\n\nIf \\(V = \\{v_1, \\ldots, v_n\\}\\), \\(M_1(V) \\definedas \\frac{v_1+\\cdots+v_n}{n}\\).\n\nThen \\(\\overline{V}\\) will denote the number which results from applying \\(M_1\\) to the set \\(V\\).\nOther common functions which get called “averages” in Machine Learning: median, harmonic mean (\\(M_{-1}\\)), geometric mean (\\(M_0\\)), the hadamard product \\(\\odot\\), etc.—pop up surprisingly often in Data Science/Machine Learning!\nThe things we’re averaging also take on weird forms: bits, logical predicates, vectors, tensors (Hence Google’s ML platform, TensorFlow), …\n\n\n\nFor what these subscripts (\\(M_{-1}\\), \\(M_0\\), \\(M_1\\)) mean, and more on the Hadamard product and its importance to Machine Learning, see Section 4.1"
+  },
+  {
+    "objectID": "w06/slides.html#definition",
+    "href": "w06/slides.html#definition",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Definition",
+    "text": "Definition\n\nFor a discrete RV \\(X\\):\n\n\\[\n\\expect{X} = \\sum_{x \\in \\mathcal{R}_X}x P(x)\n\\]\n\nFor a continuous RV \\(X\\):\n\n\\[\n\\expect{X} = \\int_{-\\infty}^{\\infty}xf(x)dx\n\\]\n\n\nRemember that \\(\\mathcal{R}_X\\) is the support of the random variable \\(X\\). If \\(X\\) is discrete, this is just \\(\\mathcal{R}_X = \\{x \\in \\mathbb{R} \\given P(X = x) &gt; 0\\}\\). If \\(X\\) is continuous, we can almost always* use the similar definition \\(\\mathcal{R}_X = \\{x \\in \\mathbb{R} \\given f_X(x) &gt; 0\\}\\), remembering that \\(f_X(x) \\neq P(X = x)\\)!!! See Section 4.2 for the scarier definition that works for all continuous RVs."
+  },
+  {
+    "objectID": "w06/slides.html#important-properties",
+    "href": "w06/slides.html#important-properties",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Important Properties",
+    "text": "Important Properties\n\n\nFor RVs \\(X\\), \\(Y\\), and \\(a, b \\in \\mathbb{R}\\):\n\n\n\n\n\n\nLinear\n\n\\[\n\\expect{aX} = a\\expect{X}\n\\]\n\n\n\n\nAdditive\n\n\\[\n\\expect{X + Y} = \\expect{X} + \\expect{Y}\n\\]\n\n\n\n\nAffine1\n\n\\[\n\\expect{aX + b} = a\\expect{X} + b\n\\]\n\n\n\nLOTUS:\n\n\\[\n\\expect{g(X)} = g(x)f(x)dx\n\\]\n\nNot Multiplicative:\n\n\\[\n\\expect{X \\cdot Y} = \\expect{X} \\cdot \\expect{Y} \\iff X \\perp Y\n\\]\n\nReally these should be called affine functions, but this property is usually just known as “linearity”, so for the sake of being able to google it I’m calling it “Linear” here as well, for now\n\nMathematically, it’s important to call \\(aX + b\\) an “affine transformation”, not a linear transformation. In practice, everyone calls this “linear”, so I try to use both (for easy Googling!). The reason it matters will come up when we discuss Variance!"
+  },
+  {
+    "objectID": "w06/slides.html#variance-motivation",
+    "href": "w06/slides.html#variance-motivation",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Variance: Motivation",
+    "text": "Variance: Motivation\n\nWe’ve now got a “measure of central tendency”, the expectation \\(\\expect{X}\\), with some nice properties. We can use it to produce point estimates.\nNow, how do we describe and communicate the spread of the data in a dataset? Similarly, how can we describe our uncertainty about a point estimate?\nLet’s try to develop a function, \\(\\text{Spread}\\), that takes in a set of values and computes how spread out they are\n(Hint: can use arithmetic mean, applied to differences between points rather than points themselves)"
+  },
+  {
+    "objectID": "w06/slides.html#first-attempt",
+    "href": "w06/slides.html#first-attempt",
+    "title": "Week 6: Moments and Covariance",
+    "section": "First Attempt",
+    "text": "First Attempt\n\nWhat properties should \\(\\text{Spread}(\\cdot)\\) have?\n\nShould be \\(0\\) if every data point is identical, then increase as they spread apart\n\nHow about: average difference between each point and the overall (arithmetic) mean? \\[\n\\text{Spread}(X) = M_1(X - \\overline{X}) = \\frac{(x_1 - \\overline{X}) + (x_2 - \\overline{X}) + \\cdots + (x_n - \\overline{X})}{n}\n\\]\n\n\n\n\n\nCode\nlibrary(tidyverse)\nlibrary(latex2exp)\nN &lt;- 10\nx &lt;- seq(1,N)\ny &lt;- rnorm(N, 0, 10)\nmean_y &lt;- mean(y)\nspread &lt;- y - mean_y\ndf &lt;- tibble(x=x, y=y, spread=spread)\nggplot(df, aes(x=x, y=y)) +\n  geom_hline(aes(yintercept=mean_y, linetype=\"dashed\"), color=\"purple\", size=g_linesize) +\n  geom_segment(aes(xend=x, yend=mean_y, color=ifelse(y&gt;0,\"Positive\",\"Negative\")), size=g_linesize) +\n  geom_point(size=g_pointsize) +\n  scale_linetype_manual(element_blank(), values=c(\"dashed\"=\"dashed\"), labels=c(\"dashed\"=unname(TeX(c(\"$M_1(X)$\"))))) +\n  dsan_theme(\"half\") +\n  scale_color_manual(\"Spread\", values=c(\"Positive\"=cbPalette[3],\"Negative\"=cbPalette[6]), labels=c(\"Positive\"=\"Positive\",\"Negative\"=\"Negative\")) +\n  scale_x_continuous(breaks=seq(0,10,2)) +\n  #remove_legend_title() +\n  theme(legend.spacing.y=unit(0.1,\"mm\")) +\n  labs(\n    title=paste0(N, \" Randomly-Generated Points, N(0,10)\"),\n    x=\"Index\",\n    y=\"Value\"\n  )\n\n\n\n\n\n\n\n\n\n\nThe result? To ten decimal places:\n\n\nCode\nspread_fmt &lt;- sprintf(\"%0.10f\", mean(df$spread))\nwriteLines(spread_fmt)\n\n\n0.0000000000\n\n\n😞 What happened?"
+  },
+  {
+    "objectID": "w06/slides.html#avoiding-cancellation",
+    "href": "w06/slides.html#avoiding-cancellation",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Avoiding Cancellation",
+    "text": "Avoiding Cancellation\n\nHow to avoid positive and negative deviations cancelling out? Two ideas:\n\nAbsolute value \\(\\left|X - \\overline{X}\\right|\\)\nSquared error \\(\\left( X - \\overline{X} \\right)^2\\)…\n\nGhost of calculus past: which is differentiable everywhere?1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFor why differentiability matters a lot for modern Machine Learning, see the Backpropagation algorithm."
+  },
+  {
+    "objectID": "w06/slides.html#weve-arrived-at-variance",
+    "href": "w06/slides.html#weve-arrived-at-variance",
+    "title": "Week 6: Moments and Covariance",
+    "section": "We’ve Arrived at Variance!",
+    "text": "We’ve Arrived at Variance!\n\\[\n\\Var{X} = \\bigexpect{ \\left(X - \\expect{X}\\right)^2 }\n\\]\n\nAnd, we can apply what we know about \\(\\expect{X}\\) to derive:\n\n\\[\n\\begin{align*}\n\\Var{X} &= \\bigexpect{ \\left(X - \\expect{X}\\right)^2 } = \\bigexpect{ X^2 - 2X\\expect{X} + \\left( \\expect{X} \\right)^2 } \\\\\n&= \\expect{X^2} - \\expect{2 X\\expect{X}} + \\left( \\expect{X} \\right)^2 \\\\\n&= \\expect{X^2} - 2\\expect{X}\\expect{X} + \\left(\\expect{X}\\right)^2 \\\\\n&= \\expect{X^2} - \\left( \\expect{X} \\right)^2 \\; \\; \\green{\\small{\\text{ (we'll need this in a minute)}}}\n\\end{align*}\n\\]\n\n\nWhy does \\(\\expect{2X\\expect{X}} = 2\\expect{X}\\expect{X}\\)? Remember: \\(X\\) is an RV, but \\(\\expect{X}\\) is a number!"
+  },
+  {
+    "objectID": "w06/slides.html#standard-deviation",
+    "href": "w06/slides.html#standard-deviation",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Standard Deviation",
+    "text": "Standard Deviation\n\nWhen we squared the deviations, we lost the units of our datapoints!\nTo see spread, but in the same units as the original data, let’s just undo the squaring!\n\n\\[\n\\text{SD}[X] = \\sqrt{\\Var{X}}\n\\]\n\nBut, computers don’t care about the unit of this measure (just minimizing it). No reason to do this additional step if humans aren’t looking at the results!"
+  },
+  {
+    "objectID": "w06/slides.html#properties-of-variance",
+    "href": "w06/slides.html#properties-of-variance",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Properties of Variance",
+    "text": "Properties of Variance\n\nRecall that Expectation was an affine function:\n\n\\[\n\\mathbb{E}[aX + b] = a\\mathbb{E}[X] + b\n\\]\n\nVariance has a similar property, but is called homogeneous of degree 2, which means\n\n\\[\n\\Var{aX + b} = a^2\\Var{X} \\; \\underbrace{\\phantom{+ b}}_{\\mathclap{\\text{(Something missing?)}}}\n\\]\n\n\nNote that since the expected value function is linear, it is also homogeneous, of degree 1, even though the \\(b\\) term doesn’t “disappear” like it does in the variance equation!"
+  },
+  {
+    "objectID": "w06/slides.html#what-happened-to-the-b-term",
+    "href": "w06/slides.html#what-happened-to-the-b-term",
+    "title": "Week 6: Moments and Covariance",
+    "section": "What Happened to the \\(b\\) Term?",
+    "text": "What Happened to the \\(b\\) Term?\nMathematically:\n\\[\n\\begin{align*}\n\\Var{aX + b} \\definedas \\; &\\mathbb{E}[(aX + b - \\mathbb{E}[aX + b])^2] \\\\\n\\definedalign \\; &\\expect{(aX \\color{orange}{+ b} - a\\expect{X} \\color{orange}{- b})^2} \\\\\n\\definedalign \\; &\\expect{a^2X^2 - 2a^2\\expectsq{X} + a^2\\expectsq{X}} \\\\\n\\definedalign \\; &a^2 \\expect{X^2 - \\expectsq{X}} = a^2(\\expect{X^2} - \\expectsq{X})b \\\\\n\\definedas \\; & a^2\\Var{X}\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w06/slides.html#what-happened-to-the-b-term-1",
+    "href": "w06/slides.html#what-happened-to-the-b-term-1",
+    "title": "Week 6: Moments and Covariance",
+    "section": "What Happened to the \\(b\\) Term?",
+    "text": "What Happened to the \\(b\\) Term?\n\nVisually (Assuming \\(X \\sim \\mathcal{N}(0,1)\\))\n\n\n\n\n\n\n\n\n\n\n\\[\n\\begin{align*}\n\\expect{{\\color{lightblue}X + 1}} = \\expect{{\\color{orange}X}} + 1, \\; \\; \\Var{{\\color{lightblue}X + 1}} = \\Var{{\\color{orange}X}} \\\\\n\\expect{{\\color{green}X - 3}} = \\expect{{\\color{orange}X}} - 3, \\; \\; \\Var{{\\color{green}X - 3}} = \\Var{{\\color{orange}X}}\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w06/slides.html#generalizing-from-expectation-and-variance",
+    "href": "w06/slides.html#generalizing-from-expectation-and-variance",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Generalizing from Expectation and Variance",
+    "text": "Generalizing from Expectation and Variance\n\nIt turns out that, expectation and variance are just two “levels” of a hierarchy of information about a distribution!\nIn calculus: knowing \\(f(x)\\) is sufficient information for us to subsequently figure out \\(f'(x)\\), \\(f''(x)\\), …\nIn probability/statistics: knowing \\(M_X(t)\\) is sufficient information for us to figure out \\(\\expect{X}\\), \\(\\Var{X}\\), …"
+  },
+  {
+    "objectID": "w06/slides.html#not-a-metaphor",
+    "href": "w06/slides.html#not-a-metaphor",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Not a Metaphor!",
+    "text": "Not a Metaphor!\n\nThis calculus \\(\\leftrightarrow\\) statistics connection is not a metaphor: differentiating \\(M_X(t)\\) literally gives us \\(\\expect{X}\\), \\(\\Var{X}\\), …\nLet’s look at MGF for \\(X \\sim \\text{Bern}(\\param{p})\\), and try to derive \\(\\expect{X}\\)1.\n\n\\[\n\\begin{align*}\nM_X(t) &= (1 - p) + pe^t \\\\\nM'_X(t) &= pe^t,\\text{ and }\\expect{X} = M'_X(0) = \\green{p} \\; ✅\n\\end{align*}\n\\]\n\n\\(\\Var{X}\\)?\n\n\\[\n\\begin{align*}\nM''_{X}(t) &= pe^t,\\text{ and }\\expect{X^2} = M''_X(0) = p \\\\\n\\Var{X} &\\definedas{} \\expect{X^2} - (\\expect{X})^2 = p - p^2 = \\green{p(1-p)} \\; ✅\n\\end{align*}\n\\]\nRecall that, for a Bernoulli-distributed random variable \\(X\\), \\(\\expect{X} = p\\)"
+  },
+  {
+    "objectID": "w06/slides.html#mgf-in-econometrics",
+    "href": "w06/slides.html#mgf-in-econometrics",
+    "title": "Week 6: Moments and Covariance",
+    "section": "MGF in Econometrics",
+    "text": "MGF in Econometrics\n\n\n\nOpen in new window\n\n\n\nIn case it doesn’t load: (Hansen 1982) has 17,253 citations as of 2023-05-21"
+  },
+  {
+    "objectID": "w06/slides.html#beware",
+    "href": "w06/slides.html#beware",
+    "title": "Week 6: Moments and Covariance",
+    "section": "BEWARE ☠️",
+    "text": "BEWARE ☠️\nAs we saw last week (the Dreaded Cauchy Distribution):\n\nNot all random variables have moment-generating functions.\nWorse yet, not all random variables have well-defined variances\nWorse yet, not all random variables have well-defined means\n(This happens in non-contrived cases!)"
+  },
+  {
+    "objectID": "w06/slides.html#multivariate-distributions-w02",
+    "href": "w06/slides.html#multivariate-distributions-w02",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Multivariate Distributions (W02)",
+    "text": "Multivariate Distributions (W02)\n\nThe bivariate normal distribution represents the distribution of two normally-distributed RVs \\(\\mathbf{X} = [\\begin{smallmatrix} X_1 & X_2\\end{smallmatrix}]\\), which may or may not be correlated:\n\n\n\\[\n\\mathbf{X} = \\begin{bmatrix}X_1 \\\\ X_2\\end{bmatrix}, \\; \\boldsymbol{\\mu} =\n%\\begin{bmatrix}\\mu_1 \\\\ \\mu_2\\end{bmatrix}\n\\begin{bmatrix}\\smash{\\overbrace{\\mu_1}^{\\mathbb{E}[X_1]}} \\\\ \\smash{\\underbrace{\\mu_2}_{\\mathbb{E}[X_2]}}\\end{bmatrix}\n, \\; \\mathbf{\\Sigma} = \\begin{bmatrix}\\smash{\\overbrace{\\sigma_1^2}^{\\text{Var}[X_1]}} & \\smash{\\overbrace{\\rho\\sigma_1\\sigma_2}^{\\text{Cov}[X_1,X_2]}} \\\\ \\smash{\\underbrace{\\rho\\sigma_2\\sigma_1}_{\\text{Cov}[X_2,X_1]}} & \\smash{\\underbrace{\\sigma_2^2}_{\\text{Var}[X_2]}}\\end{bmatrix}\n% \\begin{bmatrix}\\sigma_1^2 & \\rho\\sigma_1\\sigma_2 \\\\ \\rho\\sigma_2\\sigma_1 & \\sigma_2^2 \\end{bmatrix}\n% = \\begin{bmatrix}\\text{Var}[X_1] & \\text{Cov}[X_1,X_2] \\\\ \\text{Cov}[X_2,X_1] & \\text{Var}[X_2] \\end{bmatrix}\n\\]\n\n\nBy squishing all this information intro matrices, we can specify the parameters of multivariate-normally-distributed vectors of RVs similarly to how we specify single-dimensional normally-distributed RVs:\n\n\n\\[\n\\begin{align*}\n\\overbrace{X}^{\\mathclap{\\text{scalar}}} &\\sim \\mathcal{N}\\phantom{_k}(\\overbrace{\\mu}^{\\text{scalar}}, \\overbrace{\\sigma}^{\\text{scalar}}) \\tag{Univariate} \\\\\n\\underbrace{\\mathbf{X}}_{\\text{vector}} &\\sim \\boldsymbol{\\mathcal{N}}_k(\\smash{\\underbrace{\\boldsymbol{\\mu}}_{\\text{vector}}}, \\underbrace{\\mathbf{\\Sigma}}_{\\text{matrix}}) \\tag{Multivariate}\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w06/slides.html#visualizing-3d-distributions-projection",
+    "href": "w06/slides.html#visualizing-3d-distributions-projection",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Visualizing 3D Distributions: Projection",
+    "text": "Visualizing 3D Distributions: Projection\n\nSince most of our intuitions about plots come from 2D plots, it is extremely useful to be able to take a 3D plot like this and imagine “projecting” it down into different 2D plots:\n\n\nAdapted (and corrected!) from LaTeX code in this StackExchange thread"
+  },
+  {
+    "objectID": "w06/slides.html#visualizing-3d-distributions-contours",
+    "href": "w06/slides.html#visualizing-3d-distributions-contours",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Visualizing 3D Distributions: Contours",
+    "text": "Visualizing 3D Distributions: Contours\n\nFrom Prof. Hickman’s slides!"
+  },
+  {
+    "objectID": "w06/slides.html#visualizing-3d-distributions-contours-1",
+    "href": "w06/slides.html#visualizing-3d-distributions-contours-1",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Visualizing 3D Distributions: Contours",
+    "text": "Visualizing 3D Distributions: Contours\n\nAlso from Prof. Hickman’s slides!"
+  },
+  {
+    "objectID": "w06/slides.html#bivariate-distributions",
+    "href": "w06/slides.html#bivariate-distributions",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Bivariate Distributions",
+    "text": "Bivariate Distributions\nDeGroot and Schervish (2013, 118) | DSPS Sec. 3.4 \n\nWe generalize the concept of the distribution of a random variable to the joint distribution of two random variables.\nIn doing so, we introduce the joint pmf for two discrete random variables, the joint pdf for two continuous variables, and the joint CDF for any two random variables."
+  },
+  {
+    "objectID": "w06/slides.html#sec-hadamard",
+    "href": "w06/slides.html#sec-hadamard",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Appendix I: The Hadamard Product",
+    "text": "Appendix I: The Hadamard Product\n\n\n\nUsed in nearly all neural NLP algorithms, as basis of LSTM (see LSTM equations on right)\nSubscripts on harmonic mean \\(M_{-1}\\), geometric mean \\(M_0\\), and arithmetic mean \\(M_1\\) come from the definition of the generalized mean:\n\n\\[\nM_p(V) = \\left( \\frac{1}{n} \\sum_{i=1}^n v_i^p \\right)^{1/p}\n\\]\n\n\\[\n\\begin{align*}\nf_t &= \\sigma(W_f [h_{t - 1}, x_t] + b_f) \\\\\ni_t &= \\sigma(W_i [h_{t - 1}, x_t] + b_i) \\\\\n\\tilde{C}_t &= \\tanh(W_C [h_{t - 1}, x_t] + b_C) \\\\\nC_t &= f_t \\odot C_{t - 1} + i_t \\odot \\tilde{C}_t \\\\\no_t &= \\sigma(W_o [h_{t - 1}, x_t] + b_o) \\\\\nh_t &= o_t \\odot \\tanh(C_t) \\\\\n\\hat{y} &= \\text{softmax}(W_y h_t + b_y)\n\\end{align*}\n\\]\n\n\nIf you’re a dork like me, you can read about generalized means, Fréchet means, or Stata’s trimmean function, all of which bring together seemingly-unrelated functions used throughout Machine Learning!"
+  },
+  {
+    "objectID": "w06/slides.html#sec-continuous-support",
+    "href": "w06/slides.html#sec-continuous-support",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Appendix II: Continuous RV Support",
+    "text": "Appendix II: Continuous RV Support\nIn most cases, for continuous RVs, the definition\n\\[\n\\mathcal{R}_X = \\{x \\in \\mathsf{Domain}(f_X) \\given f_X(x) &gt; 0\\}\n\\]\nworks fine. But, to fully capture all possible continuous RVs, the following formal definition is necessary:\n\\[\n\\mathcal{R}_X = \\left\\{x \\in \\mathbb{R} \\given \\forall r &gt; 0 \\left[ f_X(B(x,r)) &gt; 0 \\right] \\right\\},\n\\]\nwhere \\(B(x,r)\\) is a “band”1 around \\(x\\) with radius \\(r\\).\n\n\n\n\nFor a full explanation, see this StackExchange discussion.\nIn one dimension, this would be an interval; in two dimensions, a circle; in three dimensions, a sphere; etc."
+  },
+  {
+    "objectID": "w06/slides.html#references",
+    "href": "w06/slides.html#references",
+    "title": "Week 6: Moments and Covariance",
+    "section": "References",
+    "text": "References\n\n\nDeGroot, Morris H., and Mark J. Schervish. 2013. Probability and Statistics. Pearson Education.\n\n\nHansen, Lars Peter. 1982. “Large Sample Properties of Generalized Method of Moments Estimators.” Econometrica: Journal of the Econometric Society, 1029–54."
+  },
+  {
+    "objectID": "w06/slides.html#generalizing-expectation-and-variance",
+    "href": "w06/slides.html#generalizing-expectation-and-variance",
+    "title": "Week 6: Moments and Covariance",
+    "section": "Generalizing Expectation and Variance",
+    "text": "Generalizing Expectation and Variance\n\nIt turns out that, expectation and variance are just two “levels” of a hierarchy of information about a distribution!\nIn calculus: knowing \\(f(x)\\) is sufficient information for us to subsequently figure out \\(f'(x)\\), \\(f''(x)\\), …\nIn probability/statistics: knowing \\(M_X(t)\\) is sufficient information for us to figure out \\(\\expect{X}\\), \\(\\Var{X}\\), …"
+  }
+]
