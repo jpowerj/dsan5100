@@ -8,7 +8,7 @@
 
 <meta name="author" content="Jeff Jacobs">
 
-<title>Deriving Conditional Expectation from Conditional Probability + Expectation – DSAN 5100-01</title>
+<title>HW1 Question 2.3 Hints – DSAN 5100-01</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -466,11 +466,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#piece-1-conditional-probability" id="toc-piece-1-conditional-probability" class="nav-link active" data-scroll-target="#piece-1-conditional-probability">Piece 1: Conditional Probability</a></li>
-  <li><a href="#piece-2-expected-value" id="toc-piece-2-expected-value" class="nav-link" data-scroll-target="#piece-2-expected-value">Piece 2: Expected Value</a></li>
-  <li><a href="#snapping-the-pieces-together" id="toc-snapping-the-pieces-together" class="nav-link" data-scroll-target="#snapping-the-pieces-together">Snapping the Pieces Together</a></li>
+  <li><a href="#approach-a" id="toc-approach-a" class="nav-link active" data-scroll-target="#approach-a">Approach A</a></li>
+  <li><a href="#approach-b" id="toc-approach-b" class="nav-link" data-scroll-target="#approach-b">Approach B</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/conditional-expectation/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/hw1-guide/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -478,9 +477,9 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Deriving Conditional Expectation from Conditional Probability + Expectation</h1>
+<h1 class="title">HW1 Question 2.3 Hints</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">Extra Writeups</div>
+    <div class="quarto-category">Clarifications</div>
   </div>
   </div>
 
@@ -494,7 +493,7 @@ window.Quarto = {
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
-            <a href="mailto:jj1088@georgetown.edu" target="_blank"><code>jj1088@georgetown.edu</code></a>
+            <a href="mailto:jj1088@georgetown.edu" target="_blank">jj1088@georgetown.edu</a>
           </p>
       </div>
   </div>
@@ -511,126 +510,258 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../../dsan-globals/_globals.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-<p>Problem 2d on your Lab 5 Assignment, which asks you to:</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Lab 5 Problem 2d">
+<p>Question 2.3 on HW1 can be a bit of a doozy! So, it’s worth (a) slowing down and thinking about <strong>two different ways</strong> we might tackle this problem, which will give us two different answers, and then (b) thinking about which of these two approaches is the correct answer that we’re looking for, given our <em>interpretation</em> of the instructions. The sequence of questions from Q1.4 to Q2.3 read as follows:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="HW1 Questions 1.4-2.3">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Lab 5 Problem 2d
+HW1 Questions 1.4-2.3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find the conditional expectation <span class="math inline">\(\mathbb{E}[Y \mid X]\)</span></p>
+<p><strong>Question 1.4</strong></p>
+<p>Assuming a 5 card poker hand, write code to answer the question: what is the probability of having four of a kind?</p>
+<p><em>(Hint: The probability of a 4 of a kind is equal to total number of ways to get a four of a kind divided by the total number of ways to choose 5 cards from a 52 card deck)</em></p>
+<p><strong>Question 2.1</strong></p>
+<p>Run four simulations that pull 10, 100, 1000, and 10000 cards respectively with replacement. Use the <code>table</code> function to find the distribution of suit counts.</p>
+<p><strong>Question 2.2</strong></p>
+<p>What do you notice about the distribution of counts as more simulations are run?</p>
+<p><strong>Question 2.3</strong></p>
+<p>Use your simulated draws to answer the same question given in <a href="#question-1.4">Question 1.4</a>. Compare the results <em>(Hint: they should be close)</em></p>
 </div>
 </div>
-<p>is a step up in difficulty relative to parts 2a through 2c, since it requires “fusing together” two pieces of knowledge you have, about two topics that were taught separately – <strong>conditional probability</strong> on the one hand and <strong>expected value</strong> on the other – in order to derive a solution. So, I hope this writeup can help steer you in the right direction, by drawing these two separate topics closer together, while also refreshing your memory about important aspects of both!</p>
-<section id="piece-1-conditional-probability" class="level2">
-<h2 class="anchored" data-anchor-id="piece-1-conditional-probability">Piece 1: Conditional Probability</h2>
-<p>Long story short, the main lesson I hope I was able to convey when we first encountered conditional probability is that <strong>all probabilities are conditional probabilities</strong>!</p>
-<p>It was our first encounter with a new <strong>type</strong> of probability distribution, beyond just a “standard” single-variable distribution, so I drew a diagram on the board that looked something like:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/probability_types.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
+<p>Let’s start with one interpretation of the question text (the interpretation that I first had when creating the solutions, for example), which will lead us down a certain pathway towards an answer. We’ll then consider a second interpretation, which is only slightly different but which will <em>change</em> our approach to the problem and will produce a second possible answer. Your job will then be to <strong>choose which interpretation you think is “more correct”</strong>, based on your understanding of what probabilities are intended to represent! (Otherwise this document would just be giving away the answer 😜)</p>
+<section id="approach-a" class="level2">
+<h2 class="anchored" data-anchor-id="approach-a">Approach A</h2>
+<p>In this first approach, we will <strong>retain the simulated draws from Question 2.1</strong>, and just split them into groups of 5.</p>
+<p>To make the calculations easier, we’ll do some work at the beginning to convert from the Question 1.4 dataframes (with each of the <span class="math inline">\(N\)</span> observations representing a single card) to new dataframe where each observation will represent a <strong>hand</strong> (so that there will now be <span class="math inline">\(\frac{N}{5}\)</span> rows instead of <span class="math inline">\(N\)</span>)</p>
+<p>For each entry in the list <code>sims</code> created in Question 1.4, we’ll divide the <span class="math inline">\(N\)</span> cards into <span class="math inline">\(\frac{N}{5}\)</span> hands, then compute what proportion of these hands are 4-of-a-kind.</p>
+<p>As an example of what this looks like, after implementing a <code>cards_to_hands()</code> helper function, the following code also displays the result of “converting” the first simulation (with <span class="math inline">\(N = 10\)</span> cards) into 2 hands with 5 cards each:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="sc">|&gt;</span> <span class="fu">suppressPackageStartupMessages</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we load our deck_df from Q1.1 and sim_data from Q2.1;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Since you're being graded on actually *writing* the simulation</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># code, rather than just generating the correct answer, you</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># can't just copy and submit the contents of these .rds files :P</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>deck_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/deck_df.rds"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/sim_data.rds"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, as a helper function which may be useful for you as well,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># we implement a *cards_to_hands() function*. This function just</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># "condenses" the one-row-per-card format of our loaded sim_data</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># object into a one-row-per-hand format that is more useful for</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># checking properties of *hands* -- so, in this case, for checking</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># whether or not a hand is a four-of-a-kind!</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>cards_to_hands <span class="ot">&lt;-</span> <span class="cf">function</span>(simulated_cards) {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First, we keep *only* the card *ranks*, since</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># that's all the info we'll need to "detect"</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># whether a hand is four-of-a-kind or not:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  simplified_cards <span class="ot">&lt;-</span> simulated_cards <span class="sc">|&gt;</span> <span class="fu">select</span>(rank)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  num_cards <span class="ot">&lt;-</span> <span class="fu">nrow</span>(simplified_cards)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  num_hands <span class="ot">&lt;-</span> num_cards <span class="sc">/</span> <span class="dv">5</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This repeats each number from 1 to num_hands</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5 times, like: 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3...</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  simplified_cards<span class="sc">$</span>hand_num <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>num_hands, <span class="at">each=</span><span class="dv">5</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This repeats 1 through 5 over and over until</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the end of the df, like 1 2 3 4 5 1 2 3 4 5...</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  simplified_cards<span class="sc">$</span>card_num <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">times=</span>num_hands)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  simulated_hands <span class="ot">&lt;-</span> simplified_cards <span class="sc">|&gt;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> <span class="st">"card_num"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> <span class="st">"rank"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>hand_num)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(simulated_hands)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># sim_data[[1]] contains the earlier sample of size 10^1,</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># sim_data[[2]] contains the earlier sample of size 10^2, and so on.</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># So, here we're just checking that our cards_to_hands() function</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># worked and successfully "condensed" the 10 cards into 2 hands:</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>simulated_hands <span class="ot">&lt;-</span> <span class="fu">cards_to_hands</span>(sim_data[[<span class="dv">1</span>]])</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>simulated_hands</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>The real point of drawing this diagram (for now!) was just to “collapse” what may seem like two different formulas down into one: Expressions for probability distributions like <span class="math inline">\(\Pr(Y = v_Y)\)</span> are really already expressions for <strong>conditional distributions</strong>, since we can always rewrite a probabilistic statement about a single event <span class="math inline">\(E\)</span> as a conditional statement:</p>
-<p><span class="math display">\[
-\Pr(E) = \Pr(E \mid \Omega) = \frac{\Pr(E, \Omega)}{\Pr(\Omega)},
-\]</span></p>
-<p>where <span class="math inline">\(\Omega\)</span> is a special “event” that literally just means “anything at all occurs”, so that the denominator of this fraction is exactly <span class="math inline">\(1\)</span> and the numerator is exactly <span class="math inline">\(\Pr(E)\)</span> (“the probability that something occurs and <span class="math inline">\(E\)</span> occurs”).</p>
-<p>Moving from the case of generic events like <span class="math inline">\(E\)</span> to events involving Random Variables, consider e.g.&nbsp;<span class="math inline">\(X = v_X\)</span>, the event that the Random Variable <span class="math inline">\(X\)</span> takes on the particular value <span class="math inline">\(v_X\)</span>. Since the “universe” of possible values that <span class="math inline">\(X\)</span> could take on is represented by its support <span class="math inline">\(\mathcal{R}_X\)</span>, we can derive a similar kind of conditional statement from any non-conditional statement about <span class="math inline">\(X\)</span>:</p>
-<p><span class="math display">\[
-\Pr(X = v_X) = \Pr(X = v_X \mid X \in \mathcal{R}_X) = \frac{\Pr(X = v_X, X \in \mathcal{R}_X)}{\Pr(X \in \mathcal{R}_X)},
-\]</span></p>
-<p>where again the denominator of the fraction is exactly <span class="math inline">\(1\)</span> (“the probability that <span class="math inline">\(X\)</span> takes on one of the possible values that <span class="math inline">\(X\)</span> can take on”), and the numerator is exactly <span class="math inline">\(\Pr(X = v_X)\)</span>. So, when we are working with probabilities involving Random Variables, we are again always working with <strong>conditional</strong> probabilities. We don’t need to carry around separate non-conditional and conditional formulas for RVs in our heads!</p>
-<p>In the context of this problem, the takeaway is: if we already know about <strong>expectation</strong> (see: next section), we may be able to think through and derive a <strong>conditional</strong> form for it, therefore deriving precisely the “conditional expectation” that this problem is asking for, even if we haven’t encountered the expected value in <strong>conditional</strong> form before.</p>
-<p>Before turning to the expected value, though, let’s write out one more atomic-conditional “linkage” here, this time for <strong>continuous</strong> distributions, where we therefore have to work with probability <strong>densities</strong> rather than probabilities themselves. As long as we keep in mind the caveat that probability density values are <strong>not</strong> probabilities themselves (but that they can be <strong>integrated</strong> to produce probability values), we can define a <strong>conditional probability density function</strong> for e.g.&nbsp;the random variable <span class="math inline">\(Y \mid X\)</span> as</p>
-<p><span class="math display">\[
-f_{Y \mid X}(y \mid x) = \frac{f_{Y,X}(y,x)}{f_X(x)}.
-\]</span></p>
-<p>With this in hand, we can then (repetitively keeping in mind that we need to use <strong>integration</strong> over <strong>regions</strong> to generate probability values from probability density functions) see the connection between this conditional density and non-conditional density via our final identity showing how <strong>all probability density functions are conditional probability density functions</strong>:</p>
-<p><span class="math display">\[
-f_{Y}(y) = f_{Y \mid X}(y \mid \mathcal{R}_x) = \int_{-\infty}^{\infty}f_{Y \mid X}(y \mid x)\mathrm{d}x
-\]</span></p>
-<p>Where we only had to abuse notation a little bit here at the very end by letting <span class="math inline">\(\mathcal{R}_X\)</span> stand in for the longer “any value at all in <span class="math inline">\(X\)</span>’s support”, i.e., “any value from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>”.</p>
-</section>
-<section id="piece-2-expected-value" class="level2">
-<h2 class="anchored" data-anchor-id="piece-2-expected-value">Piece 2: Expected Value</h2>
-<p>While the guiding principle behind the previous section was that <strong>all probabilities are conditional probabilities</strong>, here our guiding principle is that <strong>expected values are just weighted averages</strong>. Specifically, <span class="math inline">\(\mathbb{E}[X]\)</span> is a weighted average where:</p>
+</div>
+</div>
+<p>Now we need a function that, for each hand tells us whether or not it was a 4-of-a-kind. As a “subroutine”, let’s see how the <code>table()</code> function can help us here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>first_hand_vector <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(simulated_hands[<span class="dv">1</span>,])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>first_hand_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(first_hand_vector)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>first_hand_counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>first_hand_vector
+2 4 5 7 9 
+1 1 1 1 1 </code></pre>
+</div>
+</div>
+<p>The above output tells us that, for the first sampled hand (reading from left to right):</p>
 <ul>
-<li>The <span class="cb1"><strong>things being averaged</strong></span> are the <span class="cb1">possible values <span class="math inline">\(v_X\)</span></span> that <span class="math inline">\(X\)</span> can take on, that is, <span class="math inline">\(v_X \in \mathcal{R}_X\)</span>, and</li>
-<li>The <span class="cb2"><strong>weight</strong></span> for each value <span class="math inline">\(v_X\)</span> is the <span class="cb2">probability <span class="math inline">\(\Pr(X = v_X)\)</span></span> that <span class="math inline">\(X\)</span> in fact takes on that value.</li>
+<li>Cards with rank 5 appeared 1 time,</li>
+<li>Cards with rank 9 appeared 2 times,</li>
+<li>Cards with rank 10 appeared 1 time, and</li>
+<li>Cards with rank 13 (King) appeared 1 time.</li>
 </ul>
-<p>So, in discrete world (the world where the set of possible values for <span class="math inline">\(X\)</span>, <span class="math inline">\(\mathcal{R}_X\)</span>, is countable), this can be written out symbolically as</p>
-<p><span class="math display">\[
-\mathbb{E}[X] = \sum_{v_X \in \mathcal{R}_X}{\color{#e69f00}v_X}{\color{#56b4e9}\Pr(X = v_X)}
-\]</span></p>
-<p>And in continuous world<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, it can be written out symbolically as</p>
-<p><span class="math display">\[
-\mathbb{E}[X] = \int_{-\infty}^{\infty}{\color{#e69f00}v_X}{\color{#56b4e9}f_X(v_X)}.
-\]</span></p>
+<p>Hopefully it makes sense how we can use this to check for a 4-of-a-kind: we just need to check whether any of the counts of card ranks are equal to 4!</p>
+<p>At this point, before reading on, you should think about how you could utilize <code>table()</code> to write a <code>check_four_of_kind()</code> function. And, you should try to write that function on your own! Once you’ve written it, you can come back here and keep reading from the following workable version onwards:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>check_four_of_kind <span class="ot">&lt;-</span> <span class="cf">function</span>(sim_hands_row) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  hand_vector <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(sim_hands_row)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  hand_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(hand_vector)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">any</span>(hand_counts <span class="sc">==</span> <span class="dv">4</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can check that our function works (and, you should do the same for your own implementation) by giving it the above hand, which we know is <em>not</em> a four-of-a-kind, as well as a four-of-a-kind hand that we hard-code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_four_of_kind</span>(simulated_hands[<span class="dv">1</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_four_of_kind</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">11</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Now, let’s apply this logic to the full set of simulations, transforming each from one-row-per-card to one-row-per-hand and then computing what proportion of all hands are four-of-a-kind hands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sim_4ok_counts <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (sim_size_exp <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  sim_size <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>sim_size_exp</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(<span class="fu">paste0</span>(<span class="st">"N = "</span>,sim_size))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  cur_simulated_cards <span class="ot">&lt;-</span> sim_data[[sim_size_exp]]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  cur_simulated_hands <span class="ot">&lt;-</span> <span class="fu">cards_to_hands</span>(cur_simulated_cards)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run is_four_of_kind() on each row</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  cur_simulated_hands<span class="sc">$</span>is_4ok <span class="ot">&lt;-</span> <span class="fu">apply</span>(</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    cur_simulated_hands,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    check_four_of_kind</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And since R treats FALSE as 0 and TRUE as 1, we</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># can just sum this new column to get the *total*</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># number of four-of-a-kind hands in the simulation</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  total_4ok <span class="ot">&lt;-</span> cur_simulated_hands<span class="sc">$</span>is_4ok <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(total_4ok)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  sim_4ok_counts[[sim_size_exp]] <span class="ot">&lt;-</span> total_4ok</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>N = 10
+[1] 0
+N = 100
+[1] 0
+N = 1000
+[1] 0
+N = 10000
+[1] 2</code></pre>
+</div>
+</div>
+<p>And now we can print our estimates for each sample size (repeating the above output, but showing how it can be helpful to store results of simulations rather than just printing them out at the end of each loop iteration!):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (sim_size_exp <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  sim_size <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>sim_size_exp</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(<span class="fu">paste0</span>(<span class="st">"N = "</span>,sim_size))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  cur_4ok_count <span class="ot">&lt;-</span> sim_4ok_counts[[sim_size_exp]]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">writeLines</span>(<span class="fu">paste0</span>(cur_4ok_count, <span class="st">" four-of-a-kinds"</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># And the probability via the quotient</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  cur_p_est <span class="ot">&lt;-</span> cur_4ok_count <span class="sc">/</span> sim_size</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">format</span>(cur_p_est, <span class="at">scientific=</span><span class="cn">FALSE</span>))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>N = 10
+0 four-of-a-kinds
+[1] "0"
+N = 100
+0 four-of-a-kinds
+[1] "0"
+N = 1000
+0 four-of-a-kinds
+[1] "0"
+N = 10000
+2 four-of-a-kinds
+[1] "0.0002"</code></pre>
+</div>
+</div>
+<p>So we see that 2 of the 10,000 simulated hands were four-of-a-kinds, which is close to our calculated value from Question 1.4 despite the cards-drawn-with-replacement assumption here.</p>
 </section>
-<section id="snapping-the-pieces-together" class="level2">
-<h2 class="anchored" data-anchor-id="snapping-the-pieces-together">Snapping the Pieces Together</h2>
-<p>Now that we’ve looked at each piece individually, let’s think about how we might be able to “fuse” them together into an expression for a <strong>conditional expectation</strong> <span class="math inline">\(\mathbb{E}[Y \mid X]\)</span>.</p>
-<p>First, since we’re firmly within <strong>continuous world</strong> in this Lab, I won’t bore you with the discrete analogue first (though I think it’s helpful to think through!). Instead, let’s look at the definition we have for the <strong>expected value</strong> <span class="math inline">\(\mathbb{E}[Y]\)</span>:</p>
-<p><span class="math display">\[
-\mathbb{E}[Y] = \int_{-\infty}^{\infty}yf_Y(y)\mathrm{d}y
-\]</span></p>
-<p>Given that <span class="math inline">\(\mathrm{d}y\)</span> is sort of just… notation that we carry over from calculus<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, the two relevant pieces of this expression that we can focus on are <span class="math inline">\(y\)</span> (our variable of integration) and <span class="math inline">\(f_Y(y)\)</span> (the <strong>pdf</strong> of <span class="math inline">\(Y\)</span> evaluated at the point <span class="math inline">\(y\)</span>).</p>
-<p>So, since we eventually want <span class="math inline">\(\mathbb{E}[Y \mid X]\)</span>… let’s see what the previous expression could look like if we literally just clunkily “plugged in” <span class="math inline">\(Y \mid X\)</span> everywhere we see <span class="math inline">\(Y\)</span>, and <span class="math inline">\(y \mid x\)</span> everywhere we see <span class="math inline">\(y\)</span>. We’ll call this our “first draft” for a definition of conditional expectation:</p>
-<p><span class="math display">\[
-\mathbb{E}[Y \mid X] = \int_{\infty}^{\infty}(y \mid x)f_{Y \mid X}(y \mid x)\mathrm{d}(y \mid x)
-\]</span></p>
-<p>If we stare at this for a bit and try to think through what each piece might mean, my hope is that you can start to get a vague sense of the following two observations:</p>
-<ul>
-<li>The plugging-in was “successful” for <span class="math inline">\(f_{Y \mid X}(y \mid x)\)</span>, in the sense that this expression is something we <strong>do</strong> understand and <strong>have</strong> seen before: it’s the <strong>conditional probability</strong> that our random variable <span class="math inline">\(Y\)</span> takes on the specific value <span class="math inline">\(y\)</span> within a world where our random variable <span class="math inline">\(X\)</span> has taken on the specific value <span class="math inline">\(x\)</span>.</li>
-<li>The <span class="math inline">\((y \mid x)\)</span> term, on the other hand, <strong>doesn’t</strong> seem very well-defined: <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are <strong>non-random</strong> values like <span class="math inline">\(3\)</span> or <span class="math inline">\(\pi\)</span>, and here they’re <strong>not</strong> being plugged into a probability measure like <span class="math inline">\(\Pr(X = x)\)</span> or a density like <span class="math inline">\(f_{Y \mid X}(y \mid x)\)</span>.</li>
-</ul>
-<p>So, diving into the second observation: What would <span class="math inline">\((y \mid x)\)</span> even mean? Semantically, we know that the conditional bar <span class="math inline">\(|\)</span> in the middle means “given”, so that if we read <span class="math inline">\((y \mid x)\)</span> out it means something like “The value of <span class="math inline">\(y\)</span> given the value of <span class="math inline">\(x\)</span>”. But, to drive the point home: knowing the value of <span class="math inline">\(x\)</span> here is <strong>totally irrelevant</strong> to the value of <span class="math inline">\(y\)</span>, since there’s no randomness or probabilistic uncertainty involved in determining the value of <span class="math inline">\(y\)</span> at all!</p>
-<p>It’s crucial to distinguish between <span class="math inline">\(Y\)</span> and <span class="math inline">\(y\)</span> here to make sense of this, at least in my brain<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Here <span class="math inline">\(y\)</span> is <strong>not</strong> a probabilistic Random Variable, it’s an <strong>algebraic</strong> variable which exists in the expression solely as a “stand-in” for particular values (ranging from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>) that we’d have to plug in to evaluate the integral.</p>
-<p>I know that way of thinking about it might not click with everyone, but I hope it does click for some! And if it does, then I hope it might have also “clicked” ideas in your head with respect to how we could “handle” the <span class="math inline">\((y \mid x)\)</span> here:</p>
-<ol type="1">
-<li><span class="math inline">\((y \mid x)\)</span> represents “the value of <span class="math inline">\(y\)</span> given the value of <span class="math inline">\(x\)</span>”. But…</li>
-<li>The value of <span class="math inline">\(y\)</span> is not affected by the value of <span class="math inline">\(x\)</span>. So…</li>
-<li><span class="math inline">\((y \mid x)\)</span> is equivalent to just <span class="math inline">\(y\)</span>!</li>
-</ol>
-<p>If you’ve followed all of the above, then we can apply this conclusion to our “first draft” from above, and simplify it to just</p>
-<p><span class="math display">\[
-\mathbb{E}[Y \mid X] = \int_{-\infty}^{\infty}yf_{Y \mid X}(y \mid x)\mathrm{d}y
-\]</span></p>
-<p>And indeed, we did it, we’ve arrived at <a href="https://en.wikipedia.org/wiki/Conditional_expectation" target="_blank"><strong>the definition</strong></a> of conditional expectation, for continuous random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>!</p>
-<p>If it helps, we could also rewrite this using our definition of <strong>conditional probability density</strong>,</p>
-<p><span class="math display">\[
-f_{Y \mid X}(y \mid x) = \frac{f_{Y,X}(y,x)}{f_X(x)},
-\]</span></p>
-<p>to derive the following alternative forms (which are also given in the above Wikipedia article):</p>
-<p><span class="math display">\[
-\mathbb{E}[Y \mid X] = \int_{-\infty}^{\infty}y\frac{f_{Y,X}(y,x)}{f_X(x)}\mathrm{d}y = \frac{1}{f_X(x)}\int_{-\infty}^{\infty}yf_{Y,X}(y,x)\mathrm{d}y.
-\]</span></p>
+<section id="approach-b" class="level2">
+<h2 class="anchored" data-anchor-id="approach-b">Approach B</h2>
+<p>If we took our simulation from Solution A, and made the sample even larger, however, we would start to see the differences between the two approaches. For example, here is the result with <span class="math inline">\(N = 100K\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>big_N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>big_sample_cards <span class="ot">&lt;-</span> deck_df <span class="sc">|&gt;</span> <span class="fu">sample_n</span>(big_N, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>big_sample_hands <span class="ot">&lt;-</span> <span class="fu">cards_to_hands</span>(big_sample_cards)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>big_sample_hands<span class="sc">$</span>is_4ok <span class="ot">&lt;-</span> <span class="fu">apply</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  big_sample_hands,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  check_four_of_kind</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>big_total_4ok <span class="ot">&lt;-</span> big_sample_hands<span class="sc">$</span>is_4ok <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>big_total_4ok <span class="sc">/</span> big_N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.00043</code></pre>
+</div>
+</div>
+<p>Which is further away from the value we computed in Question 1.4. Thus, as an <strong>alternative approach</strong> to finding the answer to this question, we can “start over”, re-generating a collection of hands by <strong>sampling without replacement</strong> rather than sampling 5 cards independently with replacement.</p>
+<p>Repeating the above analysis but removing the splitting-into-groups-of-5 part (that is, re-interpreting the question so that <span class="math inline">\(N\)</span> is the number of <strong>hands</strong>, not the number of independently-drawn cards) and replacing it with a <code>sample_one_hand()</code> function that draws 5 cards <strong>with</strong> replacement, we get the following for the large <span class="math inline">\(N = 10000\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_one_hand <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(deck_df <span class="sc">|&gt;</span> <span class="fu">select</span>(rank) <span class="sc">|&gt;</span> <span class="fu">sample_n</span>(<span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">t</span>() <span class="sc">|&gt;</span> <span class="fu">as.numeric</span>())</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_one_hand</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  6  6  5 13  2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>N_hands <span class="ot">&lt;-</span> <span class="dv">25000</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>hands_df <span class="ot">&lt;-</span> <span class="fu">replicate</span>(N_hands, <span class="fu">sample_one_hand</span>()) <span class="sc">|&gt;</span> <span class="fu">t</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(hands_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Card 1"</span>, <span class="st">"Card 2"</span>, <span class="st">"Card 3"</span>, <span class="st">"Card 4"</span>, <span class="st">"Card 5"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>hands_df<span class="sc">$</span>is_4ok <span class="ot">&lt;-</span> <span class="fu">apply</span>(hands_df, <span class="dv">1</span>, check_four_of_kind)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>corrected_total_4ok <span class="ot">&lt;-</span> hands_df<span class="sc">$</span>is_4ok <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corrected_total_4ok)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>corrected_p_4ok <span class="ot">&lt;-</span> corrected_total_4ok <span class="sc">/</span> N_hands</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">format</span>(corrected_p_4ok, <span class="at">scientific=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0.00024"</code></pre>
+</div>
+</div>
+<p>So, with these two approaches in mind, your job is to (a) understand the difference between them as best as possible, and then (b) select one that you think better matches the semantics of the question! Then, in your final submission, you can utilize your result from Q2.1 (if you go with Approach A) or generate new hands (if you go with Approach B), as the “input” to your Q2.3 code.</p>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Where, remember, we’re only able to utilize the probability density function <span class="math inline">\(f_X(x)\)</span> in place of the probability mass function <span class="math inline">\(p_X(x) = \Pr(X)\)</span> because we’re <strong>integrating it</strong> over a <strong>range</strong> of values. <span class="math inline">\(f_X(v_X)\)</span> is <strong>not</strong> itself a probability, it is a function we <strong>use</strong> to generate valid probability values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> via integration.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Specifically, notation that we carry over from Riemann sums, which ensures that our integrand represents a product: Looking at <span class="math inline">\(\int_{-\infty}^{\infty}xf(x)\mathrm{d}x\)</span>, for example, the integrand represents the product of (a) the “height” of <span class="math inline">\(xf(x)\)</span> and (b) the (infinitesimally-small) “widths” <span class="math inline">\(\mathrm{d}x\)</span>. And, as we know, multiplying a width by a height gives us an <strong>area</strong>! Therefore, when we <strong>sum</strong> each of these tiny areas from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>, we end up with the <strong>total area under the curve</strong> formed by <span class="math inline">\(xf(x)\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Hopefully, if you’ve gotten this far, you can start to understand why I hate the <span class="math inline">\(X = x\)</span> notation, and why I always try to use <span class="math inline">\(X = v_X\)</span> and <span class="math inline">\(Y = v_Y\)</span> instead…<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1055,4 +1186,4 @@ f_{Y \mid X}(y \mid x) = \frac{f_{Y,X}(y,x)}{f_X(x)},
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/conditional-expectation/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/hw1-guide/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>

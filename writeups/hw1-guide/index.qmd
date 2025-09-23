@@ -1,0 +1,221 @@
+---
+title: "HW1 Question 2.3 Hints"
+author: "Jeff Jacobs"
+institute: "<a href='mailto:jj1088@georgetown.edu' target='_blank'>jj1088@georgetown.edu</a>"
+weeknum: 5
+assignment: "HW1"
+categories:
+  - "Clarifications"
+sidebar: mainnav
+format:
+  html:
+    cache: false
+    df-print: kable
+    html-math-method: mathjax
+    link-external-icon: true
+    link-external-newwindow: true
+---
+
+Question 2.3 on HW1 can be a bit of a doozy! So, it's worth (a) slowing down and thinking about **two different ways** we might tackle this problem, which will give us two different answers, and then (b) thinking about which of these two approaches is the correct answer that we're looking for, given our *interpretation* of the instructions. The sequence of questions from Q1.4 to Q2.3 read as follows:
+
+::: {.callout-tip title="HW1 Questions 1.4-2.3"}
+
+**Question 1.4**
+
+Assuming a 5 card poker hand, write code to answer the question: what is the probability of having four of a kind?
+
+*(Hint: The probability of a 4 of a kind is equal to total number of ways to get a four of a kind divided by the total number of ways to choose 5 cards from a 52 card deck)*
+
+**Question 2.1**
+
+Run four simulations that pull 10, 100, 1000, and 10000 cards respectively with replacement. Use the `table` function to find the distribution of suit counts.
+
+**Question 2.2**
+
+What do you notice about the distribution of counts as more simulations are run?
+
+**Question 2.3**
+
+Use your simulated draws to answer the same question given in [Question 1.4](#question-1.4). Compare the results *(Hint: they should be close)*
+
+:::
+
+Let's start with one interpretation of the question text (the interpretation that I first had when creating the solutions, for example), which will lead us down a certain pathway towards an answer. We'll then consider a second interpretation, which is only slightly different but which will *change* our approach to the problem and will produce a second possible answer. Your job will then be to **choose which interpretation you think is "more correct"**, based on your understanding of what probabilities are intended to represent! (Otherwise this document would just be giving away the answer 😜)
+
+## Approach A
+
+In this first approach, we will **retain the simulated draws from Question 2.1**, and just split them into groups of 5.
+
+To make the calculations easier, we'll do some work at the beginning to convert from the Question 1.4 dataframes (with each of the $N$ observations representing a single card) to new dataframe where each observation will represent a **hand** (so that there will now be $\frac{N}{5}$ rows instead of $N$)
+
+For each entry in the list `sims` created in Question 1.4, we'll divide the $N$ cards into $\frac{N}{5}$ hands, then compute what proportion of these hands are 4-of-a-kind.
+
+As an example of what this looks like, after implementing a `cards_to_hands()` helper function, the following code also displays the result of "converting" the first simulation (with $N = 10$ cards) into 2 hands with 5 cards each:
+
+```{r}
+#| label: q2-3-cards-to-hands
+library(tidyverse) |> suppressPackageStartupMessages()
+# Here we load our deck_df from Q1.1 and sim_data from Q2.1;
+# Since you're being graded on actually *writing* the simulation
+# code, rather than just generating the correct answer, you
+# can't just copy and submit the contents of these .rds files :P
+deck_df <- readRDS("data/deck_df.rds")
+sim_data <- readRDS("data/sim_data.rds")
+
+# Here, as a helper function which may be useful for you as well,
+# we implement a *cards_to_hands() function*. This function just
+# "condenses" the one-row-per-card format of our loaded sim_data
+# object into a one-row-per-hand format that is more useful for
+# checking properties of *hands* -- so, in this case, for checking
+# whether or not a hand is a four-of-a-kind!
+cards_to_hands <- function(simulated_cards) {
+  # First, we keep *only* the card *ranks*, since
+  # that's all the info we'll need to "detect"
+  # whether a hand is four-of-a-kind or not:
+  simplified_cards <- simulated_cards |> select(rank)
+  num_cards <- nrow(simplified_cards)
+  num_hands <- num_cards / 5
+  # This repeats each number from 1 to num_hands
+  # 5 times, like: 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3...
+  simplified_cards$hand_num <- rep(1:num_hands, each=5)
+  # This repeats 1 through 5 over and over until
+  # the end of the df, like 1 2 3 4 5 1 2 3 4 5...
+  simplified_cards$card_num <- rep(1:5, times=num_hands)
+  simulated_hands <- simplified_cards |>
+    pivot_wider(
+      names_from = "card_num",
+      values_from = "rank"
+    ) |>
+    select(-hand_num)
+  return(simulated_hands)
+}
+# sim_data[[1]] contains the earlier sample of size 10^1,
+# sim_data[[2]] contains the earlier sample of size 10^2, and so on.
+# So, here we're just checking that our cards_to_hands() function
+# worked and successfully "condensed" the 10 cards into 2 hands:
+simulated_hands <- cards_to_hands(sim_data[[1]])
+simulated_hands
+```
+
+Now we need a function that, for each hand tells us whether or not it was a 4-of-a-kind. As a "subroutine", let's see how the `table()` function can help us here:
+
+```{r}
+#| label: q2-3-first-hand-counts
+first_hand_vector <- as.numeric(simulated_hands[1,])
+first_hand_counts <- table(first_hand_vector)
+first_hand_counts
+```
+
+The above output tells us that, for the first sampled hand (reading from left to right):
+
+* Cards with rank 5 appeared 1 time,
+* Cards with rank 9 appeared 2 times,
+* Cards with rank 10 appeared 1 time, and
+* Cards with rank 13 (King) appeared 1 time.
+
+Hopefully it makes sense how we can use this to check for a 4-of-a-kind: we just need to check whether any of the counts of card ranks are equal to 4!
+
+At this point, before reading on, you should think about how you could utilize `table()` to write a `check_four_of_kind()` function. And, you should try to write that function on your own! Once you've written it, you can come back here and keep reading from the following workable version onwards:
+
+```{r}
+#| label: q2-3-check-four-of-kind
+check_four_of_kind <- function(sim_hands_row) {
+  hand_vector <- as.numeric(sim_hands_row)
+  hand_counts <- table(hand_vector)
+  return(any(hand_counts == 4))
+}
+```
+
+Now we can check that our function works (and, you should do the same for your own implementation) by giving it the above hand, which we know is *not* a four-of-a-kind, as well as a four-of-a-kind hand that we hard-code:
+
+```{r}
+#| label: q2-3-test-4ok-fn
+check_four_of_kind(simulated_hands[1,])
+check_four_of_kind(c(5,5,5,5,11))
+```
+
+Now, let's apply this logic to the full set of simulations, transforming each from one-row-per-card to one-row-per-hand and then computing what proportion of all hands are four-of-a-kind hands:
+
+```{r}
+#| label: q2-3-sim-4ok-counts
+sim_4ok_counts <- list()
+for (sim_size_exp in 1:4) {
+  sim_size <- 10^sim_size_exp
+  writeLines(paste0("N = ",sim_size))
+  cur_simulated_cards <- sim_data[[sim_size_exp]]
+  cur_simulated_hands <- cards_to_hands(cur_simulated_cards)
+  # Run is_four_of_kind() on each row
+  cur_simulated_hands$is_4ok <- apply(
+    cur_simulated_hands,
+    1,
+    check_four_of_kind
+  )
+  # And since R treats FALSE as 0 and TRUE as 1, we
+  # can just sum this new column to get the *total*
+  # number of four-of-a-kind hands in the simulation
+  total_4ok <- cur_simulated_hands$is_4ok |> sum()
+  print(total_4ok)
+  sim_4ok_counts[[sim_size_exp]] <- total_4ok
+}
+```
+
+And now we can print our estimates for each sample size (repeating the above output, but showing how it can be helpful to store results of simulations rather than just printing them out at the end of each loop iteration!):
+
+```{r}
+#| label: q2-3-display-4ok-sims
+for (sim_size_exp in 1:4) {
+  sim_size <- 10^sim_size_exp
+  writeLines(paste0("N = ",sim_size))
+  cur_4ok_count <- sim_4ok_counts[[sim_size_exp]]
+  writeLines(paste0(cur_4ok_count, " four-of-a-kinds"))
+  # And the probability via the quotient
+  cur_p_est <- cur_4ok_count / sim_size
+  print(format(cur_p_est, scientific=FALSE))
+}
+```
+
+So we see that 2 of the 10,000 simulated hands were four-of-a-kinds, which is close to our calculated value from Question 1.4 despite the cards-drawn-with-replacement assumption here.
+
+## Approach B
+
+If we took our simulation from Solution A, and made the sample even larger, however, we would start to see the differences between the two approaches. For example, here is the result with $N = 100K$:
+
+```{r}
+#| label: q2-3-approach-a-100k
+big_N <- 100000
+big_sample_cards <- deck_df |> sample_n(big_N, replace = TRUE)
+big_sample_hands <- cards_to_hands(big_sample_cards)
+big_sample_hands$is_4ok <- apply(
+  big_sample_hands,
+  1,
+  check_four_of_kind
+)
+big_total_4ok <- big_sample_hands$is_4ok |> sum()
+big_total_4ok / big_N
+```
+
+Which is further away from the value we computed in Question 1.4. Thus, as an **alternative approach** to finding the answer to this question, we can "start over", re-generating a collection of hands by **sampling without replacement** rather than sampling 5 cards independently with replacement.
+
+Repeating the above analysis but removing the splitting-into-groups-of-5 part (that is, re-interpreting the question so that $N$ is the number of **hands**, not the number of independently-drawn cards) and replacing it with a `sample_one_hand()` function that draws 5 cards **with** replacement, we get the following for the large $N = 10000$:
+
+```{r}
+#| label: q2-3-sample-one
+sample_one_hand <- function() {
+  return(deck_df |> select(rank) |> sample_n(5, replace = FALSE) |> t() |> as.numeric())
+}
+sample_one_hand()
+```
+
+```{r}
+#| label: q2-3-replicate-sample-one
+N_hands <- 25000
+hands_df <- replicate(N_hands, sample_one_hand()) |> t() |> as.data.frame()
+names(hands_df) <- c("Card 1", "Card 2", "Card 3", "Card 4", "Card 5")
+hands_df$is_4ok <- apply(hands_df, 1, check_four_of_kind)
+corrected_total_4ok <- hands_df$is_4ok |> sum()
+print(corrected_total_4ok)
+corrected_p_4ok <- corrected_total_4ok / N_hands
+print(format(corrected_p_4ok, scientific=FALSE))
+```
+
+So, with these two approaches in mind, your job is to (a) understand the difference between them as best as possible, and then (b) select one that you think better matches the semantics of the question! Then, in your final submission, you can utilize your result from Q2.1 (if you go with Approach A) or generate new hands (if you go with Approach B), as the "input" to your Q2.3 code.
