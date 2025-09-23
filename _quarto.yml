@@ -38,29 +38,31 @@ website:
         href: w02a/index.qmd
       - text: "Week 2B: Sep 2"
         href: w02b/index.qmd
-      - text: "Week 3: Sep 16"
+      - text: "Week 3: Sep 9"
         href: w03/index.qmd
-      - text: "Week 4A: Sep 22"
-        href: w04a/index.qmd
-      - text: "Week 4B: Sep 23"
-        href: w04b/index.qmd
-      - text: "Week 5: Sep 30"
-        href: w05/index.qmd
-      - text: "Week 6: Oct 7"
+      - text: "Week 4: Sep 16"
+        href: w04/index.qmd
+      - text: "Week 5A: Sep 22"
+        href: w05a/index.qmd
+      - text: "Week 5B: Sep 23"
+        href: w05b/index.qmd
+      - text: "Week 6: Sep 30"
         href: w06/index.qmd
-      - text: "Week 7: Oct 14"
+      - text: "Week 7: Oct 7"
         href: w07/index.qmd
-      - text: "Week 8: Oct 21"
+      - text: "Week 8: Oct 14"
         href: w08/index.qmd
-      - text: "Week 9: Oct 28"
+      - text: "Week 9: Oct 21"
         href: w09/index.qmd
-      - text: "Week 10: Nov 4"
+      - text: "Week 10: Oct 28"
         href: w10/index.qmd
-      - text: "Week 11: Nov 11"
+      - text: "Week 11: Nov 4"
         href: w11/index.qmd
-      - text: "Week 12: Nov 18"
-        href: w12/index.qmd
+      - text: "Week 12: Nov 11"
+        href: w12/index.qmdx
       - "---"
+      - href: resources.qmd
+        text: "Extra Resources"
       - href: writeups/index.qmd
         text: "Extra Writeups"
       - href: cheatsheet-math.qmd

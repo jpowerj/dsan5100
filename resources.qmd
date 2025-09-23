@@ -1,0 +1,59 @@
+---
+title: "Additional Resources"
+bibliography: "_DSAN5100.bib"
+csl: chicago-17-no-url.csl
+nocite: |
+  @*
+format:
+  html:
+    link-external-icon: true
+    link-external-newwindow: true
+    callout-appearance: default
+---
+
+This page is just for collecting in one place any of the additional resources (books, articles, videos, etc.), outside of the "core" course content, that I reference during lecture. So, any citations in the slides, or anything I mention in class, should be automatically added to the "References" section at the bottom of this page.
+
+For the book and article references, I modified Quarto's auto-generation of citations a bit (using a custom [.csl file](https://quarto.org/docs/authoring/citations.html#sec-citations-style)) so that the **name** of the book/article should immediately link to a **pdf download** for that resource.
+
+## Week 5B: Joint, Marginal, and Conditional Distributions
+
+In this lecture I brought up a PDF of David Barber's book *Bayesian Reasoning and Machine Learning* [@barber_bayesian_2012], and specifically pointed out how the **first chapter** provides a really great overview of helpful **semantics** that you can keep in mind as we build up from e.g. simple things like discrete probability distributions to more complex multivariate/vector-valued distributions.
+
+Two key points discussed in this chapter, that I think will be immensely helpful for you in this course, are:
+
+<i class='bi bi-1-circle pe-1'></i>You should **not** assign **causal** or even **temporal** significance to the **conditioning operator** that we introduce when discussing conditional probability (when we learn that $\Pr(A \mid B) = \frac{\Pr(A, B)}{\Pr(B)}$)!
+  
+The interpretation given in that chapter, which I find immensely helpful, is to think of this operator with the following semantics:
+
+> $\Pr(A = \mathsf{a} \mid B = \mathsf{b})$ is the probability of $A$ being in state $\mathsf{a}$ under the constraint that $B$ is in state $\mathsf{b}$.
+
+Once you complete DSAN 5100, you can then move on to classes like DSAN 5600 (Applied Time Series for Data Science) or DSAN 5650 (Causal Inference for Computational Social Science), where you will have plenty of time to explore how we might model **temporal** and/or **causal** linkages between random variables, respectively!
+
+<i class='bi bi-2-circle pe-1'></i>When we "encode" observations like "I rolled a die and the side that landed face up had 3 dots on it" into events, and then further "refine" these events into mathematical objects via Random Variables^[In this case, for example, we might define a random variable $X$ that maps this *event*, which is not a number we can do math with, to the *natural number* $3$, which *is* a number that we can do math with!], the whole point is to be able to **reason logically and mathematically about these events**.
+
+When we take observations and model them as events, we're trying to take statements like
+
+* $p$ = I rolled a die and the side that landed face up had 3 dots on it" and
+* $q$ = "I rolled a die and the side that landed face up had 5 dots on it"
+
+and reason **logically** about the likelihoods of these things happening. By "reasoning logically", I mean, reason about the likelihoods of the statements $p$ and $q$ on their own, but also about **combinations** of these statements, joined by **"and"**s, **"or"**s, and **"not"**s.
+
+Examples 1.5-1.7 in @barber_bayesian_2012 walk through this idea, emphasizing how in fact **probability theory is an *extension of logic***:
+
+* Whereas logic on its own (from Aristotle onwards) is a system allowing us to reason about statements that are either **true** or **false** (and connections between these statements),
+* Probability theory additionally allows us to reason about such statements even when we don't **know** whether they're **true** or **false**
+
+We may only be 90% certain that a statement $p$ is true, for example. In this case, **logic** on its own would be of no help for reasoning about $p$ in this case, but **probability theory** comes to the rescue, by providing an additional layer of inferences we can make: in this case, for example, that if the likelihood that $p$ is true is 90%, then the likelihood that $p$ is false must be 10%.
+
+Hopefully you can immediately imagine cases where this ability to reason logically about uncertainty can be immensely useful: for example, if you're trying to guess whether $p$ will end up being true because it relates to a **risky investment**, where you gain $10 if $p$ ends up being true but lose $20 if $p$ instead ends up being false, we can use this system to quickly calculate our **expected outcome** from this investment, as
+
+$$
+\Pr(p) \cdot \$10 + (1 - \Pr(p)) \cdot -\$20
+$$
+
+## Combined Course References
+
+As mentioned above, this section is auto-generated from every citation made across all pages of this Quarto site. If the name of the book/article is a **link**, you can click this link to download a PDF of the resource. If the name does **not** have a link, that just means Jeff hasn't added it yet -- feel free to email me and I can try to hunt down and add PDFs for any of the non-linked references here!
+
+::: {#refs}
+:::
