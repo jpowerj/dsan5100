@@ -10,8 +10,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.33">
 
-  <meta name="author" content="Purna Gamage and Jeff Jacobs">
-  <title>DSAN 5100-01 – Week 6: Moments and Covariance</title>
+  <meta name="author" content="Purna Gamage, Amineh Zadbood, and Jeff Jacobs">
+  <title>DSAN 5100-01 – Week 6: Multivariate Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,72 +29,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -116,7 +50,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-b98144a056446337e457f434ac15785f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-e6c9235fa6a0e2ac7f4ad57beef24a14.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -217,37 +151,33 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Week 6: Moments and Covariance</h1>
+  <h1 class="title">Week 6: Multivariate Distributions</h1>
   <p class="subtitle"><em>DSAN 5100: Probabilistic Modeling and Statistical Computing</em><br>Section 01</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Purna Gamage and Jeff Jacobs 
+Purna Gamage, Amineh Zadbood, and Jeff Jacobs 
 </div>
-        <p class="quarto-title-affiliation">
-            <a href="mailto:jj1088@georgetown.edu" target="_blank"><code>jj1088@georgetown.edu</code></a>
-          </p>
-    </div>
+</div>
 </div>
 
   <p class="date">Tuesday, September 30, 2025</p>
 </section>
 <section>
-<section id="moments-of-a-distribution-expectation-and-variance" class="title-slide slide level1 center" data-stack-name="Moments">
-<h1><em>Moments</em> of a Distribution: Expectation and Variance</h1>
+<section id="distributions-in-continuous-world" class="title-slide slide level1 not-title-slide title-12 smaller crunch-title crunch-ul crunch-img crunch-math math-80 crunch-quarto-figure highlight-col2 center" data-stack-name="Continuous World">
+<h1>Distributions in Continuous World</h1>
 <div class="hidden">
-
-</div>
 <div class="hidden">
 <p><span class="math display">\[
 \DeclareMathOperator*{\argmax}{argmax}
 \DeclareMathOperator*{\argmin}{argmin}
 \newcommand{\bigexp}[1]{\exp\mkern-4mu\left[ #1 \right]}
 \newcommand{\bigexpect}[1]{\mathbb{E}\mkern-4mu \left[ #1 \right]}
-\newcommand{\definedas}{\overset{\small\text{def}}{=}}
-\newcommand{\definedalign}{\overset{\phantom{\text{defn}}}{=}}
-\newcommand{\eqeventual}{\overset{\text{eventually}}{=}}
+\newcommand{\convergesAS}{\overset{\text{a.s.}}{\longrightarrow}}
+\newcommand{\definedas}{\overset{\text{def}}{=}}
+\newcommand{\definedalign}{\overset{\phantom{\text{def}}}{=}}
+\newcommand{\eqeventual}{\overset{\mathclap{\text{\small{eventually}}}}{=}}
 \newcommand{\Err}{\text{Err}}
 \newcommand{\expect}[1]{\mathbb{E}[#1]}
 \newcommand{\expectsq}[1]{\mathbb{E}^2[#1]}
@@ -258,18 +188,13 @@ Purna Gamage and Jeff Jacobs
 \newcommand{\iid}{\overset{\text{\small{iid}}}{\sim}}
 \newcommand{\lik}{\mathcal{L}}
 \newcommand{\loglik}{\ell}
-\DeclareMathOperator*{\maximize}{maximize}
-\DeclareMathOperator*{\minimize}{minimize}
 \newcommand{\mle}{\textsf{ML}}
 \newcommand{\nimplies}{\;\not\!\!\!\!\implies}
 \newcommand{\orange}[1]{\color{orange}{#1}}
 \newcommand{\outcome}[1]{\textsf{#1}}
 \newcommand{\param}[1]{{\color{purple} #1}}
 \newcommand{\pgsamplespace}{\{\green{1},\green{2},\green{3},\purp{4},\purp{5},\purp{6}\}}
-\newcommand{\pedge}[2]{\require{enclose}\enclose{circle}{~{#1}~} \rightarrow \; \enclose{circle}{\kern.01em {#2}~\kern.01em}}
-\newcommand{\pnode}[1]{\require{enclose}\enclose{circle}{\kern.1em {#1} \kern.1em}}
-\newcommand{\ponode}[1]{\require{enclose}\enclose{box}[background=lightgray]{{#1}}}
-\newcommand{\pnodesp}[1]{\require{enclose}\enclose{circle}{~{#1}~}}
+\newcommand{\prob}[1]{P\left( #1 \right)}
 \newcommand{\purp}[1]{\color{purple}{#1}}
 \newcommand{\sign}{\text{Sign}}
 \newcommand{\spacecap}{\; \cap \;}
@@ -279,440 +204,339 @@ Purna Gamage and Jeff Jacobs
 \newcommand{\bigVar}[1]{\text{Var}\mkern-4mu \left[ #1 \right]}
 \]</span></p>
 </div>
-</section>
-<section id="expectations-weighted-means" class="slide level2 smaller math-90 crunch-title crunch-ul footnotes-0 scrollable">
-<h2>Expectations = Weighted Means</h2>
-<ul>
-<li>We already know how to find the (<strong>unweighted</strong>) <strong>mean</strong> of a list of <span style="color: orange;"><strong>numbers</strong></span>:</li>
-</ul>
-<p><span class="math display">\[
-\begin{align*}
-\begin{array}{|p{1cm}||p{1cm}|p{1cm}|p{1cm}|}\hline X &amp; \orange{4} &amp; \orange{10} &amp; \orange{8} \\\hline\end{array} \implies \overline{X} &amp;= \frac{\orange{4} + \orange{10} + \orange{8}}{\purp{3}} = \purp{\left(\frac{1}{3}\right)} \cdot \orange{4} + \purp{\left( \frac{1}{3} \right)} \cdot \orange{10} + \purp{\left( \frac{1}{3} \right)} \cdot \orange{8} \\
-&amp;= \frac{22}{3} \approx 7.33
-\end{align*}
-\]</span></p>
-<ul>
-<li>Discrete distributions: just lists of <span style="color: orange;"><strong>numbers</strong></span> and their <span style="color: purple"><strong>probability</strong></span> of occurring!</li>
-</ul>
-<p><span class="math display">\[
-\begin{align*}
-\begin{array}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}\hline X &amp; \orange{4} &amp; \orange{10} &amp; \orange{8} \\\hline \Pr(X) &amp; \purp{0.01} &amp; \purp{0.01} &amp; \purp{0.98}\\\hline\end{array} \implies \overline{X} &amp;= \purp{\left( \frac{1}{100} \right)} \cdot \orange{4} + \purp{\left( \frac{1}{100} \right)} \cdot \orange{10} + \purp{\left( \frac{98}{100} \right)} \cdot \orange{8} \\
-&amp;= \left.\frac{798}{100}\right.^{1} \approx 7.98
-\end{align*}
-\]</span></p>
-
-<aside><div>
-<ol type="1">
-<li>It will be helpful for later/life as a data scientist to notice that this is exactly <span class="math inline">\(\frac{4 + 10 + \overbrace{8 + \cdots + 8}^{98\text{ times}}}{100}\)</span>. That is: weighted mean = normal mean where numbers are repeated proportionally to their probabilities. (See <a href="https://en.wikipedia.org/wiki/Additive_smoothing" target="_blank">Laplace smoothing</a>!).</li>
-</ol>
-</div></aside></section>
-<section id="different-types-of-averages" class="slide level2 smaller footnotes-0">
-<h2>Different Types of “Averages”</h2>
-<ul>
-<li>(This will seem like overkill now, but will help us later!)</li>
-<li>To avoid confusion, we denote the “regular” (<strong>arithmetic</strong>) mean <strong>function</strong> as <span class="math inline">\(M_1(\cdot)\)</span>
-<ul>
-<li>If <span class="math inline">\(V = \{v_1, \ldots, v_n\}\)</span>, <span class="math inline">\(M_1(V) \definedas \frac{v_1+\cdots+v_n}{n}\)</span>.</li>
-</ul></li>
-<li>Then <span class="math inline">\(\overline{V}\)</span> will denote the <strong>number</strong> which results from applying <span class="math inline">\(M_1\)</span> to the set <span class="math inline">\(V\)</span>.</li>
-<li>Other common <strong>functions</strong> which get called “averages” in Machine Learning: <strong>median</strong>, <strong>harmonic</strong> mean (<span class="math inline">\(M_{-1}\)</span>), <strong>geometric</strong> mean (<span class="math inline">\(M_0\)</span>), the <strong>hadamard product</strong> <span class="math inline">\(\odot\)</span>, etc.—pop up surprisingly often in Data Science/Machine Learning!</li>
-<li>The <strong>things</strong> we’re averaging also take on weird forms: bits, logical predicates, vectors, <strong>tensors</strong> (Hence Google’s ML platform, <a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a>), …</li>
-</ul>
-
-<aside><div>
-<p>For what these subscripts (<span class="math inline">\(M_{-1}\)</span>, <span class="math inline">\(M_0\)</span>, <span class="math inline">\(M_1\)</span>) mean, and more on the Hadamard product and its importance to Machine Learning, see <a href="#/sec-hadamard" class="quarto-xref">Section&nbsp;4.1</a></p>
-</div></aside></section>
-<section id="definition" class="slide level2 smaller crunch-title footnotes-0">
-<h2>Definition</h2>
-<ul>
-<li>For a <strong>discrete</strong> RV <span class="math inline">\(X\)</span>:</li>
-</ul>
-<p><span class="math display">\[
-\expect{X} = \sum_{x \in \mathcal{R}_X}x P(x)
-\]</span></p>
-<ul>
-<li>For a <strong>continuous</strong> RV <span class="math inline">\(X\)</span>:</li>
-</ul>
-<p><span class="math display">\[
-\expect{X} = \int_{-\infty}^{\infty}xf(x)dx
-\]</span></p>
-
-<aside><div>
-<p>Remember that <span class="math inline">\(\mathcal{R}_X\)</span> is the <strong>support</strong> of the random variable <span class="math inline">\(X\)</span>. If <span class="math inline">\(X\)</span> is discrete, this is just <span class="math inline">\(\mathcal{R}_X = \{x \in \mathbb{R} \given P(X = x) &gt; 0\}\)</span>. If <span class="math inline">\(X\)</span> is continuous, we can almost always* use the similar definition <span class="math inline">\(\mathcal{R}_X = \{x \in \mathbb{R} \given f_X(x) &gt; 0\}\)</span>, <strong>remembering that <span class="math inline">\(f_X(x) \neq P(X = x)\)</span>!!!</strong> See <a href="#/sec-continuous-support" class="quarto-xref">Section&nbsp;4.2</a> for the scarier definition that works for <strong>all</strong> continuous RVs.</p>
-</div></aside></section>
-<section id="important-properties" class="slide level2 crunch-title smaller math-90 footnotes-0 scrollable">
-<h2>Important Properties</h2>
-<div id="above">
-<ul>
-<li>For RVs <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(a, b \in \mathbb{R}\)</span>:</li>
-</ul>
 </div>
-<div class="columns">
-<div class="column" style="width:33%;">
-<div style="border: 1px solid black !important; padding: 4px !important;">
-<center>
-<strong>Linear</strong>
-</center>
-<p><span class="math display">\[
-\expect{aX} = a\expect{X}
-\]</span></p>
-</div>
-</div><div class="column" style="width:33%;">
-<div style="border: 1px solid black !important; padding: 4px !important;">
-<center>
-<strong>Additive</strong>
-</center>
-<p><span class="math display">\[
-\expect{X + Y} = \expect{X} + \expect{Y}
-\]</span></p>
-</div>
-</div><div class="column" style="width:33%;">
-<div style="border: 1px solid black !important; padding: 4px !important;">
-<center>
-<strong>Affine</strong><sup>1</sup>
-</center>
-<p><span class="math display">\[
-\expect{aX + b} = a\expect{X} + b
-\]</span></p>
-</div>
-</div></div>
-<ul>
-<li>LOTUS:</li>
-</ul>
-<p><span class="math display">\[
-\expect{g(X)} = g(x)f(x)dx
-\]</span></p>
-<ul>
-<li><strong>Not</strong> Multiplicative:</li>
-</ul>
-<p><span class="math display">\[
-\expect{X \cdot Y} = \expect{X} \cdot \expect{Y} \iff X \perp Y
-\]</span></p>
-<aside class="notes">
-<p>Really these should be called <strong>affine</strong> functions, but this property is usually just known as “linearity”, so for the sake of being able to google it I’m calling it “Linear” here as well, for now</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Mathematically, it’s important to call <span class="math inline">\(aX + b\)</span> an “affine transformation”, <em>not</em> a linear transformation. In practice, everyone calls this “linear”, so I try to use both (for easy Googling!). The reason it matters will come up when we discuss Variance!</p></li></ol></aside></section>
-<section id="variance-motivation" class="slide level2 crunch-title crunch-ul inline-90">
-<h2>Variance: Motivation</h2>
-<ul>
-<li>We’ve now got a “measure of central tendency”, the expectation <span class="math inline">\(\expect{X}\)</span>, with some nice properties. We can use it to produce <strong>point estimates</strong>.</li>
-<li>Now, how do we describe and communicate the <strong>spread</strong> of the data in a dataset? Similarly, how can we describe our <strong>uncertainty</strong> about a point estimate?</li>
-<li>Let’s try to develop a function, <span class="math inline">\(\text{Spread}\)</span>, that takes in a set of values and computes <strong>how spread out</strong> they are</li>
-<li>(<em>Hint</em>: can use <strong>arithmetic mean</strong>, applied to <strong>differences between points</strong> rather than points themselves)</li>
-</ul>
-</section>
-<section id="first-attempt" class="slide level2 smaller crunch-title crunch-code crunch-ul math-90 crunch-quarto-figure">
-<h2>First Attempt</h2>
-<ul>
-<li>What properties should <span class="math inline">\(\text{Spread}(\cdot)\)</span> have?
-<ul>
-<li>Should be <span class="math inline">\(0\)</span> if every data point is identical, then increase as they spread apart</li>
-</ul></li>
-<li>How about: average <strong>difference</strong> between each point and the overall (arithmetic) mean? <span class="math display">\[
-\text{Spread}(X) = M_1(X - \overline{X}) = \frac{(x_1 - \overline{X}) + (x_2 - \overline{X}) + \cdots + (x_n - \overline{X})}{n}
-\]</span></li>
-</ul>
-<div class="columns">
-<div class="column" style="width:75%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(latex2exp)</span>
-<span id="cb1-3"><a></a>N <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1-4"><a></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,N)</span>
-<span id="cb1-5"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb1-6"><a></a>mean_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb1-7"><a></a>spread <span class="ot">&lt;-</span> y <span class="sc">-</span> mean_y</span>
-<span id="cb1-8"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">spread=</span>spread)</span>
-<span id="cb1-9"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span></span>
-<span id="cb1-10"><a></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept=</span>mean_y, <span class="at">linetype=</span><span class="st">"dashed"</span>), <span class="at">color=</span><span class="st">"purple"</span>, <span class="at">size=</span>g_linesize) <span class="sc">+</span></span>
-<span id="cb1-11"><a></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend=</span>x, <span class="at">yend=</span>mean_y, <span class="at">color=</span><span class="fu">ifelse</span>(y<span class="sc">&gt;</span><span class="dv">0</span>,<span class="st">"Positive"</span>,<span class="st">"Negative"</span>)), <span class="at">size=</span>g_linesize) <span class="sc">+</span></span>
-<span id="cb1-12"><a></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize) <span class="sc">+</span></span>
-<span id="cb1-13"><a></a>  <span class="fu">scale_linetype_manual</span>(<span class="fu">element_blank</span>(), <span class="at">values=</span><span class="fu">c</span>(<span class="st">"dashed"</span><span class="ot">=</span><span class="st">"dashed"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"dashed"</span><span class="ot">=</span><span class="fu">unname</span>(<span class="fu">TeX</span>(<span class="fu">c</span>(<span class="st">"$M_1(X)$"</span>))))) <span class="sc">+</span></span>
-<span id="cb1-14"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb1-15"><a></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Spread"</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">"Positive"</span><span class="ot">=</span>cbPalette[<span class="dv">3</span>],<span class="st">"Negative"</span><span class="ot">=</span>cbPalette[<span class="dv">6</span>]), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Positive"</span><span class="ot">=</span><span class="st">"Positive"</span>,<span class="st">"Negative"</span><span class="ot">=</span><span class="st">"Negative"</span>)) <span class="sc">+</span></span>
-<span id="cb1-16"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb1-17"><a></a>  <span class="co">#remove_legend_title() +</span></span>
-<span id="cb1-18"><a></a>  <span class="fu">theme</span>(<span class="at">legend.spacing.y=</span><span class="fu">unit</span>(<span class="fl">0.1</span>,<span class="st">"mm"</span>)) <span class="sc">+</span></span>
-<span id="cb1-19"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb1-20"><a></a>    <span class="at">title=</span><span class="fu">paste0</span>(N, <span class="st">" Randomly-Generated Points, N(0,10)"</span>),</span>
-<span id="cb1-21"><a></a>    <span class="at">x=</span><span class="st">"Index"</span>,</span>
-<span id="cb1-22"><a></a>    <span class="at">y=</span><span class="st">"Value"</span></span>
-<span id="cb1-23"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/spread-first-attempt-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:25%;">
-<p>The result? To ten decimal places:</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>spread_fmt <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%0.10f"</span>, <span class="fu">mean</span>(df<span class="sc">$</span>spread))</span>
-<span id="cb2-2"><a></a><span class="fu">writeLines</span>(spread_fmt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.0000000000</code></pre>
-</div>
-</div>
-<p>😞 What happened?</p>
-</div></div>
-</section>
-<section id="avoiding-cancellation" class="slide level2 smaller crunch-title crunch-code crunch-ul crunch-quarto-figure footnotes-0 scrollable">
-<h2>Avoiding Cancellation</h2>
-<ul>
-<li>How to avoid <strong>positive</strong> and <strong>negative</strong> deviations cancelling out? Two ideas:
-<ul>
-<li>Absolute value <span class="math inline">\(\left|X - \overline{X}\right|\)</span></li>
-<li>Squared error <span class="math inline">\(\left( X - \overline{X} \right)^2\)</span>…</li>
-</ul></li>
-<li>Ghost of calculus past: which is <strong>differentiable</strong> everywhere?<sup>1</sup></li>
-</ul>
 <div class="columns">
 <div class="column" style="width:50%;">
+<ul>
+<li><strong>Discrete</strong> = “Easy mode”: Based (intuitively) on <strong>sets</strong></li>
+<li><span class="math inline">\(\Pr(A)\)</span>: Four equally-likely marbles <span class="math inline">\(\{A, B, C, D\}\)</span> in box, what is probability I pull out <span class="math inline">\(A\)</span>?</li>
+</ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="index_files/figure-revealjs/x2-plot-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<p><span class="math display">\[
+\Pr(A) = \underset{\mathclap{\small \text{Probability }\textbf{mass}}}{\boxed{\frac{|\{A\}|}{|\Omega|}}} = \frac{1}{|\{A,B,C,D\}|} = \frac{1}{4}
+\]</span></p>
 </div><div class="column" style="width:50%;">
+<ul>
+<li><strong>Continuous</strong> = “Hard mode”: Based (intuitively) on <strong>areas</strong></li>
+<li><span class="math inline">\(\Pr(A)\)</span>: Throw dart at random point in square, what is probability I hit <span class="math inline">\(\require{enclose}\enclose{circle}{\textsf{A}}\)</span>?</li>
+</ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="index_files/figure-revealjs/abs-x-plot-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<p><span class="math display">\[
+\Pr(A) = \underset{\mathclap{\small \text{Probability }\textbf{density}}}{\boxed{\frac{\text{Area}(\{A\})}{\text{Area}(\Omega)}}} = \frac{\pi r^2}{s^2} = \frac{\pi \left(\frac{1}{4}\right)^2}{4} = \frac{\pi}{64}
+\]</span></p>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>For why differentiability matters <strong>a lot</strong> for modern Machine Learning, see the <a href="https://en.wikipedia.org/wiki/Backpropagation" target="_blank">Backpropagation algorithm</a>.</p></li></ol></aside></section>
-<section id="weve-arrived-at-variance" class="slide level2 crunch-math crunch-title math-90 footnotes-0">
-<h2>We’ve Arrived at Variance!</h2>
-<p><span class="math display">\[
-\Var{X} = \bigexpect{ \left(X - \expect{X}\right)^2 }
-\]</span></p>
+</section>
+<section id="moving-to-continuous-world" class="slide level2 crunch-title">
+<h2>Moving to Continuous World</h2>
 <ul>
-<li>And, we can apply what we know about <span class="math inline">\(\expect{X}\)</span> to derive:</li>
+<li>Intuitions from discrete world <em>do</em> translate into good intuitions for continuous world, in this case!</li>
+<li>Can “move” discrete table into continuous space like Riemann sums “move” discrete sums into integrals:</li>
+</ul>
+
+<img data-src="images/riemann.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="smoothing-our-example" class="slide level2 text-95">
+<h2>“Smoothing” Our Example</h2>
+<ul>
+<li>Instead of discrete <span class="math inline">\(G\)</span> with <span class="math inline">\(\mathcal{R}_G = \{10, 11, 12\}\)</span>, we have <strong>continuous</strong> <span class="math inline">\(G\)</span> with <span class="math inline">\(\mathcal{R}_G = [10,12] \subset \mathbb{R}\)</span> (HS <em>progress</em>)</li>
+<li>Instead of discrete <span class="math inline">\(H\)</span> with <span class="math inline">\(\mathcal{R}_H = \{0, 1\}\)</span>, now we keep track of <strong>continuous</strong> “honors spectrum” <span class="math inline">\(H\)</span> with <span class="math inline">\(\mathcal{R}_H = [0, 1] \subset \mathbb{R}\)</span></li>
+<li>Student near beginning of 10th grade who is at “high end” of honors spectrum: <span class="math inline">\(G = 10.03\)</span> and <span class="math inline">\(H = 0.95\)</span></li>
+</ul>
+</section>
+<section id="smoothing-our-tables" class="slide level2">
+<h2>“Smoothing” Our Tables</h2>
+<ul>
+<li><strong>Sums</strong> become <strong>integrals</strong></li>
+<li><strong>Re-normalization</strong> (ensuring that <strong>probability mass</strong> values <strong>sum to 1</strong>) becomes ensuring that <strong>probability density</strong> values <strong>integrate to 1</strong>.</li>
+<li>What comes in place of <strong>frequency table</strong>?</li>
+<li>Answer in theory: <strong>Joint pdf</strong></li>
+<li>Answer in practice: Depends on the context 😬</li>
+</ul>
+</section>
+<section id="continuous-joint-pdfs" class="slide level2 smaller crunch-title crunch-ul crunch-math">
+<h2>Continuous Joint pdfs</h2>
+<ul>
+<li>The <strong>volume</strong> of this <strong>Hershey Kiss</strong> is exactly <span class="math inline">\(1\)</span></li>
+<li>Integrating over a region <span class="math inline">\(C\)</span> gives us</li>
 </ul>
 <p><span class="math display">\[
-\begin{align*}
-\Var{X} &amp;= \bigexpect{ \left(X - \expect{X}\right)^2 } = \bigexpect{ X^2 - 2X\expect{X} + \left( \expect{X} \right)^2 } \\
-&amp;= \expect{X^2} - \expect{2 X\expect{X}} + \left( \expect{X} \right)^2 \\
-&amp;= \expect{X^2} - 2\expect{X}\expect{X} + \left(\expect{X}\right)^2 \\
-&amp;= \expect{X^2} - \left( \expect{X} \right)^2 \; \; \green{\small{\text{ (we'll need this in a minute)}}}
-\end{align*}
+\frac{\text{Volume}(\{(X,Y) \mid (X,Y) \in C\})}{\text{Volume}(\text{Hershey Kiss})} = \Pr((X,Y) \in C)
 \]</span></p>
+
+<img data-src="images/fig-3-11.svg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3.11 from <span class="citation" data-cites="degroot_probability_2013">DeGroot and Schervish (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span></p></section>
+<section id="conditional-pdfs" class="slide level2 smaller crunch-title crunch-li-8 text-65">
+<h2>Conditional pdfs</h2>
+<ul>
+<li>Now, if we <strong>learn that <span class="math inline">\(Y = y_0\)</span></strong>, can take “slice” at <span class="math inline">\(y = y_0\)</span></li>
+<li><strong>Total area</strong> of this slice is <strong>not</strong> <span class="math inline">\(1\)</span>, so <span class="math inline">\(f_{X,Y}(x, y_0)\)</span> is <strong>not</strong> a valid pdf</li>
+<li><strong>Dividing by total area of slice</strong> would generate valid pdf. What is this area? <span class="math inline">\(f_X(y_0)\)</span></li>
+<li><span class="math inline">\(\implies\)</span> <span class="math inline">\(f_{X \mid Y = y_0}(x \mid y_0) = \frac{f_{X,Y}(x, y_0)}{f_X(y_0)}\)</span> <strong>is</strong> valid (conditional) pdf</li>
+</ul>
+
+<img data-src="images/fig-3-20.svg" class="r-stretch quarto-figure-center"><p class="caption">Figure 3.20 from <span class="citation" data-cites="degroot_probability_2013">DeGroot and Schervish (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span></p></section>
+<section id="working-backwards-in-continuous-world" class="slide level2 title-08 inline-95">
+<h2>Working Backwards in Continuous World</h2>
+<ul>
+<li>While in <strong>discrete world</strong> we could easily provide a table, in <strong>continuous world</strong> we often/usually have to work backwards; we may just be given:</li>
+<li><span class="math inline">\(G \sim \mathcal{U}(10, 12)\)</span></li>
+<li><span class="math inline">\(H \sim \ddot{\mathcal{N}}(\mu = 0.5, \sigma = 0.1, a = 0, b = 1)\)</span>, and</li>
+<li><span class="math inline">\(G \perp H\)</span> (so <span class="math inline">\(\Pr(G \mid H) = \Pr(G), \Pr(H \mid G) = \Pr(H)\)</span>)</li>
+<li>(i.e., marginal distributions = conditional distributions)</li>
+</ul>
+</section>
+<section id="the-marginal-pdfs-of-g-and-h" class="slide level2 crunch-title crunch-ul text-95 crunch-li-8">
+<h2>The Marginal pdfs of <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span></h2>
+<ul>
+<li>Since we know <span class="math inline">\(G \sim \mathcal{U}(10,12)\)</span>, we know (or we could look up) that <span class="math inline">\(G\)</span> has pdf</li>
+</ul>
+<p><span class="math display">\[
+f_G(g) = \frac{1}{12 - 10} = \frac{1}{2}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(H\)</span> has a slightly fancier distribution: <strong>truncated normal</strong></li>
+<li>Nonetheless a pdf we can derive from (a) knowing the pdf of the <strong>normal</strong> distribution and (b) knowing what we’ve just talked about regarding <strong>conditional</strong> distributions</li>
+</ul>
+</section>
+<section id="the-truncated-normal-distribution" class="slide level2 smaller crunch-title crunch-ul">
+<h2>The Truncated Normal Distribution</h2>
+<ul>
+<li><span class="math inline">\(\ddot{\mathcal{N}}\)</span> may look scary, but <span class="math inline">\(X \sim \ddot{\mathcal{N}}(\mu, \sigma, a, b)\)</span> just means <span class="math inline">\(X\)</span> can be constructed as:</li>
+</ul>
+<p><span class="math display">\[
+X \sim \mathcal{N}(\mu, \sigma) \leadsto [X \mid a &lt; X &lt; b] \sim \ddot{\mathcal{N}}(\mu, \sigma, a, b)
+\]</span></p>
+
+<img data-src="index_files/figure-revealjs/truncated-plots-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Adapted from <a href="https://www.rdatagen.net/post/generating-data-from-a-truncated-distribution/" target="_blank"><code>simstudy</code> package documentation</a></p></section>
+<section id="the-truncated-normal-pdf" class="slide level2 crunch-title crunch-math crunch-ul math-90 footnotes-0 text-90 inline-95">
+<h2>The Truncated Normal pdf</h2>
+<ul>
+<li>Since we see a <strong>conditioning bar</strong> on the previous slide, we can infer what the <strong>pdf</strong> of this <strong>conditional distribution</strong> would look like. If <span class="math inline">\(X \sim \ddot{\mathcal{N}}(\mu, \sigma, a, b)\)</span>, then <span class="math inline">\(X\)</span> has pdf</li>
+</ul>
+<p><span class="math display">\[
+f_X(x) = \frac{1}{\sigma}\cdot \frac{\varphi\left(\frac{x - \mu}{\sigma}\right)}{\Phi\left(\frac{b-\mu}{\sigma}\right) - \Phi\left(\frac{a - \mu}{\sigma}\right)} \approx \frac{\Pr(X \approx x, a &lt; X &lt; b)}{\Pr(a &lt; X &lt; b)}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\varphi\)</span> is the pdf of <span class="math inline">\(\mathcal{N}(0,1)\)</span></li>
+<li><span class="math inline">\(\Phi\)</span> is the CDF of <span class="math inline">\(\mathcal{N}(0,1)\)</span></li>
+</ul>
 
 <aside><div>
-<p>Why does <span class="math inline">\(\expect{2X\expect{X}} = 2\expect{X}\expect{X}\)</span>? Remember: <span class="math inline">\(X\)</span> is an <strong>RV</strong>, but <span class="math inline">\(\expect{X}\)</span> is a <strong>number</strong>!</p>
+<p>(Note the lowercasing to describe pdfs and capitalizing to describe CDFs, even in Greek!)</p>
 </div></aside></section>
-<section id="standard-deviation" class="slide level2 crunch-title crunch-ul math-90">
-<h2>Standard Deviation</h2>
+<section id="back-to-working-backwards" class="slide level2 crunch-ul">
+<h2>Back to Working Backwards</h2>
 <ul>
-<li>When we squared the deviations, we <strong>lost the units</strong> of our datapoints!</li>
-<li>To see spread, but <strong>in the same units as the original data</strong>, let’s just undo the squaring!</li>
+<li>By <em>definition of independence</em>, we can obtain <strong>joint pdf</strong> <span class="math inline">\(f_{G,H}(g, h)\)</span> by <strong>multiplying</strong> marginal pdf <span class="math inline">\(f_G(g)\)</span> and marginal pdf <span class="math inline">\(f_H(h)\)</span>:</li>
 </ul>
 <p><span class="math display">\[
-\text{SD}[X] = \sqrt{\Var{X}}
+\begin{align*}
+f_{G,H}(g, h) &amp;= f_G(g) \cdot f_H(h) \\
+&amp;= \frac{1}{2} \cdot \left[ \frac{1}{0.1} \cdot \frac
+{
+  \varphi\left(\frac{h - 0.5}{0.1}\right)
+}
+{
+    \Phi\left(\frac{12-0.5}{0.1}\right) - \Phi\left(\frac{10 - 0.5}{0.1}\right)
+}
+\right]
+\end{align*}
 \]</span></p>
+</section>
+<section id="moving-forwards-again" class="slide level2 crunch-title math-90 crunch-ul">
+<h2>Moving Forwards Again</h2>
 <ul>
-<li>But, computers don’t care about the unit of this measure (just <strong>minimizing it</strong>). No reason to do this additional step <strong>if</strong> humans aren’t looking at the results!</li>
+<li>We’ve arrived at the case we had in discrete world, where we know the <strong>joint distribution</strong>!</li>
+<li>We can <strong>integrate</strong> wherever we took <strong>sums</strong> in the discrete case to obtain <strong>marginal</strong> pdfs:</li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+f_G(g) &amp;= \int_{0}^{1}f_{G,H}(g,h)\mathrm{d}h = \frac{1}{2}, \\
+f_H(h) &amp;= \int_{10}^{12}f_{G,H}(g, h)\mathrm{d}g = \frac{1}{0.1} \cdot \frac
+{
+  \varphi\left(\frac{h - 0.5}{0.1}\right)
+}
+{
+  \Phi\left(\frac{12 - 0.5}{0.1}\right) - \Phi\left(\frac{10 - 0.5}{0.1}\right)
+}
+\end{align*}
+\]</span></p>
+</section>
+<section id="conditional-distributions-in-continuous-world" class="slide level2 text-90 title-09">
+<h2>Conditional Distributions in Continuous World</h2>
+<ul>
+<li>We can compute <strong>conditional</strong> pdfs by <strong>renormalizing</strong></li>
+<li>Denominator is no longer integral of the distribution over <strong>all</strong> possible values (hence just the number <span class="math inline">\(1\)</span>), but a <strong>ratio</strong> of <strong>joint distribution</strong> to <strong>marginal distribution</strong> values like:</li>
+</ul>
+<p><span class="math display">\[
+f_{H \mid G}(h | g) = \frac{f_{G,H}(g, h)}{f_G(g)}.
+\]</span></p>
+</section>
+<section id="you-dont-have-to-stare-helplessly-at-scary-math" class="slide level2">
+<h2>You Don’t Have To Stare Helplessly At Scary Math!</h2>
+<ul>
+<li>Try to <strong>link the continuous equations back to their simpler discrete forms</strong></li>
+<li>Work with the discrete forms to develop intuition, then</li>
+<li>Convert <strong>sums</strong> back into <strong>integrals</strong> once you’re ready</li>
 </ul>
 </section>
-<section id="properties-of-variance" class="slide level2 crunch-title crunch-ul footnotes-0">
-<h2>Properties of Variance</h2>
+<section id="a-concrete-strategy" class="slide level2 crunch-title crunch-ul crunch-figures crunch-img inline-95 crunch-quarto-figure text-90">
+<h2>A Concrete Strategy</h2>
 <ul>
-<li>Recall that Expectation was an <strong>affine</strong> function:</li>
-</ul>
-<p><span class="math display">\[
-\mathbb{E}[aX + b] = a\mathbb{E}[X] + b
-\]</span></p>
+<li>Start by <strong>discretizing</strong> (“binning”) the possible values of a <strong>continuous</strong> RV to obtain a <strong>discrete</strong> RV:
 <ul>
-<li>Variance has a similar property, but is called <a href="https://en.wikipedia.org/wiki/Homogeneous_function" target="_blank"><strong>homogeneous</strong></a> <strong>of degree 2</strong>, which means</li>
+<li>Split <span class="math inline">\([10,12]\)</span> into three equal-length bins, <span class="math inline">\([0,1]\)</span> into two equal-length bins</li>
+<li><strong>Simulate</strong> <span class="math inline">\((G, H)\)</span> pairs, sort into bins, plot joint / marginal / conditional distributions of <strong>binned data</strong></li>
+</ul></li>
+<li>As you make bins thinner and thinner… 🤔</li>
 </ul>
-<p><span class="math display">\[
-\Var{aX + b} = a^2\Var{X} \; \underbrace{\phantom{+ b}}_{\mathclap{\text{(Something missing?)}}}
-\]</span></p>
 
-<aside><div>
-<p>Note that since the expected value function is <strong>linear</strong>, it is also <strong>homogeneous</strong>, <strong>of degree 1</strong>, even though the <span class="math inline">\(b\)</span> term doesn’t “disappear” like it does in the variance equation!</p>
-</div></aside></section>
-<section id="what-happened-to-the-b-term" class="slide level2">
-<h2>What Happened to the <span class="math inline">\(b\)</span> Term?</h2>
-<p>Mathematically:</p>
-<p><span class="math display">\[
-\begin{align*}
-\Var{aX + b} \definedas \; &amp;\mathbb{E}[(aX + b - \mathbb{E}[aX + b])^2] \\
-\definedalign \; &amp;\expect{(aX \color{orange}{+ b} - a\expect{X} \color{orange}{- b})^2} \\
-\definedalign \; &amp;\expect{a^2X^2 - 2a^2\expectsq{X} + a^2\expectsq{X}} \\
-\definedalign \; &amp;a^2 \expect{X^2 - \expectsq{X}} = a^2(\expect{X^2} - \expectsq{X})b \\
-\definedas \; &amp; a^2\Var{X}
-\end{align*}
-\]</span></p>
-</section>
-<section id="what-happened-to-the-b-term-1" class="slide level2 smallish-math nostretch crunch-title crunch-code crunch-figures crunch-math crunch-ul">
-<h2>What Happened to the <span class="math inline">\(b\)</span> Term?</h2>
-<ul>
-<li>Visually (Assuming <span class="math inline">\(X \sim \mathcal{N}(0,1)\)</span>)</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/shifting-variance-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><span class="math display">\[
-\begin{align*}
-\expect{{\color{lightblue}X + 1}} = \expect{{\color{orange}X}} + 1, \; \; \Var{{\color{lightblue}X + 1}} = \Var{{\color{orange}X}} \\
-\expect{{\color{green}X - 3}} = \expect{{\color{orange}X}} - 3, \; \; \Var{{\color{green}X - 3}} = \Var{{\color{orange}X}}
-\end{align*}
-\]</span></p>
-</section></section>
+<img data-src="images/riemann.svg" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section>
-<section id="generalizing-expectationvariance-the-moment-generating-function-mgf" class="title-slide slide level1 title-12 center" data-stack-name="MGF">
-<h1>Generalizing Expectation/Variance: The Moment-Generating Function (MGF)</h1>
-
-</section>
-<section id="generalizing-expectation-and-variance" class="slide level2 crunch-title title-09">
-<h2>Generalizing Expectation and Variance</h2>
+<section id="thinking-through-specific-multivariate-distributions" class="title-slide slide level1 center" data-stack-name="N > 2">
+<h1>Thinking Through Specific Multivariate Distributions</h1>
 <ul>
-<li>It turns out that, expectation and variance are just two “levels” of a <strong>hierarchy</strong> of <strong>information about a distribution!</strong></li>
-<li>In calculus: knowing <span class="math inline">\(f(x)\)</span> is <strong>sufficient information</strong> for us to subsequently figure out <span class="math inline">\(f'(x)\)</span>, <span class="math inline">\(f''(x)\)</span>, …</li>
-<li>In probability/statistics: knowing <span class="math inline">\(M_X(t)\)</span> is <strong>sufficient information</strong> for us to figure out <span class="math inline">\(\expect{X}\)</span>, <span class="math inline">\(\Var{X}\)</span>, …</li>
+<li>From <span class="math inline">\(2\)</span> to <span class="math inline">\(N\)</span> variables!</li>
 </ul>
 </section>
-<section id="not-a-metaphor" class="slide level2 smaller footnotes-0 scrollable">
-<h2>Not a Metaphor!</h2>
+<section id="the-multinoulli-distribution" class="slide level2 smaller crunch-title crunch-ul crunch-math inline-95">
+<h2>The Multinoulli Distribution</h2>
 <ul>
-<li>This calculus <span class="math inline">\(\leftrightarrow\)</span> statistics connection is not a metaphor: <strong>differentiating <span class="math inline">\(M_X(t)\)</span> literally gives us <span class="math inline">\(\expect{X}\)</span>, <span class="math inline">\(\Var{X}\)</span>, …</strong></li>
-<li>Let’s look at MGF for <span class="math inline">\(X \sim \text{Bern}(\param{p})\)</span>, and try to derive <span class="math inline">\(\expect{X}\)</span><sup>1</sup>.</li>
+<li><p>May seem like a weird/contrived distribution, but is <strong>perfect for building intuition</strong>, as your first <span class="math inline">\(N\)</span>-dimensional distribution (<span class="math inline">\(N &gt; 2\)</span>)</p></li>
+<li><p><span class="math inline">\(\mathbf{X}\)</span> is a six-dimensional <strong>Vector-Valued</strong> RV, so that</p>
+<p><span class="math display">\[
+  \mathbf{X} = (X_1, X_2, X_3, X_4, X_5, X_6),
+  \]</span></p>
+<p>where <span class="math inline">\(\mathcal{R}_{X_1} = \{0, 1\}, \mathcal{R}_{X_2} = \{0, 1\}, \ldots, \mathcal{R}_{X_6} = \{0, 1\}\)</span></p></li>
+<li><p>But, <span class="math inline">\(X_1, X_2, \ldots, X_6\)</span> are <strong>not independent!</strong> In fact, they are <strong>so dependent</strong> that if one has value <span class="math inline">\(1\)</span>, the rest must have value <span class="math inline">\(0\)</span> <span class="math inline">\(\leadsto\)</span> we can infer the support of <span class="math inline">\(\mathbf{X}\)</span>:</p>
+<p><span class="math display">\[
+  \begin{align*}
+  \mathcal{R}_{\mathbf{X}} = \{ &amp;(1,0,0,0,0,0),(0,1,0,0,0,0),(0,0,1,0,0,0), \\
+  &amp;(0,0,0,1,0,0),(0,0,0,0,1,0),(0,0,0,0,0,1)\}
+  \end{align*}
+  \]</span></p></li>
+<li><p>Lastly, need to define the <strong>probability</strong> that <span class="math inline">\(\mathbf{X}\)</span> takes on any of these values. Let’s say <span class="math inline">\(\Pr(\mathbf{X} = \mathbf{v}) = \frac{1}{6}\)</span> for all <span class="math inline">\(\mathbf{v} \in \mathcal{R}_{\mathbf{X}}\)</span>. Do we see the structure behind this contrived case?</p></li>
+<li><p>(For math major friends, there is an isomorphism afoot… For the rest, it’s an extremely inefficient way to model outcomes from <strong>rolling a fair die</strong>)</p></li>
+</ul>
+</section>
+<section id="the-multivariate-normal-distribution" class="slide level2 smaller crunch-title title-10 crunch-ul math-90 crunch-math">
+<h2>The Multivariate Normal Distribution</h2>
+<ul>
+<li>We’ve already seen the matrix notation for writing the <strong>parameters</strong> of this distribution: <span class="math inline">\(\mathbf{X}_{[k \times 1]} \sim \mathcal{N}_k\left(\boldsymbol\mu_{[k \times 1]}, \Sigma_{[k \times k]}\right)\)</span></li>
+<li>Now we get to crack open the matrix notation for writing its <strong>pdf</strong>:</li>
 </ul>
 <p><span class="math display">\[
-\begin{align*}
-M_X(t) &amp;= (1 - p) + pe^t \\
-M'_X(t) &amp;= pe^t,\text{ and }\expect{X} = M'_X(0) = \green{p} \; ✅
-\end{align*}
+f_\mathbf{X}(\mathbf{x}_{[k \times 1]}) = \underbrace{\left(\frac{1}{\sqrt{2\pi}}\right)^k \frac{1}{\sqrt{\det(\Sigma)}}}_{\text{Normalizing constants}} \exp\left(-\frac{1}{2}\underbrace{(\mathbf{x} - \boldsymbol\mu)^\top \Sigma^{-1} (\mathbf{x} - \boldsymbol\mu)}_{\text{Quadratic form}}\right)
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\Var{X}\)</span>?</li>
+<li>Try to squint your eyes while looking at the above and compare with…</li>
 </ul>
+<div class="quarto-layout-panel" data-layout="[1,1]">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div id="mvnorm-compare-left" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<center>
+<p><span style="border-bottom: 1px solid black;">pdf of <span class="math inline">\(\mathcal{N}(\mu,\sigma)\)</span></span></p>
+</center>
 <p><span class="math display">\[
-\begin{align*}
-M''_{X}(t) &amp;= pe^t,\text{ and }\expect{X^2} = M''_X(0) = p \\
-\Var{X} &amp;\definedas{} \expect{X^2} - (\expect{X})^2 = p - p^2 = \green{p(1-p)} \; ✅
-\end{align*}
-\]</span></p>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Recall that, for a Bernoulli-distributed random variable <span class="math inline">\(X\)</span>, <span class="math inline">\(\expect{X} = p\)</span></p></li></ol></aside></section>
-<section id="mgf-in-econometrics" class="slide level2">
-<h2>MGF in Econometrics</h2>
-
-<img data-src="images/gmm_results.png" class="quarto-figure quarto-figure-center r-stretch"><div style="font-size: 75% !important;">
-<ul>
-<li><a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=generalized+method+of+moments&amp;btnG=">Open in new window</a></li>
-</ul>
-</div>
-<aside class="notes">
-<p>In case it doesn’t load: <span class="citation" data-cites="hansen_large_1982">(<a href="#/references" role="doc-biblioref" onclick="">Hansen 1982</a>)</span> has 17,253 citations as of 2023-05-21</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="beware" class="slide level2">
-<h2>BEWARE ☠️</h2>
-<p>As we saw last week (the Dreaded Cauchy Distribution):</p>
-<ul>
-<li>Not all random variables <strong>have</strong> moment-generating functions.</li>
-<li>Worse yet, not all random variables have well-defined <strong>variances</strong></li>
-<li>Worse yet, not all random variables have well-defined <strong>means</strong></li>
-<li>(This happens in non-contrived cases!)</li>
-</ul>
-</section></section>
-<section>
-<section id="moving-beyond-one-rv" class="title-slide slide level1 center" data-stack-name="Multivariate Dists">
-<h1>Moving Beyond One RV</h1>
-
-</section>
-<section id="multivariate-distributions-w02" class="slide level2 smaller crunch-title">
-<h2>Multivariate Distributions (W02)</h2>
-<ul>
-<li>The <strong>bivariate normal</strong> distribution represents the distribution of <strong>two</strong> normally-distributed RVs <span class="math inline">\(\mathbf{X} = [\begin{smallmatrix} X_1 &amp; X_2\end{smallmatrix}]\)</span>, which may or may not be correlated:</li>
-</ul>
-<div class="special-math" style="margin-bottom: 42px !important;">
-<p><span class="math display">\[
-\mathbf{X} = \begin{bmatrix}X_1 \\ X_2\end{bmatrix}, \; \boldsymbol{\mu} =
-%\begin{bmatrix}\mu_1 \\ \mu_2\end{bmatrix}
-\begin{bmatrix}\smash{\overbrace{\mu_1}^{\mathbb{E}[X_1]}} \\ \smash{\underbrace{\mu_2}_{\mathbb{E}[X_2]}}\end{bmatrix}
-, \; \mathbf{\Sigma} = \begin{bmatrix}\smash{\overbrace{\sigma_1^2}^{\text{Var}[X_1]}} &amp; \smash{\overbrace{\rho\sigma_1\sigma_2}^{\text{Cov}[X_1,X_2]}} \\ \smash{\underbrace{\rho\sigma_2\sigma_1}_{\text{Cov}[X_2,X_1]}} &amp; \smash{\underbrace{\sigma_2^2}_{\text{Var}[X_2]}}\end{bmatrix}
-% \begin{bmatrix}\sigma_1^2 &amp; \rho\sigma_1\sigma_2 \\ \rho\sigma_2\sigma_1 &amp; \sigma_2^2 \end{bmatrix}
-% = \begin{bmatrix}\text{Var}[X_1] &amp; \text{Cov}[X_1,X_2] \\ \text{Cov}[X_2,X_1] &amp; \text{Var}[X_2] \end{bmatrix}
+f_X(v) = \frac{1}{\sigma\sqrt{2\pi}}\bigexp{-\frac{1}{2}\left(\frac{v - \mu}{\sigma}\right)^2}
 \]</span></p>
 </div>
-<ul>
-<li>By squishing all this information intro matrices, we can specify the parameters of <strong>multivariate-normally-distributed</strong> <em>vectors</em> of RVs similarly to how we specify single-dimensional normally-distributed RVs:</li>
-</ul>
-<div class="crunch-math">
+<div id="mvnorm-compare-right" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<center>
+<p><span style="border-bottom: 1px solid black;">Structure of <span class="math inline">\(\Sigma\)</span></span></p>
+</center>
 <p><span class="math display">\[
 \begin{align*}
-\overbrace{X}^{\mathclap{\text{scalar}}} &amp;\sim \mathcal{N}\phantom{_k}(\overbrace{\mu}^{\text{scalar}}, \overbrace{\sigma}^{\text{scalar}}) \tag{Univariate} \\
-\underbrace{\mathbf{X}}_{\text{vector}} &amp;\sim \boldsymbol{\mathcal{N}}_k(\smash{\underbrace{\boldsymbol{\mu}}_{\text{vector}}}, \underbrace{\mathbf{\Sigma}}_{\text{matrix}}) \tag{Multivariate}
+\mathbf{\Sigma} &amp;= \begin{bmatrix}\sigma_1^2 &amp; \rho\sigma_1\sigma_2 \\ \rho\sigma_2\sigma_1 &amp; \sigma_2^2\end{bmatrix} \\[0.1em]
+\implies \det(\Sigma) &amp;= \sigma_1^2\sigma_2^2 - \rho^2\sigma_1^2\sigma_2^2 \\
+&amp;= \sigma_1^2\sigma_2^2(1-\rho^2)
 \end{align*}
 \]</span></p>
 </div>
+</div>
+</div>
 </section>
-<section id="visualizing-3d-distributions-projection" class="slide level2 smaller crunch-title title-12">
-<h2>Visualizing 3D Distributions: Projection</h2>
+<section id="quadratic-forms" class="slide level2 smaller">
+<h2>Quadratic Forms</h2>
 <ul>
-<li>Since most of our intuitions about plots come from <strong>2D</strong> plots, it is <strong>extremely useful</strong> to be able to take a 3D plot like this and imagine “projecting” it down into different 2D plots:</li>
+<li>Quadratic forms will seem scary until someone forces you to write out the matrix multiplication!</li>
+<li>Start with the 1D case: <span class="math inline">\(\mathbf{x} = [x_1]\)</span>, <span class="math inline">\(\boldsymbol\mu = [\mu_1]\)</span>, <span class="math inline">\(\Sigma = [\sigma^2]\)</span>. Then</li>
 </ul>
-
-<img data-src="images/bivariate_normal_corrected.svg" class="r-stretch quarto-figure-center"><p class="caption">Adapted (and corrected!) from LaTeX code in <a href="https://tex.stackexchange.com/questions/31708/draw-a-bivariate-normal-distribution-in-tikz" target="_blank">this StackExchange thread</a></p></section>
-<section id="visualizing-3d-distributions-contours" class="slide level2 smaller title-12">
-<h2>Visualizing 3D Distributions: Contours</h2>
-
-<img data-src="images/contour_nocorr.png" class="r-stretch quarto-figure-center"><p class="caption">From <a href="https://jfh.georgetown.domains/dsan5100/slides/W02/notes.html#bi-variate-normal-uncorrelated" target="_blank">Prof.&nbsp;Hickman’s slides</a>!</p></section>
-<section id="visualizing-3d-distributions-contours-1" class="slide level2 smaller title-12">
-<h2>Visualizing 3D Distributions: Contours</h2>
-
-<img data-src="images/contour_corr.png" class="r-stretch quarto-figure-center"><p class="caption">Also from <a href="https://jfh.georgetown.domains/dsan5100/slides/W02/notes.html#bi-variate-correlated" target="_blank">Prof.&nbsp;Hickman’s slides</a>!</p></section>
-<section id="bivariate-distributions" class="slide level2">
-<h2>Bivariate Distributions</h2>
-<p><span class="citation" data-cites="degroot_probability_2013">DeGroot and Schervish (<a href="#/references" role="doc-biblioref" onclick="">2013, 118</a>)</span> | <a href="https://jjacobs.me/dsps/03-random-variables.html#sec-3-4">DSPS Sec. 3.4 <i class="bi bi-box-arrow-up-right ps-1"></i></a></p>
+<p><span class="math display">\[
+(\mathbf{x} - \boldsymbol\mu)^\top \Sigma^{-1} (\mathbf{x - \boldsymbol\mu}) = (x_1 - \mu_1)\frac{1}{\sigma^2}(x_1 - \mu_1) = \left(\frac{x_1 - \mu_1}{\sigma}\right)^2 ~ 🤯
+\]</span></p>
+</section>
+<section id="the-2d-case" class="slide level2 smaller math-80 crunch-title crunch-ul crunch-lists crunch-math">
+<h2>The 2D Case</h2>
 <ul>
-<li>We generalize the concept of the distribution of a random variable to the <strong>joint distribution</strong> of two random variables.</li>
-<li>In doing so, we introduce the <strong>joint pmf</strong> for two <strong>discrete</strong> random variables, the <strong>joint pdf</strong> for two <strong>continuous</strong> variables, and the <strong>joint CDF</strong> for <strong>any two</strong> random variables.</li>
+<li>Let <span class="math inline">\(\mathbf{x} = \left[\begin{smallmatrix}x_1 \\ x_2\end{smallmatrix}\right]\)</span>, <span class="math inline">\(\boldsymbol\mu = \left[ \begin{smallmatrix}\mu_1 \\ \mu_2 \end{smallmatrix}\right]\)</span>, <span class="math inline">\(\Sigma\)</span> as in previous slide. Then <span class="math inline">\(\mathbf{x} - \boldsymbol\mu = \left[ \begin{smallmatrix} x_1 - \mu_1 \\ x_2 - \mu_2 \end{smallmatrix} \right]\)</span></li>
+<li>Using what we know about <span class="math inline">\(2 \times 2\)</span> matrix inversion,</li>
 </ul>
+<p><span class="math display">\[
+\Sigma^{-1} = \frac{1}{\det(\Sigma)}\left[ \begin{smallmatrix} \sigma_2^2 &amp; -\rho \sigma_2\sigma_1 \\ -\rho \sigma_1\sigma_2 &amp; \sigma_1^2\end{smallmatrix} \right] = \frac{1}{\sigma_1^2\sigma_2^2(1-\rho^2)}\left[ \begin{smallmatrix} \sigma_2^2 &amp; -\rho \sigma_2\sigma_1 \\ -\rho \sigma_1\sigma_2 &amp; \sigma_1^2\end{smallmatrix} \right]
+\]</span></p>
+<ul>
+<li>With <span class="math inline">\(\widetilde{\rho} \equiv 1 - \rho^2\)</span>, we can write everything as a bunch of matrix multiplications:</li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+&amp;(\mathbf{x} - \boldsymbol\mu)^\top \Sigma^{-1} (\mathbf{x} - \boldsymbol\mu)
+= \frac{1}{\sigma_1^2\sigma_2^2 \widetilde{\rho}}
+\begin{bmatrix}x_1 - \mu_1 &amp; x_2 - \mu_2\end{bmatrix}
+\cdot
+\begin{bmatrix} \sigma_2^2 &amp; -\rho \sigma_2\sigma_1 \\ -\rho \sigma_1\sigma_2 &amp; \sigma_1^2\end{bmatrix}
+\cdot
+\begin{bmatrix}x_1 - \mu_1 \\ x_2 - \mu_2\end{bmatrix} \\
+&amp;= \frac{1}{\sigma_1^2\sigma_2^2 \widetilde{\rho}}
+\begin{bmatrix}(x_1-\mu_1)\sigma_2^2 - (x_2-\mu_2)\rho\sigma_1\sigma_2 &amp; (x_2 - \mu_2)\sigma_1^2 - (x_1 - \mu_1)\rho\sigma_2\sigma_1 \end{bmatrix}
+\cdot
+\begin{bmatrix}x_1 - \mu_1 \\ x_2 - \mu_2\end{bmatrix} \\
+&amp;= \frac{1}{\sigma_1^2\sigma_2^2 \widetilde{\rho}}
+\left(
+  (x_1-\mu_1)^2 \sigma_2^2 - (x_1 - \mu_1)(x_1 - \mu_2)\sigma_1\sigma_2 + (x_2 - \mu_2)^2 \sigma_1^2 - (x_1 - \mu_1)(x_2 - \mu_2)\sigma_2\sigma_1
+\right) \\
+&amp;= \boxed{
+\frac{1}{\widetilde{\rho}}
+\left(
+  \left(\frac{x_1 - \mu_1}{\sigma_1}\right)^2
+  + \left(\frac{x_2 - \mu_2}{\sigma_2}\right)^2
+  - 2\rho\frac{(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1\sigma_2}
+\right)
+}
+\end{align*}
+\]</span></p>
+</section>
+<section id="the-2d-case-in-its-final-form" class="slide level2 smaller math-90">
+<h2>The 2D Case In Its FINAL FORM</h2>
+<p><span class="math display">\[
+f_{\mathbf{X}}(\mathbf{x})
+= C \bigexp{
+  -\frac{1}{2(1-\rho^2)}
+  \left(
+    \left(\frac{x_1 - \mu_1}{\sigma_1}\right)^2
+    + \left(\frac{x_2 - \mu_2}{\sigma_2}\right)^2
+    - 2\rho\frac{(x_1 - \mu_1)(x_2 - \mu_2)}{\sigma_1\sigma_2}
+  \right)
+}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+C = \frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}.
+\]</span></p>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -720,67 +544,14 @@ M''_{X}(t) &amp;= pe^t,\text{ and }\expect{X^2} = M''_X(0) = p \\
 <div id="ref-degroot_probability_2013" class="csl-entry" role="listitem">
 DeGroot, Morris H., and Mark J. Schervish. 2013. <em>Probability and <span>Statistics</span></em>. Pearson Education.
 </div>
-<div id="ref-hansen_large_1982" class="csl-entry" role="listitem">
-Hansen, Lars Peter. 1982. <span>“Large Sample Properties of Generalized Method of Moments Estimators.”</span> <em>Econometrica: Journal of the Econometric Society</em>, 1029–54.
 </div>
-</div>
-<!-- APPENDIX -->
+
+
 </section></section>
-<section>
-<section id="appendix-slides" class="title-slide slide level1 center">
-<h1>Appendix Slides</h1>
-
-</section>
-<section id="sec-hadamard" class="slide level2 smaller smallmath title-10">
-<h2>Appendix I: The Hadamard Product</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li>Used in nearly all neural NLP algorithms, as basis of <a href="https://jaketae.github.io/study/dissecting-lstm/">LSTM</a> (see LSTM equations on right)</li>
-<li>Subscripts on harmonic mean <span class="math inline">\(M_{-1}\)</span>, geometric mean <span class="math inline">\(M_0\)</span>, and arithmetic mean <span class="math inline">\(M_1\)</span> come from the definition of the <strong>generalized mean</strong>:</li>
-</ul>
-<p><span class="math display">\[
-M_p(V) = \left( \frac{1}{n} \sum_{i=1}^n v_i^p \right)^{1/p}
-\]</span></p>
-</div><div class="column" style="width:40%;">
-<p><span class="math display">\[
-\begin{align*}
-f_t &amp;= \sigma(W_f [h_{t - 1}, x_t] + b_f) \\
-i_t &amp;= \sigma(W_i [h_{t - 1}, x_t] + b_i) \\
-\tilde{C}_t &amp;= \tanh(W_C [h_{t - 1}, x_t] + b_C) \\
-C_t &amp;= f_t \odot C_{t - 1} + i_t \odot \tilde{C}_t \\
-o_t &amp;= \sigma(W_o [h_{t - 1}, x_t] + b_o) \\
-h_t &amp;= o_t \odot \tanh(C_t) \\
-\hat{y} &amp;= \text{softmax}(W_y h_t + b_y)
-\end{align*}
-\]</span></p>
-</div></div>
-<ul>
-<li>If you’re a dork like me, you can read about <a href="https://en.wikipedia.org/wiki/Generalized_mean" target="_blank">generalized means</a>, <a href="https://en.wikipedia.org/wiki/Fr%C3%A9chet_mean" target="_blank">Fréchet means</a>, or <a href="https://www.stata-journal.com/article.html?article=st0313" target="_blank">Stata’s <code>trimmean</code> function</a>, all of which bring together seemingly-unrelated functions used throughout Machine Learning!</li>
-</ul>
-</section>
-<section id="sec-continuous-support" class="slide level2 crunch-title title-09 footnotes-0 scrollable">
-<h2>Appendix II: Continuous RV Support</h2>
-<p>In most cases, for continuous RVs, the definition</p>
-<p><span class="math display">\[
-\mathcal{R}_X = \{x \in \mathsf{Domain}(f_X) \given f_X(x) &gt; 0\}
-\]</span></p>
-<p>works fine. But, to fully capture <strong>all</strong> possible continuous RVs, the following formal definition is necessary:</p>
-<p><span class="math display">\[
-\mathcal{R}_X = \left\{x \in \mathbb{R} \given \forall r &gt; 0 \left[ f_X(B(x,r)) &gt; 0 \right] \right\},
-\]</span></p>
-<p>where <span class="math inline">\(B(x,r)\)</span> is a “band”<sup>1</sup> around <span class="math inline">\(x\)</span> with radius <span class="math inline">\(r\)</span>.</p>
-
-
-
-<aside><div>
-<p>For a full explanation, see <a href="https://math.stackexchange.com/questions/846011/precise-definition-of-the-support-of-a-random-variable" target="_blank">this StackExchange discussion</a>.</p>
-</div><ol class="aside-footnotes"><li id="fn4"><p>In one dimension, this would be an interval; in two dimensions, a circle; in three dimensions, a sphere; etc.</p></li></ol></aside></section></section>
-
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>DSAN 5100-01 W06: Moments and Covariance</p>
+<p>DSAN 5100 W06: Multivariate Distributions</p>
 </div>
 </div></div>
 

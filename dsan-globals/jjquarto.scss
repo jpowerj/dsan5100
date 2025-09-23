@@ -267,6 +267,9 @@ margin-bottom: 0px !important;
     padding: 3px !important;
 }
 
+.crunch-title h1 {
+    margin-bottom: 0px !important;
+}
 .crunch-title h2 {
     margin-bottom: 0px !important;
 }
@@ -318,11 +321,23 @@ height: 350px !important;
 }
 
 .fix-tex-headers th {
-font-size: 1em !important;
+    font-size: 1em !important;
 }
 
 .fn-span {
-font-size: 80% !important;
+    font-size: 80% !important;
+}
+
+.highlight-col1 .column:first-of-type {
+    background-color: rgba(255, 165, 0, 0.1);
+    border: 2px solid orange;
+    border-radius: 10px;
+}
+.highlight-col2 .column:nth-of-type(2) {
+    background-color: rgba(255, 165, 0, 0.1);
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding-right: 4px !important;
 }
 
 .inline-95 .math.inline {
@@ -341,10 +356,13 @@ font-size: 80% !important;
     font-size: 95% !important;
 }
 .math-90 .math.display {
-font-size: 90% !important;
+    font-size: 90% !important;
+}
+.math-85 .math.display {
+    font-size: 85% !important;
 }
 .math-80 .math.display {
-font-size: 80% !important;
+    font-size: 80% !important;
 }
 .math-75 .math.display {
     font-size: 75% !important;
@@ -354,8 +372,8 @@ font-size: 80% !important;
 }
 
 .footnotes-0 aside {
-bottom: 0px !important;
-margin-top: 0px !important;
+    bottom: 0px !important;
+    margin-top: 0px !important;
 }
 
 .new-unit {
@@ -472,7 +490,7 @@ border-top: none !important;
 }
 
 .small-title h1 {
-font-size: var(--r-heading2-size) !important;
+    font-size: var(--r-heading2-size) !important;
 }
 .small-title h2 {
     font-size: var(--r-heading3-size) !important;
@@ -545,16 +563,16 @@ vertical-align: top !important;
     font-size: 50% !important;
 }
 .text-60 {
-        font-size: 60% !important;
+    font-size: 60% !important;
 }
 .text-65 {
     font-size: 65% !important;
 }
 .text-70 {
-font-size: 70% !important;
+    font-size: 70% !important;
 }
 .text-75 {
-font-size: 75% !important;
+    font-size: 75% !important;
 }
 .text-80 {
     font-size: 80% !important;
@@ -563,20 +581,20 @@ font-size: 75% !important;
     font-size: 82% !important;
 }
 .text-85 {
-font-size: 85% !important;
+    font-size: 85% !important;
 }
 .text-90 {
-font-size: 90% !important;
+    font-size: 90% !important;
 }
 .text-95 {
-font-size: 95% !important;
+    font-size: 95% !important;
 }
 
 .reveal .title {
-    font-size: 200% !important;
+    font-size: 180% !important;
 }
 .reveal .subtitle {
-    font-size: 90% !important;
+    font-size: 80% !important;
 }
 
 .title-06 h2, .title-06 h1 {

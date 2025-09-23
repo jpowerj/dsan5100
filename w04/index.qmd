@@ -1,18 +1,17 @@
 ---
-title: "Week 4: Discrete Distributions"
-subtitle: "*DSAN 5100: Probabilistic Modeling and Statistical Computing*<br>Section 03"
-author: "Jeff Jacobs"
-institute: "<a href=\"mailto:jj1088@georgetown.edu\" target=\"_blank\">`jj1088@georgetown.edu`</a>"
-date: 2024-09-17
+title: "Week 4: Continuous Distributions"
+subtitle: "*DSAN 5100: Probabilistic Modeling and Statistical Computing*<br>Section 01"
+author: "Purna Gamage, Amineh Zadbood, and Jeff Jacobs"
+date: 2025-09-16
 date-format: full
-lecnum: 4
+lecnum: 5
+bibliography: "../_DSAN5100.bib"
 categories:
   - "Class Sessions"
 format:
   revealjs:
     cache: false
-    css: "../dsan-globals/jjstyles.css"
-    footer: "DSAN 5100-03 W04: Discrete Distributions"
+    footer: "DSAN 5100 W04: Continuous Distributions"
     output-file: slides.html
     df-print: kable
     code-fold: true
@@ -22,7 +21,7 @@ format:
     number-sections: false
     link-external-icon: true
     link-external-newwindow: true
-    theme: [default]
+    theme: [default, "../dsan-globals/jjquarto.scss"]
     revealjs-plugins:
       - simplemenu
     simplemenu:
@@ -31,7 +30,7 @@ format:
         header: "<div class='menubar'><span style='position: absolute; left: 8; padding-left: 8px;'><a href='./index.html'>&larr; Return to Notes</a></span><ul class='menu'></ul></div>"
       scale: 0.5
     include-in-header:
-      text: "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'><link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css'>"
+      text: "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'><link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css'><link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'><script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz' crossorigin='anonymous'></script>"
   html:
     cache: false
     output-file: index.html
@@ -49,929 +48,26 @@ format:
 
 :::
 
-# "Rules" of Probability {data-stack-name="«Rules»"}
+# Probability Distributions in General {data-stack-name="Probability Distributions"}
+
+{{< include ../dsan-globals/_globals-tex.qmd >}}
 
 ::: {.hidden}
 
 ```{r}
+#| label: source-globals
 source("../dsan-globals/_globals.r")
 ```
 
 :::
 
-## Summarizing What We Know So Far {.smaller}
-
-* Logic $\rightarrow$ Set Theory $\rightarrow$ Probability Theory
-* Entirety of probability theory can be derived from **two axioms**:
-
-::: {.callout-tip icon=false title="The Entirety of Probability Theory Follows From..."}
-
-**Axiom 1** (*Unitarity*): $\Pr(\Omega) = 1$ (The probability that **something** happens is 1)
-
-**Axiom 2** (*$\sigma$-additivity*): For mutually-exclusive events $E_1, E_2, \ldots$,
-
-$$
-\underbrace{\Pr\left(\bigcup_{i=1}^{\infty}E_i\right)}_{\Pr(E_1\text{ occurs }\vee E_2\text{ occurs } \vee \cdots)} = \underbrace{\sum_{i=1}^{\infty}\Pr(E_i)}_{\Pr(E_1\text{ occurs}) + \Pr(E_2\text{ occurs}) + \cdots}
-$$
-  
-:::
-
-* But what does "mutually exclusive" mean...?
-
-## Venn Diagrams: Sets {.smaller}
-
-:::: {.columns}
-::: {.column width="50%"}
-
-$$
-\begin{align*}
-&A = \{1, 2, 3\}, \; B = \{4, 5, 6\} \\
-&\implies A \cap B = \varnothing
-\end{align*}
-$$
-
-![Mutually-exclusive (disjoint) sets](images/venn_disjoint.svg){fig-align="center" width="100%"}
-
-:::
-::: {.column width="50%"}
-
-$$
-\begin{align*}
-&A = \{1, 2, 3, 4\}, \; B = \{3, 4, 5, 6\} \\
-&\implies A \cap B = \{3, 4\}
-\end{align*}
-$$
-
-![Non-mutually-exclusive sets](images/venn_two_circs.svg){fig-align="center" width="75%"}
-
-:::
-:::
-
-## Venn Diagrams: Events (Dice) {.smaller}
-
-$$
-\begin{align*}
-A &= \{\text{Roll is even}\} = \{2, 4, 6\} \\
-B &= \{\text{Roll is odd}\} = \{1, 3, 5\} \\
-C &= \{\text{Roll is in Fibonnaci sequence}\} = \{1, 2, 3, 5\}
-\end{align*}
-$$
-
-| Set 1 | Set 2 | Intersection | Mutually Exclusive? | Can Happen Simultaneously? |
-|:-:|:-:| - | - | - |
-| $A$ | $B$ | $A \cap B = \varnothing$ | **Yes** | **No** |
-| $A$ | $C$ | $A \cap C = \{2\}$ | **No** | **Yes** |
-| $B$ | $C$ | $B \cap C = \{1, 3, 5\}$ | **No** | **Yes** |
-
-: {tbl-colwidths="[8,8,30,27,27]"}
-
-## "Rules" of Probability {.smaller}
-
-(Remember: not *"rules"* but *"facts resulting from the logic $\leftrightarrow$ probability connection"*)
-
-::: {.callout-tip icon="false" title="\"Rules\" of Probability"}
-
-For logical predicates $p, q \in \{T, F\}$, events $P, Q$ defined so $P$ = event that $p$ becomes true, $Q$ = event that $q$ becomes true,
-
-1. **Logical AND = Probabilistic Multiplication**
-
-$$
-\Pr(p \wedge q) = \Pr(P \cap Q) = \Pr(P) \cdot \Pr(Q)
-$$
-
-2. **Logical OR = Probabilistic Addition**
-
-$$
-\Pr(p \vee q) = \Pr(P \cup Q) = \Pr(P) + \Pr(Q) - \underbrace{\Pr(P \cap Q)}_{\text{(see rule 1)}}
-$$
-
-3. **Logical NOT = Probabilistic Complement**
-
-$$
-\Pr(\neg p) = \Pr(P^c) = 1 - \Pr(P)
-$$
-
-:::
-
-# What is Conditional Probability? {data-stack-name="Conditional Prob"}
-
-## Conditional Probability {.smaller .crunch-title .crunch-li-8 .inline-90}
-
-* Usually if someone asks you probabilistic questions, like
-  * "What is the likelihood that [our team] wins?"
-  * "Do you think it will rain tomorrow?"
-    
-* You don't guess a random number, you **consider** and **incorporate evidence**.
-* Example: $\Pr(\text{rain})$ on its own, no other info? Tough question... maybe $0.5$?
-* In reality, we would think about
-  * $\Pr(\text{rain} \mid \text{month of the year})$
-  * $\Pr(\text{rain} \mid \text{where we live})$
-  * $\Pr(\text{rain} \mid \text{did it rain yesterday?})$
-* Psychologically, breaks down into two steps: (1) Think of **baseline probability**, (2) **Update** baseline to incorporate **relevant evidence** (more on this in a bit...)
-* Also recall: **all** probability is **conditional** probability, even if just conditioned on "something happened" ($\Omega$, the thing defined so $\Pr(\Omega) = 1$)
-
-## Naïve Definition 2.0 {.smaller}
-
-::: {.callout-tip icon="false" title="[Slightly Less] Naïve Definition of Probability"}
-
-$$
-\Pr(A \mid B) = \frac{\text{\# of Desired Outcomes in world where }B\text{ happened}}{\text{\# Total outcomes in world where }B\text{ happened}} = \frac{|B \cap A|}{|B|}
-$$
-
-:::
-
-| World Name | Weather in World | Likelihood of Rain Today |
-| - | - |:-:|
-| $R$ | **Rained for the past 5 days** | $\Pr(\text{rain} \mid R) > 0.5$ |
-| $M$ | **Mix of rain and non-rain over past 5 days** | $\Pr(\text{rain} \mid M) \approx 0.5$ |
-| $S$ | **Sunny for the past 5 days** | $\Pr(\text{rain} \mid S) < 0.5$ |
-
-: {tbl-colwidths="[16,50,34]"}
-
-
-## Law of Total Probability {.smaller .crunch-title .math-80}
-
-* Suppose the events $B_1, \ldots, B_k$ form a partition of the space $\Omega$ and $\Pr(B_j) > 0 \forall j$.
-* Then, for every event $A$ in $\Omega$,
-
-    $$
-    \Pr(A) = \sum_{i=1}^k \Pr(B_j)\Pr(A \mid B_j)
-    $$
-
-* Probability of an event is the sum of its conditional probabilities across all conditions.
-* In other words: $A$ is some event, $B_1, \ldots, B_n$ are mutually exclusive events filling entire sample-space, then
-
-    $$
-    \Pr(A) = \Pr(A \mid B_1)\Pr(B_1) + \Pr(A \mid B_2)\Pr(B_2) + \cdots + \Pr(A \mid B_n)\Pr(B_n)
-    $$
-
-    i.e. Compute the probability by **summing over all possible cases**.
-
-::: {.notes}
-
-Draw pic on board!
-
-:::
-
-## Example {.smaller .crunch-title}
-
-* Probability of completing job on time with and without rain: 0.42 and 0.9.
-* Probability of rain is 0.45. What is probability job will be completed on time?
-* $A$ = job will be completed on time, $B$ = rain
-
-$$
-\Pr(B) = 0.45 \implies \Pr(B^c) = 1 - \Pr(B) = 0.55.
-$$
-
-* Note: Events $B$ and $B^c$ are exclusive and form partitions of the sample space $S$
-* We know $\Pr(A \mid B) = 0.24$, $\Pr(A \mid B^c) = 0.9$.
-* By the Law of Total Probability, we have
-
-$$
-\begin{align*}
-\Pr(A) &= \Pr(B)\Pr(A \mid B) + \Pr(B^c)\Pr(A \mid B^c) \\
-&= 0.45(0.42) + 0.55(0.9) = 0.189 + 0.495 = 0684.
-\end{align*}
-$$
-
-So, the probability that the job will be completed on time is **0.684**. [(source)](https://byjus.com/maths/total-probability-theorem/){target="_blank"}
-
-# Bayes' Theorem and its Implications {data-stack-name="Bayes"}
-
-## Deriving Bayes' Theorem {.smaller .crunch-math}
-
-* Literally just a re-writing of the conditional probability definition (don't be scared)!
-
-::: columns
-::: {.column width="50%"}
-
-1. For two events $A$ and $B$, definition of conditional probability says that
-
-$$
-\begin{align*}
-\Pr(A \mid B) &= \frac{\Pr(A \cap B)}{\Pr(B)} \tag{1} \\
-\Pr(B \mid A) &= \frac{\Pr(B \cap A)}{\Pr(A)} \tag{2}
-\end{align*}
-$$
-
-2. Multiply to get rid of fractions
-
-$$
-\begin{align*}
-\Pr(A \mid B)\Pr(B) &= \Pr(A \cap B) \tag{1*} \\
-\Pr(B \mid A)\Pr(A) &= \Pr(B \cap A) \tag{2*}
-\end{align*}
-$$
-
-:::
-::: {.column width="50%"}
-
-3. But **set intersection** is **associative** (just like multiplication...), $A \cap B = B \cap A$! So, we know LHS of $(\text{1*})$ = LHS of $(\text{2*})$:
-
-$$
-\Pr(A \mid B)\Pr(B) = \Pr(B \mid A)\Pr(A)
-$$
-
-4. Divide both sides by $\Pr(B)$ to get a **new definition** of $\Pr(A \mid B)$, **Bayes' Theorem**!
-
-::: {#fig-bayes-thm}
-
-$$
-\boxed{\Pr(A \mid B) = \frac{\Pr(B \mid A)\Pr(A)}{\Pr(B)}}
-$$
-
-Bayes' Theorem
-:::
-
-:::
-:::
-
-## Why Is This Helpful? {.smaller .crunch-title .crunch-math .crunch-li-5 .inline-90}
-
-::: {.callout-tip icon="false" title="Bayes' Theorem"}
-
-For any two events $A$ and $B$,
-$$
-\Pr(A \mid B) = \frac{\Pr(B \mid A)\Pr(A)}{\Pr(B)}
-$$
-
-:::
-
-* In words (as exciting as I can make it, for now): **Bayes' Theorem allows us to take information about $B \mid A$ and use it to infer information about $A \mid B$**
-* It isn't until you work through some examples that this becomes mind-blowing, the most powerful equation we have for inferring **unknowns** from **knowns**...
-* Consider $A = \{\text{person has disease}\}$, $B = \{\text{person tests positive for disease}\}$
-  1. Is $A$ observable on its own? **No**, but...
-  2.
-    (a) Is $B$ observable on its own? **Yes**, and
-    (b) Can we **infer** info about $A$ from knowing $B$? **Also Yes, thx Bayes!**
-  3. Therefore, we can **use $B$ to infer information about $A$**, i.e., calculate $\Pr(A \mid B)$
-
-## Why Is This Helpful for *Data Science*? {.smaller}
-
-* It merges **probability theory** and **hypothesis testing** into a single framework:
-
-$$
-\Pr(\text{hypothesis} \mid \text{data}) = \frac{\Pr(\text{data} \mid \text{hypothesis})\Pr(\text{hypothesis})}{\Pr(\text{data})}
-$$
-
-
-## Probability Forwards and Backwards {.nostretch .smaller}
-
-* Two discrete RVs:
-  * Weather on a given day, $W \in \{\textsf{Rain},\textsf{Sun}\}$
-  * Action that day, $A \in \{\textsf{Go}, \textsf{Stay}\}$: go to party or stay in and watch movie
-* Data-generating process: if $\textsf{Sun}$, rolls a die $R$ and goes out unless $R = 6$. If $\textsf{Rain}$, flips a coin and goes out if $\textsf{H}$.
-
-* Probabilistic Graphical Model (PGM):
-
-![](images/pgm.svg){fig-align="center" width="60%"}
-
-## Probability Forwards and Backwards {.unnumbered .nostretch}
-
-* So, if we know $W = \textsf{Sun}$, what is $P(A = \textsf{Go})$?
-$$
-\begin{align*}
-P(A = \textsf{Go} \mid W) &= 1 - P(R = 6) \\
-&= 1 - \frac{1}{6} = \frac{5}{6}
-\end{align*}
-$$
-
-* Conditional probability lets us go **forwards** (left to right):
-
-![](images/pgm_forwards.svg){fig-align="center" width="60%"}
-
-::: {.notes}
-But what if we want to perform inference going **backwards**?
-:::
-
-## Probability Forwards and Backwards {.unnumbered .smaller .smallishmath}
-
-::: columns
-::: {.column width="50%"}
-
-  * If we see Ana at the party, we know $A = \textsf{Go}$
-  * What does this tell us about the weather?
-  * Intuitively, we should increase our degree of belief that $W = \textsf{Sun}$. But, by how much?
-  * We don't know $P(W \mid A)$, only $P(A \mid W)$...
-
-:::
-::: {.column width="50%"}
-
-![](images/koolaid_bayes.png){fig-align="center" width="100%"}
-
-:::
-:::
-
-## Probability Forwards and Backwards {.unnumbered .smaller}
-
-$$
-P(W = \textsf{Sun} \mid A = \textsf{Go}) = \frac{\overbrace{P(A = \textsf{Go} \mid W = \textsf{Sun})}^{5/6~ ✅}\overbrace{P(W = \textsf{Sun})}^{❓}}{\underbrace{P(A = \textsf{Go})}_{❓}}
-$$
-
-* We've seen $P(W = \textsf{Sun})$ before, it's our **prior**: the probability without having any additional relevant knowledge. So, let's say 50/50. $P(W = \textsf{Sun}) = \frac{1}{2}$
-* If we lived in Seattle, we could pick $P(W = \textsf{Sun}) = \frac{1}{4}$
-
-## Probability Forwards and Backwards {.unnumbered .smaller .small-math}
-
-$$
-P(W = \textsf{Sun} \mid A = \textsf{Go}) = \frac{\overbrace{P(A = \textsf{Go} \mid W = \textsf{Sunny})}^{5/6~ ✅}\overbrace{P(W = \textsf{Sun})}^{1/2~ ✅}}{\underbrace{P(A = \textsf{Go})}_{❓}}
-$$
-
-* $P(A = \textsf{Go})$ is trickier: the probability that Ana goes out **regardless of what the weather is**. But there are only two possible weather outcomes! So we just compute
-
-$$
-\begin{align*}
-&P(A = \textsf{Go}) = \sum_{\omega \in S(W)}P(A = \textsf{Go}, \omega) = \sum_{\omega \in S(W)}P(A = \textsf{Go} \mid \omega)P(\omega) \\
-&= P(A = \textsf{Go} \mid W = \textsf{Rain})P(W = \textsf{Rain}) + P(A = \textsf{Go} \mid W = \textsf{Sun})P(W = \textsf{Sun}) \\
-&= \left( \frac{1}{2} \right)\left( \frac{1}{2} \right) + \left( \frac{5}{6} \right)\left( \frac{1}{2} \right) = \frac{1}{4} + \frac{5}{12} = \frac{2}{3}
-\end{align*}
-$$
-
-## Putting it All Together {.math-80}
-
-$$
-\begin{align*}
-P(W = \textsf{Sun} \mid A = \textsf{Go}) &= \frac{\overbrace{P(A = \textsf{Go} \mid W = \textsf{Sunny})}^{3/4~ ✅}\overbrace{P(W = \textsf{Sun})}^{1/2~ ✅}}{\underbrace{P(A = \textsf{Go})}_{1/2~ ✅}} \\
-&= \frac{\left(\frac{3}{4}\right)\left(\frac{1}{2}\right)}{\frac{1}{2}} = \frac{\frac{3}{8}}{\frac{1}{2}} = \frac{3}{4}.
-\end{align*}
-$$
-
-* Given that we see Ana at the party, we should **update our beliefs**, so that $P(W = \textsf{Sun}) = \frac{3}{4}, P(W = \textsf{Rain}) = \frac{1}{4}$.
-
-## A Scarier Example {.smaller}
-
-* Bo worries he has a **rare disease**. He takes a test with **99% accuracy** and tests **positive**. What's the probability Bo has the disease? (Intuition: 99%? ...Let's do the math!)
-
-::: columns
-::: {.column width="50%"}
-
-* $H \in \{\textsf{sick}, \textsf{healthy}\}, T \in \{\textsf{T}^+, \textsf{T}^-\}$
-* **The test**: 99% accurate. $\Pr(T = \textsf{T}^+ \mid H = \textsf{sick}) = 0.99$, $\Pr(T = \textsf{T}^- \mid H = \textsf{healthy}) = 0.99$.
-* **The disease**: 1 in 10K. $\Pr(H = \textsf{sick}) = \frac{1}{10000}$
-* **What do we want to know?** $\Pr(H = \textsf{sick} \mid T = \textsf{T}^+)$
-* **How do we get there?**
-
-:::
-::: {.column width="50%"}
-
-![This photo, originally thought to be of Thomas Bayes, turns out to be [probably someone else](https://www.york.ac.uk/depts/maths/histstat/bayespic.htm)... $\Pr(\textsf{Bayes})$?](images/bayes.jpg){fig-align="center" width="65%"}
-
-:::
-:::
-
-::: {.notes}
-$H$ for health, $T$ for test result
-
-Photo credit: https://thedatascientist.com/wp-content/uploads/2019/04/reverend-thomas-bayes.jpg
-:::
-
-## A Scarier Example {.unnumbered .math-80}
-
-$$
-\begin{align*}
-\Pr(H = \textsf{sick} \mid T = \textsf{T}^+) &= \frac{\Pr(T = \textsf{T}^+ \mid H = \textsf{sick})\Pr(H = \textsf{sick})}{\Pr(T = \textsf{T}^+)} \\
-&= \frac{(0.99)\left(\frac{1}{10000}\right)}{(0.99)\left( \frac{1}{10000} \right) + (0.01)\left( \frac{9999}{10000} \right)}
-\end{align*}
-$$
-
-```{r}
-#| label: prob-sick-bayes
-#| echo: true
-p_sick <- 1 / 10000
-p_healthy <- 1 - p_sick
-p_pos_given_sick <- 0.99
-p_neg_given_sick <- 1 - p_pos_given_sick
-p_neg_given_healthy <- 0.99
-p_pos_given_healthy <- 1 - p_neg_given_healthy
-numer <- p_pos_given_sick * p_sick
-denom1 <- numer
-denom2 <- p_pos_given_healthy * p_healthy
-final_prob <- numer / (denom1 + denom2)
-final_prob
-```
-
-* ... Less than 1% 😱
-
-## Proof in the Pudding {.smaller}
-
-* Let's generate a dataset of **5,000** people, using $\Pr(\textsf{Disease}) = \frac{1}{10000}$
-
-```{r}
-#| label: bayes-sick-mc
-#| echo: true
-#| code-fold: true
-library(tibble)
-library(dplyr)
-# Disease rarity
-p_disease <- 1 / 10000
-# 1K people
-num_people <- 10000
-# Give them ids
-ppl_df <- tibble(id=seq(1,num_people))
-# Whether they have the disease or not
-has_disease <- rbinom(num_people, 1, p_disease)
-ppl_df <- ppl_df %>% mutate(has_disease=has_disease)
-ppl_df |> head()
-```
-
-## Binary Variable Trick {.smaller .crunch-code}
-
-* Since `has_disease` $\in \{0, 1\}$, we can use
-  * `sum(has_disease)` to obtain the **count** of people with the disease, or
-  * `mean(has_disease)` to obtain the **proportion** of people who have the disease
-* To see this (or, if you forget in the future), just make a fake dataset with a binary variable and 3 rows, and think about **sums** vs. **means** of that variable:
-
-::: columns
-::: {.column width="40%"}
-
-```{r}
-#| label: fake-binary-data
-#| echo: true
-#| code-fold: show
-binary_df <- tibble(
-  id=c(1,2,3),
-  x=c(0,1,0)
-)
-binary_df
-```
-
-:::
-::: {.column width="60%"}
-
-Taking the **sum** tells us: **one** row where `x == 1`:
-
-```{r}
-#| label: binary-df-sum
-#| echo: true
-#| code-fold: show
-sum(binary_df$x)
-```
-
-Taking the **mean** tells us: **1/3** of rows have `x == 1`:
-
-```{r}
-#| label: binary-df-mean
-#| echo: true
-#| code-fold: show
-mean(binary_df$x)
-```
-
-:::
-:::
-
-## Applying This to the Disease Data {.smaller}
-
-* If we want the **number** of people who have the disease:
-
-```{r}
-#| echo: true
-#| code-fold: show
-#| label: compute-disease-count
-# Compute the *number* of people who have the disease
-sum(ppl_df$has_disease)
-```
-
-* If we want the **proportion** of people who have the disease:
-
-```{r}
-#| echo: true
-#| code-fold: show
-#| label: compute-disease-rate
-# Compute the *proportion* of people who have the disease
-mean(ppl_df$has_disease)
-```
-
-* (And if you dislike scientific notation like I do...)
-
-```{r}
-#| label: compute-disease-rate-decimal
-#| echo: true
-#| code-fold: show
-format(mean(ppl_df$has_disease), scientific = FALSE)
-```
-
-::: {.notes}
-(Foreshadowing Monte Carlo methods)
-:::
-
-## Data-Generating Process: Test Results {.smaller}
-
-```{r}
-#| label: count-positive-tests
-#| echo: true
-#| code-fold: show
-library(dplyr)
-# Data Generating Process
-take_test <- function(is_sick) {
-  if (is_sick) {
-    return(rbinom(1,1,p_pos_given_sick))
-  } else {
-    return(rbinom(1,1,p_pos_given_healthy))
-  }
-}
-ppl_df['test_result'] <- unlist(lapply(ppl_df$has_disease, take_test))
-num_positive <- sum(ppl_df$test_result)
-p_positive <- mean(ppl_df$test_result)
-writeLines(paste0(num_positive," positive tests / ",num_people," total = ",p_positive))
-```
-
-```{r}
-#| label: df-test-result-var
-#disp(ppl_df %>% head(50), obs_per_page = 3)
-ppl_df |> head()
-```
-
-## Zooming In On Positive Tests {.smaller}
-
-::: columns
-::: {.column width="50%"}
-
-```{r}
-#| label: filter-positives-only
-pos_ppl <- ppl_df %>% filter(test_result == 1)
-#disp(pos_ppl, obs_per_page = 10)
-pos_ppl |> head()
-```
-
-:::
-::: {.column width="50%"}
-
-* Bo doesn't have it, and neither do 110 of the 111 total people who tested positive!
-* But, in the real world, we only observe $T$
-
-![](images/pgm_sick.svg){fig-align="center" width="100%"}
-
-:::
-:::
-
-## Zooming In On Disease-Havers {.smaller}
-
-* What if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?
-
-```{r}
-#| label: disease-only
-#| echo: true
-#| code-fold: show
-#disp(ppl_df[ppl_df$has_disease == 1,])
-ppl_df[ppl_df$has_disease == 1,]
-```
-
-Is this always going to be the case?
-
-::: columns
-::: {.column width="50%"}
-
-```{r}
-#| label: repeating-disease-simulation
-#| echo: false
-#| code-fold: true
-simulate_disease <- function(num_people, p_disease, verbose = TRUE, return_df = TRUE, return_full_df = FALSE, return_all_detected = FALSE, return_info = FALSE) {
-  # Give them ids
-  sim_df <- tibble(id=seq(1,num_people))
-  # Whether they have the disease or not
-  has_disease <- rbinom(num_people, 1, p_disease)
-  sim_df['has_disease'] <- has_disease
-  # Find the number / proportion with the disease
-  num_with_disease <- sum(sim_df$has_disease)
-  prop_with_disease <- mean(sim_df$has_disease)
-  prop_with_disease_decimal <- format(prop_with_disease, scientific = FALSE)
-  if (verbose) {
-    writeLines(paste0("Num with disease: ",num_with_disease))
-    writeLines(paste0("Proportion with disease: ",prop_with_disease_decimal))
-  }
-  # Simulate giving everyone the test
-  sim_df['test_result'] <- unlist(lapply(sim_df$has_disease, take_test))
-  if (return_full_df) {
-    return(sim_df)
-  }
-  # Find the number with positive tests
-  num_pos_tests <- sum(sim_df$test_result)
-  if (verbose) {
-    writeLines(paste0("Number of positive tests: ",num_pos_tests))
-  }
-  # Extract just the people *with* the disease
-  disease_df <- sim_df %>% filter(has_disease == 1)
-  # And print the proportion of these who got correct result
-  if (nrow(disease_df) == 0) {
-    # (We define P(correct) as 1 in this case.)
-    # (Intuition: we correctly detected "all" 0 people with the disease)
-    prop_correct <- 1
-  } else {
-    prop_correct <- mean(disease_df$test_result)
-  }
-  #if (verbose) {
-  #  writeLines(paste0("Proportion of disease-havers with correct test: ",prop_correct))
-  #  print(disease_df)
-  #}
-  if (return_all_detected) {
-    return(prop_correct == 1)
-  }
-  if (return_df) {
-    return(disease_df)
-  }
-  if (return_info) {
-    return(list(
-      num_people=num_people,
-      df=disease_df,
-      prop_correct=prop_correct,
-      all_detected=(prop_correct == 1)
-    ))
-  }
-}
-#disp(simulate_disease(5000, 1/10000))
-simulate_disease(5000, 1/10000)
-```
-
-:::
-::: {.column width="50%"}
-
-```{r}
-#| label: sim-disease-again
-#disp(simulate_disease(5000, 1/10000))
-simulate_disease(5000, 1/10000)
-```
-
-:::
-:::
-
-## Worst-Case Worlds {.smaller}
-
-::: columns
-::: {.column width="50%"}
-
-```{r}
-#| label: worse-case-sim
-for (i in seq(1,1000)) {
-  sim_result <- simulate_disease(5000, 1/10000, verbose = FALSE, return_all_detected = FALSE, return_df = FALSE, return_info = TRUE)
-  if (!sim_result$all_detected) {
-    writeLines(paste0("World #",i," / 1000 (",sim_result$num_people," people):"))
-    print(sim_result$df)
-    writeLines('\n')
-  }
-}
-format(4 / 5000000, scientific = FALSE)
-```
-
-:::
-::: {.column width="50%"}
-
-How unlikely is this? Math:
-
-$$
-\begin{align*}
-\Pr(\textsf{T}^- \cap \textsf{Sick}) &= \Pr(\textsf{T}^- \mid \textsf{Sick})\Pr(\textsf{Sick}) \\
-&= (0.01)\frac{1}{10000} \\
-&= \frac{1}{1000000}
-\end{align*}
-$$
-
-Computers:
-
-```{r}
-#| label: how-unlikely-sim
-result_df <- simulate_disease(1000000, 1/10000, verbose = FALSE, return_full_df = TRUE)
-false_negatives <- result_df[result_df$has_disease == 1 & result_df$test_result == 0,]
-num_false_negatives <- nrow(false_negatives)
-writeLines(paste0("False Negatives: ",num_false_negatives,", Total Cases: ", nrow(result_df)))
-false_negative_rate <- num_false_negatives / nrow(result_df)
-false_negative_rate_decimal <- format(false_negative_rate, scientific = FALSE)
-writeLines(paste0("False Negative Rate: ", false_negative_rate_decimal))
-```
-
-(Perfect match!)
-
-:::
-:::
-
-## Bayes: Takeaway
-
-* Bayesian approach **allows new evidence to be weighed against existing evidence**, with **statistically principled** way to derive these weights:
-
-$$
-\begin{array}{ccccc}
-\Pr_{\text{post}}(\mathcal{H}) &\hspace{-6mm}\propto &\hspace{-6mm} \Pr(X \mid \mathcal{H}) &\hspace{-6mm} \times &\hspace{-6mm} \Pr_{\text{pre}}(\mathcal{H}) \\
-\text{Posterior} &\hspace{-6mm}\propto &\hspace{-6mm}\text{Evidence} &\hspace{-6mm} \times &\hspace{-6mm} \text{Prior}
-\end{array}
-$$
-
-
-## Monte Carlo Methods: Overview {data-name="Monte Carlo"}
-
-* You already saw an example, in our rare disease simulation!
-* Generally, **using computers** (rather than math, "by hand") **to estimate probabilistic quantities**
-
-::: columns
-::: {.column width="50%" .smaller}
-
-**Pros:**
-
-* Most real-world processes have no analytic solution
-* Step-by-step breakdown of complex processes
-
-:::
-::: {.column width="50%"}
-
-**Cons:**
-
-* Can require immense computing power
-* ⚠️ Can generate **incorrect answers** ⚠️
-
-:::
-:::
-
-::: {.notes}
-By step-by-step I mean, a lot of the time you are just walking through, generating the next column using previously-generated columns. Like we did in the example above, generating `test_result` based on `has_disease`.
-:::
-
-## Birthday Problem
-
-::: columns
-::: {.column width="50%"}
-
-* 30 people gather in a room together. What is the probability that two of them share the same birthday?
-* Analytic solution is fun, but requires some thought... Monte Carlo it!
-
-:::
-::: {.column width="50%"}
-
-```{r}
-#| label: monty-hall-mc
-#| echo: true
-#| code-fold: true
-gen_bday_room <- function(room_num=NULL) {
-  num_people <- 30
-  num_days <- 366
-  ppl_df <- tibble(id=seq(1,num_people))
-birthdays <- sample(1:num_days, num_people,replace = T)
-  ppl_df['birthday'] <- birthdays
-  if (!is.null(room_num)) {
-    ppl_df <- ppl_df %>% mutate(room_num=room_num) %>% relocate(room_num)
-  }
-  return(ppl_df)
-}
-ppl_df <- gen_bday_room(1)
-#disp(ppl_df %>% head())
-ppl_df |> head()
-```
-
-:::
-:::
-
-## Birthday Problem {.unnumbered}
-
-```{r}
-#| label: shared-bdays-fn
-# Inefficient version (return_num=FALSE) is for: if you want tibbles of *all* shared bdays for each room
-get_shared_bdays <- function(df, is_grouped=NULL, return_num=FALSE, return_bool=FALSE) {
-  bday_pairs <- tibble()
-  for (i in 1:(nrow(df)-1)) {
-    i_data <- df[i,]
-    i_bday <- i_data$birthday
-    for (j in (i+1):nrow(df)) {
-      j_data <- df[j,]
-      j_bday <- j_data$birthday
-      # Check if they're the same
-      same_bday <- i_bday == j_bday
-      if (same_bday) {
-        if (return_bool) {
-          return(1)
-        }
-        pair_data <- tibble(i=i,j=j,bday=i_bday)
-        if (!is.null(is_grouped)) {
-          i_room <- i_data$room_num
-          pair_data['room'] <- i_room
-        }
-        bday_pairs <- bind_rows(bday_pairs, pair_data)
-      }
-    }
-  }
-  if (return_bool) {
-    return(0)
-  }
-  if (return_num) {
-    return(nrow(bday_pairs))
-  }
-  return(bday_pairs)
-}
-#get_shared_bdays(ppl_df)
-get_shared_bdays(ppl_df)
-```
-
-## {.unnumbered .smaller}
-
-Let's try more rooms...
-
-::: columns
-::: {.column width="48%"}
-
-```{r,echo=TRUE}
-#| label: bday-mc-multiple-rooms
-#| echo: true
-# Get tibbles for each room
-library(purrr)
-gen_bday_rooms <- function(num_rooms) {
-  rooms_df <- tibble()
-  for (r in seq(1, num_rooms)) {
-      cur_room <- gen_bday_room(r)
-      rooms_df <- bind_rows(rooms_df, cur_room)
-  }
-  return(rooms_df)
-}
-num_rooms <- 10
-rooms_df <- gen_bday_rooms(num_rooms)
-rooms_df %>% group_by(room_num) %>% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))
-```
-
-:::
-::: {.column width="48%"}
-
-Number of shared birthdays per room:
-
-```{r}
-#| label: get-shared-bdays
-#| echo: true
-# Now just get the # shared bdays
-shared_per_room <- rooms_df %>%
-    group_by(room_num) %>%
-    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))
-shared_per_room <- unlist(shared_per_room)
-shared_per_room
-```
-
-* $\widehat{\Pr}(\text{shared})$
-
-```{r}
-#| label: shared-bday-rooms-pct
-sum(shared_per_room > 0) / num_rooms
-```
-
-:::
-:::
-
-## {.unnumbered .smaller}
-
-* How about **A THOUSAND ROOMS**?
-
-```{r}
-#| label: bday-1k-rooms
-num_rooms_many <- 100
-many_rooms_df <- gen_bday_rooms(num_rooms_many)
-anyshared_per_room <- many_rooms_df %>%
-    group_by(room_num) %>%
-    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_bool = TRUE))
-anyshared_per_room <- unlist(anyshared_per_room)
-anyshared_per_room
-```
-
-* $\widehat{\Pr}(\text{shared bday})$?
-
-```{r}
-#| label: bday-1k-rooms-prob
-# And now the probability estimate
-sum(anyshared_per_room > 0) / num_rooms_many
-```
-
-* The analytic solution: $\Pr(\text{shared} \mid k\text{ people in room}) = 1 - \frac{366!}{366^{k}(366-k)!}$
-* In our case: $1 - \frac{366!}{366^{30}(366-30)!} = 1 - \frac{366!}{366^{30}336!} = 1 - \frac{\prod_{i=337}^{366}i}{366^{30}}$
-* `R` can juust barely handle these numbers:
-
-```{r}
-#| label: bday-exact-soln
-(exact_solution <- 1 - (prod(seq(337,366))) / (366^30))
-```
-
-## Wrapping Up {.smaller .nostretch}
-
-```{=html}
-<style>
-#bday-solns-plot {
-  width: 50% !important;
-}
-</style>
-```
-
-<center>
-
-{{< embed _bday-solutions-plot.ipynb#bday-solns-plot width="100%" height="75%" >}}
-
-</center>
-
-## Final Note: Functions of Random Variables
-
-* $X \sim U[0,1], Y \sim U[0,1]$.
-* $P(Y < X^2)$?
-* The hard way: solve analytically
-* The easy way: simulate!
-
-# Probability Distributions in General {data-stack-name="Probability Distributions"}
-
-## Discrete vs. Continuous {.smaller .math-80 .crunch-ul .crunch-img .crunch-title .crunch-math .crunch-cell-output}
+## Discrete vs. Continuous {.smaller .math-80 .inline-90 .crunch-ul .crunch-img .crunch-title .crunch-math .crunch-cell-output .crunch-quarto-figure}
 
 ::: columns
 ::: {.column width="50%"}
 
 * **Discrete** = "Easy mode": Based (intuitively) on **sets**
-* $\Pr(A)$: Four marbles $\{A, B, C, D\}$ in box, all equally likely, what is the probability I pull out $A$?
+* $\Pr(A)$: Four equally-likely marbles $\{A, B, C, D\}$ in box, what is probability I pull out $A$?
 
 ```{r}
 #| label: discrete-prob-plot
@@ -1001,14 +97,14 @@ ggplot(disc_df, aes(x=x, y=y, label=label)) +
 ```
 
 $$
-\Pr(A) = \underbrace{\frac{|\{A\}|}{|\Omega|}}_{\mathclap{\small \text{Probability }\textbf{mass}}} = \frac{1}{|\{A,B,C,D\}|} = \frac{1}{4}
+\Pr(A) = \underset{\mathclap{\small \text{Probability }\textbf{mass}}}{\boxed{\frac{|\{A\}|}{|\Omega|}}} = \frac{1}{|\{A,B,C,D\}|} = \frac{1}{4}
 $$
 
 :::
 ::: {.column width="50%"}
 
 * **Continuous** = "Hard mode": Based (intuitively) on **areas**
-* $\Pr(A)$: If I throw a dart at this square, what is the probability that I hit region $A$?
+* $\Pr(A)$: Throw dart at random point in square, what is probability I hit $\require{enclose}\enclose{circle}{\textsf{A}}$?
 
 ```{r}
 #| label: continuous-prob-plot
@@ -1029,7 +125,7 @@ ggplot(disc_df, aes(x=x, y=y, label=label)) +
       data=data.frame(label="Ω"),
       aes(x=-0.4,y=1.39),
       parse=TRUE,
-      size=g_textsize
+      size=10
     ) +
     labs(
       title=expression("Continuous Probability Space in "*R^2)
@@ -1037,89 +133,86 @@ ggplot(disc_df, aes(x=x, y=y, label=label)) +
 ```
 
 $$
-\Pr(A) = \underbrace{\frac{\text{Area}(\{A\})}{\text{Area}(\Omega)}}_{\mathclap{\small \text{Probability }\textbf{density}}} = \frac{\pi r^2}{s^2} = \frac{\pi \left(\frac{1}{4}\right)^2}{4} = \frac{\pi}{64}
+\Pr(A) = \underset{\mathclap{\small \text{Probability }\textbf{density}}}{\boxed{\frac{\text{Area}(\{A\})}{\text{Area}(\Omega)}}} = \frac{\pi r^2}{s^2} = \frac{\pi \left(\frac{1}{4}\right)^2}{4} = \frac{\pi}{64}
 $$
 
 :::
 :::
 
-## The Technical Difference tl;dr {.smaller .smallish-math .crunch-title .crunch-math-less}
+## The Technical Difference tl;dr {.smaller .math-80 .crunch-title .crunch-math-less .crunch-ul .footnotes-0}
 
-* **Countable** Sets: Can be put into 1-to-1 correspondence with the **natural numbers** $\mathbb{N}$
+* **Countable** Sets: Can be put into 1-to-1 correspondence with **natural numbers** $\mathbb{N}$
   * What are you doing when you're counting? Saying "first", "second", "third", ...
   * You're pairing each object with a natural number! $\{(\texttt{a},1),(\texttt{b},2),\ldots,(\texttt{z},26)\}$
   <!-- f(\texttt{a}) = 1, f^{-1}(1) = \texttt{a}$, $f(\texttt{b}) = 2, f^{-1}(2) = \texttt{b}$, ... -->
-* **Uncountable** Sets: Cannot be put into 1-to-1 correspondence with the natural numbers.
-  * **$\mathbb{R}$ is uncountable**. *Intuition*: Try counting the real numbers. *Proof*[^cantor]
-  $$
-  \text{Assume }\exists (f: \mathbb{R} \leftrightarrow \mathbb{N}) = 
-  \begin{array}{|c|c|c|c|c|c|c|}\hline
-  \mathbb{R} & & & & & & \Leftrightarrow \mathbb{N} \\ \hline
-  \color{orange}{3} & . & 1 & 4 & 1 & \cdots & \Leftrightarrow 1 \\\hline
-  4 & . & \color{orange}{9} & 9 & 9 & \cdots & \Leftrightarrow 2 \\\hline
-  0 & . & 1 & \color{orange}{2} & 3 & \cdots &\Leftrightarrow 3 \\\hline
-  1 & . & 2 & 3 & \color{orange}{4} & \cdots & \Leftrightarrow 4 \\\hline
- \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
-  \end{array} \overset{\color{blue}{y_{[i]}} = \color{orange}{x_{[i]}} \overset{\mathbb{Z}_{10}}{+} 1}{\longrightarrow} \color{blue}{y = 4.035 \ldots} \Leftrightarrow \; ?
-  $$
-
-[^cantor]: The method used in this proof, if you haven't seen it before, is called [**Cantor diagonalization**](https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument){target="_blank"}, and it is extremely fun and applicable to a wide variety of levels-of-infinity proofs
+* **Uncountable** Sets: Can't be put into 1-to-1 correspondence with natural numbers.
+* **$\mathbb{R}$ is uncountable**. *Intuition*: Try counting the real numbers. *Proof*
+$$
+\text{Assume }\exists \, (f: \mathbb{R} \leftrightarrow \mathbb{N}):
+\begin{array}{|c|c|c|c|c|c|c|}\hline
+\mathbb{R} & & & & & & \Leftrightarrow \mathbb{N} \\ \hline
+\color{orange}{3} & . & 1 & 4 & 1 & \cdots & \Leftrightarrow 1 \\\hline
+4 & . & \color{orange}{9} & 9 & 9 & \cdots & \Leftrightarrow 2 \\\hline
+0 & . & 1 & \color{orange}{2} & 3 & \cdots &\Leftrightarrow 3 \\\hline
+1 & . & 2 & 3 & \color{orange}{4} & \cdots & \Leftrightarrow 4 \\\hline
+\vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\\hline
+\end{array} \overset{\color{blue}{y_{[i]}} = \color{orange}{x_{[i]}} \overset{\mathbb{Z}_{10}}{+} 1}{\underset{😈}{\longrightarrow}} \color{blue}{y = 4.035 \ldots} \Leftrightarrow \; ?
+$$
 
 ::: {.aside}
-**Fun math challenge**: Is $\mathbb{Q}$ countable? See [this appendix slide](#appendix-countability-of-mathbbq) for why the answer is yes, despite the fact that $\forall x, y \in \mathbb{Q} \left[ \frac{x+y}{2} \in \mathbb{Q} \right]$
+
+**Fun math challenge**: Is $\mathbb{Q}$ countable? See [this appendix slide](#appendix-countability-of-mathbbq) for why the answer is yes, despite the fact that $\forall x, y \in \mathbb{Q} \left[ \frac{x+y}{2} \in \mathbb{Q} \right]$❗️ The method used in the above proof is called [**Cantor diagonalization**](https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument){target="_blank"}
+
 :::
 
 ## The Practical Difference {.smaller}
 
 * This part of the course (**discrete** probability): $\Pr(X = v), v \in \mathcal{R}_X \subseteq \mathbb{N}$
   * Example: $\Pr($<span><i class="bi bi-dice-3"></i></span>$) = \Pr(X = 3), 3 \in \{1,2,3,4,5,6\} \subseteq \mathbb{N}$
-* Next part of the course (**continuous** probability): $\Pr(X \in V), v \subseteq \mathbb{R}$
+* Next part of the course (**continuous** probability): $\Pr(X \in V), V \subseteq \mathbb{R}$
   * Example: $\Pr(X \geq 2\pi) = \Pr(X \in [\pi,\infty)), [\pi,\infty) \subseteq \mathbb{R}$
 * Why do they have to be in separate parts?
 
 $$
-\Pr(X = 2\pi) = \frac{\text{Area}(\overbrace{2\pi}^{\mathclap{\small \text{Single point}}})}{\text{Area}(\underbrace{\mathbb{R}}_{\mathclap{\small \text{(Uncountably) Infinite set of points}}})} = 0
+\Pr(X \underset{\substack{\uparrow \\ 🚩}}{=} 2\pi) = \frac{\text{Area}(\overbrace{2\pi}^{\mathclap{\small \text{Single point}}})}{\text{Area}(\underbrace{\mathbb{R}}_{\mathclap{\small \text{(Uncountably) Infinite set of points}}})} = 0
 $$
 
 
-## Probability Mass vs. Probability Density {.smaller .small-title}
+## The **CDF** Unifies the Two Worlds! {.smaller .title-12 .crunch-title .crunch-ul .crunch-li-8 .crunch-math .footnotes-0}
 
-* **Cumulative Distribution Function** (**CDF**): $F_X(v) = \Pr(X \leq v)$
-* For **discrete** RV $X$, **Probability Mass Function** (**pmf**) $p_X(v)$:
+* **Cumulative Distribution Function** (**CDF**): $F_X(v) = \Pr(X \leq v)$^[Textbooks sometimes write $F(x) = \Pr(X \leq x)$, where capital $X$ is a RV while lowercase $x$ is a particular value, like $3$. To reduce confusion, I use $X$ for the RV and $v$ for the **value** at which we're checking the CDF. Also note capitalized CDF but lowercase pmf/pdf, matching mathematical notation: $f_X(v)$ is the derivative of $F_X(v)$.]
+* For **discrete** RV $X$ ($\mathcal{R}_X \cong \mathbb{N}$), **Probability Mass Function** (**pmf**) $p_X(v)$:
   $$
   \begin{align*}
-  p_X(v) &= \Pr(X = v) = F_X(v) - F_X(v-1) \\
-  \implies F_X(v) &= \sum_{\{w \in \mathcal{R}_X: \; w \leq v\}}p_X(w)
+  p_X(v) &\definedas \Delta F_X(v) \definedas F_X(v) - F_X(v - 1) = \underset{\text{Meaningful}}{\boxed{\Pr(X = v)}} \\
+  \implies F_X(v) &= \sum_{\{w \in \mathcal{R}_X: \; w \leq v\}}p_X(w) = \underset{\text{Meaningful}}{\boxed{\Pr(X \leq v)}}
   \end{align*}
   $$
 * For **continuous** RV $X$ ($\mathcal{R}_X \subseteq \mathbb{R}$), **Probability Density Function** (**pdf**) $f_X(v)$:
   $$
   \begin{align*}
-  f_X(v) &= \frac{d}{dx}F_X(v) \\
-  \implies F_X(v) &= \int_{-\infty}^v f_X(w)dw
+  f_X(v) &\definedas \frac{d}{dx}F_X(v) \definedas \lim_{h \rightarrow 0}\frac{F(x + h) - F(x)}{h} = \underset{\text{Not Meaningful}}{\boxed{\; ? \;}} \\
+  \implies F_X(v) &= \int_{-\infty}^v f_X(w)dw = \underset{\text{Meaningful}}{\boxed{\Pr(X \leq v)}}
   \end{align*}
   $$
 
-::: {.aside}
+## Probability Density $\neq$ Probability {.smaller .crunch-title .crunch-ul .math-90 .crunch-hr-3}
 
-Frustratingly, the CDF/pmf/pdf is usually written using $X$ and $x$, like $F_X(x) = \Pr(X \leq x)$. To me this is extremely confusing, since the capitalized $X$ is a random variable (not a number) while the lowercase $x$ is some particular value, like $3$. So, to emphasize this difference, I use $X$ for the RV and $v$ for the **value** at which we're checking the CDF/pmf/pdf.
+* ☠️**BEWARE**☠️: $f_X(v) \neq \Pr(X = v)$!
+* Long story short, for continuous variables, $\Pr(X = v)$ is just always $0$[^measurezero]
+* Hence, we instead construct a pdf $f_X(v)$ whose **sole purpose** is to allow us to calculate $\Pr(X \in [a,b])$ by **integrating**!
+  * $f_X(v)$ is whatever satisfies $\Pr(X \in [a,b]) = \int_{a}^bf_X(v)dv$, and *nothing more*
+* i.e., instead of $p_X(v) = \Pr(X = v)$ from discrete world, the relevant function here is $f_X(v)$, the probability **density** of $X$ at $v$.
 
-Also note the capitalized CDF but lowercase pmf/pdf, matching the mathematical notation where $f_X(v)$ is the derivative of $F_X(v)$.
+<hr>
+<center>[Scary math zone]{style="font-size: 65%"}</center>
+
+::: {.inline-90 .crunch-li}
+
+* For intuition: think of $X \sim \mathcal{U}(0,10) \implies \Pr(X = \pi) = \frac{|\{v \in \mathbb{R}:\; v = \pi\}|}{|\mathbb{R}|} = \frac{1}{2^{\aleph_0}} \approx 0$. That is, finding the $\pi$ needle in the $\mathbb{R}$ haystack is a one-in-$\left(\infty^\infty\right)$ event.
+* Issue even if $\mathcal{R}_X$ **countably** infinite, like $\mathcal{R}_X = \mathbb{N}$: $\Pr(X = 3) = \frac{|\{x \in \mathbb{N} : \; x = 3\}|}{|\mathbb{N}|} = \frac{1}{\aleph_0}$. Finding the $3$ needle in the $\mathbb{N}$ haystack is a one-in-$\infty$ event
 
 :::
-
-## Probability Density $\neq$ Probability {.smaller}
-
-* **BEWARE**: $f_X(v) \neq \Pr(X = v)$!
-* Long story short, for continuous variables, $\Pr(X = v) = 0$[^measurezero]
-* Hence, we instead construct a PDF $f_X(v)$ that enables us to calculate $\Pr(X \in [a,b])$ by integrating: $f_X(v)$ is whatever function satisfies $\Pr(X \in [a,b]) = \int_{a}^bf_X(v)dv$.
-* i.e., instead of $p_X(v) = \Pr(X = v)$ from discrete world, the relevant function here is $f_X(v)$, the probability **density** of $X$ at $v$.
-* If we **really** want to get something like the "probability of a value" in a continuous space 😪, we can get something kind of like this by using fancy limits
-  $$
-  f_X(v) = \lim_{\varepsilon \to 0}\frac{P(X \in [v-\varepsilon, v + \varepsilon])}{2\varepsilon} = \lim_{\varepsilon \to 0}\frac{F(v + \varepsilon) - F(v - \varepsilon)}{2\varepsilon} = \frac{d}{dx}F_X(v)
-  $$
-
-[^measurezero]: For intuition: $X \sim U[0,10] \implies \Pr(X = \pi) = \frac{|\{v \in \mathbb{R}:\; v = \pi\}|}{|\mathbb{R}|} = \frac{1}{2^{\aleph_0}} \approx 0$. That is, finding the $\pi$ needle in the $\mathbb{R}$ haystack is a one-in-$\left(\infty^\infty\right)$ event. A similar issue occurs if $S$ is countably-infinite, like $S = \mathbb{N}$: $\Pr(X = 3) = \frac{|\{x \in \mathbb{N} : \; x = 3\}|}{|\mathbb{N}|} = \frac{1}{\aleph_0}$.
 
 # Common Discrete Distributions {data-stack-name="Discrete Distributions"}
 
@@ -1152,13 +245,17 @@ ggplot(data = bern_tibble, aes(x=Outcome, y=Probability)) +
   remove_legend()
 ```
 
-## Binomial Distribution
+## Binomial Distribution {.crunch-title .crunch-ul .crunch-li .text-90}
 
 * **Number of successes** in ${\color{purple}N}$ Bernoulli trials. $X \sim \text{Binom}({\color{purple}N},{\color{purple}k},{\color{purple}p}) \implies \mathcal{R}_X = \{0, 1, \ldots, N\}$
-  * $P(X = k)  = \binom{N}{k}p^k(1-p)^{N-k}$: probability of $k$ successes out of $N$ trials.
+  * $\Pr(X = k)  = \binom{N}{k}p^k(1-p)^{N-k}$: probability of $k$ successes out of $N$ trials.
   * $\binom{N}{k} = \frac{N!}{k!(N-k)!}$: "Binomial coefficient". How many groups of size $k$ can be formed?[^binom]
 
-[^binom]: A fun way to never have to memorize or compute these: imagine a pyramid like $\genfrac{}{}{0pt}{}{}{\boxed{\phantom{1}}}\genfrac{}{}{0pt}{}{\boxed{\phantom{1}}}{}\genfrac{}{}{0pt}{}{}{\boxed{\phantom{1}}}$, where the boxes are slots for numbers, and put a $1$ in the box at the top. In the bottom row, fill each slot with the sum of the two numbers above-left and above-right of it. Since $1 + \text{(nothing)} = 1$, this looks like: $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$. Continue filling in the pyramid this way, so the next row looks like $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{2}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$, then $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{3}\genfrac{}{}{0pt}{}{2}{}\genfrac{}{}{0pt}{}{}{3}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$, and so on. The $k$th number in the $N$th row (counting from $0$) is $\binom{N}{k}$. For the triangle written out to the 7th row, see Appendix I at end of slideshow.
+::: {.inline-90}
+
+[^binom]: Fun way to avoid memorizing! Imagine a pyramid like $\genfrac{}{}{0pt}{}{}{\boxed{\phantom{1}}}\genfrac{}{}{0pt}{}{\boxed{\phantom{1}}}{}\genfrac{}{}{0pt}{}{}{\boxed{\phantom{1}}}$, where boxes are slots for numbers. Put a $1$ in box at the top. In bottom row, fill each slot with the sum of the two numbers above-left and above-right of it. Since $1 + \text{(nothing)} = 1$, this looks like: $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$. Continue filling in rows this way, so next row looks like $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{2}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$, then $\genfrac{}{}{0pt}{}{}{1}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{3}\genfrac{}{}{0pt}{}{2}{}\genfrac{}{}{0pt}{}{}{3}\genfrac{}{}{0pt}{}{1}{}\genfrac{}{}{0pt}{}{}{1}$, etc. The $k$th number in the $N$th row (counting from $0$) is $\binom{N}{k}$. Appendix shows triangle written out to 7th row!
+
+:::
 
 ## Visualizing the Binomial {.smaller}
 
@@ -1185,45 +282,31 @@ So who can tell me, from this plot, the approximate probability of getting 4 hea
 :::
 
 
-## Multiple Classes: Multinomial Distribution {.smaller}
+## Multiple Classes: Multinomial Distribution {.smaller .title-12}
 
 * Bernoulli only allows two outcomes: success or failure.
 * What if we're predicting soccer match outcomes?
   * $X_i \in \{\text{Win}, \text{Loss}, \text{Draw}\}$
-* **Categorical Distribution**: Generalization of Bernoulli to $k$ outcomes. $X \sim \text{Categorical}(\mathbf{p} = \{p_1, p_2, \ldots, p_k\}), \sum_{i=1}^kp_i = 1$.
-  * $P(X = k) = p_k$
-* **Multinomial Distribution**: Generalization of Binomial to $k$ outcomes.
+* **Categorical Distribution**: Generalizes **Bernoulli** to $k$ possible outcomes. $X \sim \text{Categorical}(\mathbf{p} = \{p_1, p_2, \ldots, p_k\}), \sum_{i=1}^kp_i = 1$.
+  * $\Pr(X = k) = p_k$
+* **Multinomial Distribution**: Generalizes **Binomial** to $k$ possible outcomes.
 * $\mathbf{X} \sim \text{Multinom}(N,k,\mathbf{p}=\{p_1,p_2,\ldots,p_k\}), \sum_{i=1}^kp_i=1$
-  * $P(\mathbf{X} = \{x_1,x_2\ldots,x_k\}) = \frac{N!}{x_1!x_2!\cdots x_k!}p_1^{x_1}p_2^{x_2}\cdots p_k^{x_k}$
-  * $P(\text{30 wins}, \text{4 losses}, \text{4 draws}) = \frac{38!}{30!4!4!}p_{\text{win}}^{30}p_{\text{lose}}^4p_{\text{draw}}^4$.
+  * $\Pr(\mathbf{X} = \{x_1,x_2\ldots,x_k\}) = \frac{N!}{x_1!x_2!\cdots x_k!}p_1^{x_1}p_2^{x_2}\cdots p_k^{x_k}$
+  * $\Pr(\text{30 wins}, \text{4 losses}, \text{4 draws}) = \frac{38!}{30!4!4!}p_{\text{win}}^{30}p_{\text{lose}}^4p_{\text{draw}}^4$.
+  * $\leadsto$ "Multinomial Coefficient": $\binom{38}{30,4,4} = \frac{38!}{30!4!4!}$
 
-## Geometric Distribution
+## Geometric Distribution {.crunch-title .crunch-ul}
 
-* **Geometric**: Likelihood that we need ${\color{purple}k}$ trials to get our first success. $X \sim \text{Geom}({\color{purple}k},{\color{purple}p}) \implies \mathcal{R}_X = \{0, 1, \ldots\}$
-  * $P(X = k) = \underbrace{(1-p)^{k-1}}_{\small k - 1\text{ failures}}\cdot \underbrace{p}_{\mathclap{\small \text{success}}}$
-  * Probability of $k-1$ failures followed by a success
+* Likelihood that we need ${\color{purple}k}$ **trials** to get our first **success**. $X \sim \text{Geom}({\color{purple}k},{\color{purple}p}) \implies \mathcal{R}_X = \{1, 2, \ldots\}$
+  * $\Pr(X = k) = \underbrace{(1-p)^{k-1}}_{\small k - 1\text{ failures}}\cdot \underbrace{p}_{\mathclap{\small \text{success}}}$
+  * Probability of $k$ trials before first success
 
-```{r}
-#| label: geometric-demo
-#| fig-align: center
-library(ggplot2)
-k <- seq(0, 8)
-prob <- dgeom(k, 0.5)
-bar_data <- tibble(k, prob)
-ggplot(bar_data, aes(x = k, y = prob)) +
-    geom_bar(stat = "identity", fill = cbPalette[1]) +
-    labs(
-        title = "Geometric Distribution, p = 0.5",
-        y = "Probability Mass"
-    ) +
-    scale_x_continuous(breaks = seq(0, 8)) +
-    dsan_theme("half")
-```
+{{< include ../_components/geometric-plot.qmd >}}
 
-## Less Common (But Important) Distributions {.smaller}
+## Less Common (But Important) Distributions {.smaller .title-11}
 
 * **Discrete Uniform**: $N$ equally-likely outcomes
-  * $X \sim U\{{\color{purple}a},{\color{purple}b}\} \implies \mathcal{R}_X = \{a, a+1, \ldots, b\}, P(X = k) = \frac{1}{{\color{purple}b} - {\color{purple}a} + 1}$
+  * $X \sim U\{{\color{purple}a},{\color{purple}b}\} \implies \mathcal{R}_X = \{a, a+1, \ldots, b\}, \Pr(X = k) = \frac{1}{{\color{purple}b} - {\color{purple}a} + 1}$
 * **Beta**: $X \sim \text{Beta}({\color{purple}\alpha}, {\color{purple}\beta})$: *conjugate prior* for Bernoulli, Binomial, and Geometric dists.
   * Intuition: If we use Beta to encode our prior hypothesis, then observe data drawn from Binomial, distribution of our *updated* hypothesis is still Beta.
   * $\underbrace{\Pr(\text{biased}) = \Pr(\text{unbiased})}_{\text{Prior: }\text{Beta}({\color{purple}\alpha}, {\color{purple}\beta})} \rightarrow$ Observe $\underbrace{\frac{8}{10}\text{ heads}}_{\text{Data}} \rightarrow \underbrace{\Pr(\text{biased}) = 0.65}_{\text{Posterior: }\text{Beta}({\color{purple}\alpha + 8}, {\color{purple}\beta + 2})}$
@@ -1240,12 +323,517 @@ We can now use $\text{Beta}(\alpha + 8, \beta + 2)$ as a prior for our next set 
 
 <a href="https://seeing-theory.brown.edu/probability-distributions/index.html" target="_blank">Seeing Theory</a>, Brown University
 
-<!-- APPENDIX SLIDES -->
+# Continuous Probability {data-stack-name="Continuous Prob"}
+
+* (With some final reminders first!)
+
+## What Things Have Distributions?
+
+* Answer: **Random Variables**
+* Meaning: $\mathcal{N}(0, 1)$ on its own is a "template", an exhibit at a museum within a glass case
+* To start **using** it, e.g., to generate random values, we need to consider a particular **RV** $X \sim \mathcal{N}(0,1)$, then generate values on basis of this template:
+  * $X = 0$ more likely than $X = 1$ or $X = -1$,
+  * $X = 1$ more likely than $X = 2$ or $X = -2$,
+  * and so on
+
+## CDFs/pdfs/pmfs: *What* Are They? {.smaller .crunch-title .crunch-math}
+
+* Functions which **answer questions** about a **Random Variable** ($X$ in this case) with respect to a **non-random** value ($v$ in this case, for "**v**alue")
+* **CDF**: What is probability that $X$ takes on a value **less than or equal to $v$**?
+
+$$
+F_X(v) \definedas \Pr(X \leq v)
+$$
+
+* **pmf**: What is the probability of **this exact value**? (Discrete only)
+
+$$
+p_X(v) \definedas \Pr(X = v)
+$$
+
+* **pdf**: 🙈 ...It's the thing you integrate to get the CDF
+
+$$
+f_X(v) \definedas \frac{d}{dv}F_X(v) \iff \int_{-\infty}^{v} f_X(v)dv = F_X(v)
+$$
+
+## CDFs/pdfs/pmfs: *Why* Do We Use Them? {.smaller .title-11}
+
+* CDF is like the "API" that allows you to access **all of the information about the distribution** (pdf/pmf is **derived from** the CDF)
+* Example: we know there's some "thing" called the *Exponential Distribution*...
+* How do we **use** this distribution to understand a random variable $X \sim \text{Exp}(\lambda)$?
+  * Answer: the **CDF** of $X$!
+  * Since **all exponentially-distributed RVs have the same pdf** (with different $\lambda$ values plugged in), we can call this pdf **"the" exponential distribution**
+* Say we want to find the **median** of $X$: The median is the number(s) $m$ satisfying
+
+$$
+\Pr(X \leq m) = \frac{1}{2}
+$$
+
+* How can we find this? What "tool" do we use to figure this out about $X$?
+
+## Finding a Median via the CDF
+
+::: {.callout-note title="<i class='bi bi-info-circle'></i> Median of a Random Variable $X$" icon="false"}
+
+The **median** of a random variable $X$ with some CDF $F_X(v_X)$ is the [set of] numbers $m$ for which the probability that $X$ is **lower than** $m$ is $\frac{1}{2}$:
+
+$$
+\begin{align*}
+\text{Median}(X) &= \left\{m \left| F_X(m) = \frac{1}{2} \right. \right\} \\
+&= \left\{m \left| \int_{-\infty}^{m}f_X(v_X)dv_X = \frac{1}{2} \right. \right\}
+\end{align*}
+$$
+
+:::
+
+::: {.aside}
+(If you're wondering why we start with the **median** rather than the more commonly-used **mean**: it's specifically because I want you to get used to calculating **general functions $f(X)$ of a random variable $X$**. It's easy to just e.g. learn how to compute the mean $\expect{X}$ and forget that this is only one of many possible choices for $f(X)$.)
+:::
+
+## Median via CDF Example
+
+**Example**: If $X \sim \text{Exp}(\param{\lambda})$,
+
+$$
+F_X(v) = 1 - e^{-\lambda v}
+$$
+
+So we want to solve for $m$ in
+
+$$
+F_X(m) = \frac{1}{2} \iff 1 - e^{-\lambda m} = \frac{1}{2}
+$$
+
+## Step-by-Step
+
+$$
+\begin{align*}
+1 - e^{-\lambda m} &= \frac{1}{2} \\
+\iff e^{-\lambda m} &= \frac{1}{2} \\
+\iff \ln\left[e^{-\lambda m}\right] &= \ln\left[\frac{1}{2}\right] \\
+\iff -\lambda m &= -\ln(2) \\
+\iff m &= \frac{\ln(2)}{\lambda}
+%3x = 19-2y
+\; \llap{\mathrel{\boxed{\phantom{m = \frac{\ln(2)}{\lambda}}}}}.
+\end{align*}
+$$
+
+## Top Secret Fun Fact {.smaller .crunch-title .crunch-math .crunch-ul .crunch-li .math-90}
+
+<center style="margin-bottom: 6px;">
+<span class="px-4" style="border: 2px solid black !important;">**Every Discrete Distribution is <span style='font-size: 50% !important;'>[technically, in a weird way]</span> a Continuous Distribution!**</span>
+</center>
+
+* Same intuition as: every **natural number** is a **real number**, but converse not true
+* Marbles: Let $X$ be a RV defined s.t. $X(A) = 1$, $X(B) = 2$, $X(C) = 3$, $X(D) = 4$. Then **pmf** for $X$ is $p_X(i) = \frac{1}{4}$ for $i \in \{1, 2, 3, 4\}$.
+* We can then use the [Dirac delta function](#appendix-dirac-delta-function) $\delta(v)$ to define a **continuous pdf**
+
+    $$
+    f_X(v) = \sum_{i \in \mathcal{R}_X}p_X(i)\delta(v - i) = \sum_{i=1}^4p_X(i)\delta(v-i) = \frac{1}{4}\sum_{i=1}^4 \delta(v - i)
+    $$
+    
+    and use **either** the (discrete) pmf $p_X(v)$ or (continuous) pdf $f_X(v)$ to describe $X$:
+
+$$
+\begin{align*}
+\overbrace{\Pr(X \leq 3)}^{\text{CDF}} &= \sum_{i=1}^3\overbrace{p_X(i)}^{\text{pmf}} = \frac{1}{4} + \frac{1}{4} + \frac{1}{4} = \frac{3}{4} \\
+\underbrace{\Pr(X \leq 3)}_{\text{CDF}} &= \int_{-\infty}^{3} \underbrace{f_X(v)}_{\text{pdf}} = \frac{1}{4}\int_{-\infty}^{3} \sum_{i = 1}^{4}\overbrace{\delta(v-i)}^{\small 0\text{ unless }v = i}dv = \frac{3}{4}
+\end{align*}
+$$
+
+# Common Continuous Distributions {data-stack-name="Common Dists"}
+
+* Normal: The friend who shows up everywhere
+* Uniform: The stable, reliable friend
+* Exponential: Good days and bad days
+* Cauchy: Toxic af, stay away ☠️
+
+## [Recall] Binomial Distribution {.crunch-title}
+
+{{< include ../_components/binomial-plot.qmd >}}
+
+## The Emergence of Order {.crunch-title}
+
+:::: {.columns}
+::: {.column width="50%"}
+
+* Who can guess the state of this process after 10 steps, with 1 person?
+* 10 people? 50? 100? (If they find themselves on the same spot, they stand on each other's heads)
+* 100 steps? 1000?
+
+:::
+::: {.column width="50%"}
+
+![](images/random_walk.svg){fig-align="center" width="90%"}
+
+:::
+::::
+
+## The Result: 16 Steps
+
+```{r}
+#| label: random-walk-16
+#| code-fold: true
+library(tibble)
+library(ggplot2)
+library(ggExtra)
+library(dplyr)
+library(tidyr)
+# From McElreath!
+gen_histo <- function(reps, num_steps) {
+  support <- c(-1,1)
+  pos <-replicate(reps, sum(sample(support,num_steps,replace=TRUE,prob=c(0.5,0.5))))
+  #print(mean(pos))
+  #print(var(pos))
+  pos_df <- tibble(x=pos)
+  clt_distr <- function(x) dnorm(x, 0, sqrt(num_steps))
+  plot <- ggplot(pos_df, aes(x=x)) +
+    geom_histogram(aes(y = after_stat(density)), fill=cbPalette[1], binwidth = 2) +
+    stat_function(fun = clt_distr) +
+    dsan_theme("quarter") +
+    theme(title=element_text(size=16)) +
+    labs(
+      title=paste0(reps," Random Walks, ",num_steps," Steps")
+    )
+  return(plot)
+}
+gen_walkplot <- function(num_people, num_steps, opacity=0.15) {
+  support <- c(-1, 1)
+  # Unique id for each person
+  pid <- seq(1, num_people)
+  pid_tib <- tibble(pid)
+  pos_df <- tibble()
+  end_df <- tibble()
+  all_steps <- t(replicate(num_people, sample(support, num_steps, replace = TRUE, prob = c(0.5, 0.5))))
+  csums <- t(apply(all_steps, 1, cumsum))
+  csums <- cbind(0, csums)
+  # Last col is the ending positions
+  ending_pos <- csums[, dim(csums)[2]]
+  end_tib <- tibble(pid = seq(1, num_people), endpos = ending_pos, x = num_steps)
+  # Now convert to tibble
+  ctib <- as_tibble(csums, name_repair = "none")
+  merged_tib <- bind_cols(pid_tib, ctib)
+  long_tib <- merged_tib %>% pivot_longer(!pid)
+  # Convert name -> step_num
+  long_tib <- long_tib %>% mutate(step_num = strtoi(gsub("V", "", name)) - 1)
+  # print(end_df)
+  grid_color <- rgb(0, 0, 0, 0.1)
+
+  # And plot!
+  walkplot <- ggplot(
+      long_tib,
+      aes(
+          x = step_num,
+          y = value,
+          group = pid,
+          # color=factor(label)
+      )
+  ) +
+      geom_line(linewidth = g_linesize, alpha = opacity, color = cbPalette[1]) +
+      geom_point(data = end_tib, aes(x = x, y = endpos), alpha = 0) +
+      scale_x_continuous(breaks = seq(0, num_steps, num_steps / 4)) +
+      scale_y_continuous(breaks = seq(-20, 20, 10)) +
+      dsan_theme("quarter") +
+      theme(
+          legend.position = "none",
+          title = element_text(size = 16)
+      ) +
+      theme(
+          panel.grid.major.y = element_line(color = grid_color, linewidth = 1, linetype = 1)
+      ) +
+      labs(
+          title = paste0(num_people, " Random Walks, ", num_steps, " Steps"),
+          x = "Number of Steps",
+          y = "Position"
+      )
+}
+wp1 <- gen_walkplot(500, 16, 0.05)
+ggMarginal(wp1, margins = "y", type = "histogram", yparams = list(binwidth = 1))
+```
+
+## The Result: 64 Steps
+
+```{r}
+#| label: random-walk-64
+#| code-fold: true
+library(ggExtra)
+wp2 <- gen_walkplot(5000,64,0.008) +
+  ylim(-30,30)
+ggMarginal(wp2, margins = "y", type = "histogram", yparams = list(binwidth = 1))
+```
+
+::: {.unnumbered .hidden}
+
+<!-- just the histograms -->
+
+```{r}
+#| fig-height: 3.4
+#| label: walk-histo-16
+p2 <- gen_histo(1000, 16)
+p2
+```
+
+```{r}
+#| fig-height: 3.4
+#| label: walk-histo-32
+p3 <- gen_histo(10000, 32)
+p3
+```
+
+:::
+
+## What's Going On Here? {.smaller}
+
+![](images/the_function_msg.jpeg){fig-align="center"}
+
+(Stay tuned for **Markov processes** $\overset{t \rightarrow \infty}{\leadsto}$ **Stationary distributions**!)
+
+## Properties of the Normal Distribution {.crunch-title .title-09}
+
+* If $X \sim \mathcal{N}(\param{\mu}, \param{\theta})$, then $X$ has pdf $f_X(v)$ defined by
+
+$$
+f_X(v) = \frac{1}{\sigma\sqrt{2\pi}}\bigexp{-\frac{1}{2}\left(\frac{v - \mu}{\sigma}\right)^2}
+$$
+
+* I hate memorizing as much as you do, I promise 🥴
+* The important part (imo): this is the **most conservative** out of **all possible (symmetric) prior distributions** defined on $\mathbb{R}$ (defined from $-\infty$ to $\infty$)
+
+## "Most Conservative" How?
+
+* Of all possible distributions with mean $\mu$, variance $\sigma^2$, $\mathcal{N}(\mu, \sigma^2)$ is the **entropy-maximizing** distribution
+* Roughly: using any other distribution (implicitly/secretly) **imports additional information** beyond the fact that [mean is $\mu$]{.boxed} and [variance is $\sigma^2$]{.boxed}
+* Example: let $X$ be an RV. If we know mean is $\mu$, variance is $\sigma^2$, **but then we learn** that [$X \neq 3$]{.boxed}, or [$X$ is even]{.boxed}, or the [15th digit of $X$ is 7]{.boxed}, can **update** $\mathcal{N}(\mu,\sigma^2)$ to derive a "better" distribution (incorporating this additional info)
+
+## The Takeaway {.crunch-title .crunch-ul .inline-90 .text-90}
+
+* **Given info we know**, we can find a distribution that "encodes" **only this info**
+* More straightforward example: if we only know that the value is something in the range $[a,b]$, entropy-maximizing distribution is the **Uniform Distribution**
+
+| If We Know | And We Know | (Max-Entropy) Distribution Is... |
+| - | - | - |
+| $\text{Mean}[X] = \mu$ | $\text{Var}[X] = \sigma^2$ | $X \sim \mathcal{N}(\mu, \sigma^2)$ |
+| $\text{Mean}[X] = \lambda$ | $X \geq 0$ | $X \sim \text{Exp}\left(\frac{1}{\lambda}\right)$ |
+| $X \geq a$ | $X \leq b$ | $X \sim \mathcal{U}[a,b]$ |
+
+## [Recall] Discrete Uniform Distribution {.title-09 .crunch-title}
+
+```{r}
+#| label: discrete-uniform-pmf
+#| echo: true
+#| code-fold: true
+#| fig-align: center
+library(tibble)
+bar_data <- tribble(
+  ~x, ~prob,
+  1, 1/6,
+  2, 1/6,
+  3, 1/6,
+  4, 1/6,
+  5, 1/6,
+  6, 1/6
+)
+ggplot(bar_data, aes(x=x, y=prob)) +
+  geom_bar(stat="identity", fill=cbPalette[1]) +
+  labs(
+    title="Discrete Uniform pmf: a = 1, b = 6",
+    y="Probability Mass",
+    x="Value"
+  ) +
+  scale_x_continuous(breaks=seq(1,6)) +
+  dsan_theme("half")
+```
+
+## Continuous Uniform Distribution {.crunch-title .crunch-math .math-90}
+
+* If $X \sim \mathcal{U}[a,b]$, then intuitively $X$ is a value randomly selected from within $[a,b]$, with all values equally likely.
+* **Discrete** case: what we've been using all along (e.g., dice): if $X \sim \mathcal{U}\{1,6\}$, then
+
+$$
+\Pr(X = 1) = \Pr(X = 2) = \cdots = \Pr(X = 6) = \frac{1}{6}
+$$
+
+* For **continuous** case... what do we put in the denominator? $X \sim \mathcal{U}[1,6] \implies \Pr(X = \pi) = \frac{1}{?}$...
+  * Answer: $\Pr(X = \pi) = \frac{1}{|[1,6]|} = \frac{1}{\aleph_0} = 0$
+
+## Constructing the Uniform CDF {.smaller .crunch-title .crunch-li}
+
+* We were ready for this! We already knew $\Pr(X = v) = 0$ for continuous $X$
+* So, we forget about $\Pr(X = v)$, and focus on $\Pr(X \in [v_0, v_1])$.
+* In 2D (dartboard) we had $\Pr(X \in \circ) = \frac{\text{Area}(\circ)}{\text{Area}(\Omega)}$, so here we should have
+
+$$
+P(X \in [v_0,v_1]) = \frac{\text{Length}([v_0,v_1])}{\text{Length}([1,6])}
+$$
+
+* And indeed, the CDF of $X$ is $\boxed{F_X(v) = \Pr(X \leq v) = \frac{v-a}{b-a}}$, so that
+
+$$
+\Pr(X \in [v_0,v_1]) = F_X(v_1) - F_X(v_0) = \frac{v_1-a}{b-a} - \frac{v_0-a}{b-a} = \frac{v_1 - v_0}{b-a}
+$$
+
+* Since $a = 1$, $b = 6$ in our example, $\Pr(X \in [v_0,v_1]) = \frac{v_1-v_0}{6-1} = \frac{\text{Length}([v_0,v_1])}{\text{Length}([1,6])} \; ✅$
+
+<!-- ## References -->
+
+## Exponential Distribution {data-name="Exponential"}
+
+* Recall the (discrete) **Geometric Distribution**:
+
+```{r}
+#| label: geometric-demo
+#| fig-align: center
+#| echo: true
+#| code-fold: true
+library(ggplot2)
+k <- seq(0, 8)
+prob <- dgeom(k, 0.5)
+bar_data <- tibble(k, prob)
+ggplot(bar_data, aes(x = k, y = prob)) +
+    geom_bar(stat = "identity", fill = cbPalette[1]) +
+    labs(
+        title = "Geometric Distribution pmf: p = 0.5",
+        y = "Probability Mass"
+    ) +
+    scale_x_continuous(breaks = seq(0, 8)) +
+    dsan_theme("half")
+```
+
+## Now In Continuous Form!
+
+```{r}
+#| label: exponential-plot
+#| echo: true
+#| code-fold: true
+#| fig-align: center
+my_dexp <- function(x) dexp(x, rate = 1/2)
+ggplot(data.frame(x=c(0,8)), aes(x=x)) +
+  stat_function(fun=my_dexp, size=g_linesize, fill=cbPalette[1], alpha=0.8) +
+  stat_function(fun=my_dexp, geom='area', fill=cbPalette[1], alpha=0.75) +
+  dsan_theme("half") +
+  labs(
+    title="Exponential Distribution pdf: λ (rate) = 0.5",
+    x = "v",
+    y = "f_X(v)"
+  )
+```
 
 
-## Appendix: Countability of $\mathbb{Q}$ {.smaller .small-math}
+## The Dreaded Cauchy Distribution {.smaller .crunch-title .inline-90}
 
-* **Bad** definition: "$\mathbb{N}$ is countable because no $x \in \mathbb{N}$ between $0$ and $1$. $\mathbb{R}$ is uncountable because infinitely-many $x \in \mathbb{R}$ between $0$ and $1$." ($\implies \mathbb{Q}$ uncountable)
+```{r}
+#| label: cauchy-pdf
+#| echo: true
+#| code-fold: true
+ggplot(data.frame(x=c(-4,4)), aes(x=x)) +
+  stat_function(fun=dcauchy, size=g_linesize, fill=cbPalette[1], alpha=0.75) +
+  stat_function(fun=dcauchy, geom='area', fill=cbPalette[1], alpha=0.75) +
+  dsan_theme("quarter") +
+  labs(
+    title="PDF of R",
+    x = "r",
+    y = "f(r)"
+  )
+```
+
+* Paxton is a Houston Rockets fan, while Jeff is a Chicago Bulls fan. Paxton creates a RV $H$ modeling how many games above .500 (wins minus losses) the Rockets will be in a season, while Jeff creates a similar RV $C$ for the Bulls
+* They decide to combine their RVs to create a new RV, $R = \frac{H}{C}$, which now models **how much better** the Nuggets will be in a season ($R$ for "Ratio")
+* For example, if the Rockets are $10$ games above .500, while the Bulls are only $5$ above .500, $R = \frac{10}{5} = 2$. If they're both 3 games above .500, $R = \frac{3}{3} = 1$.
+
+## So What's the Issue? {.crunch-title .inline-90 .crunch-figure .crunch-ul .text-90}
+
+So far so good. It turns out (though Paxton and Jeff don't know this) the teams are both mediocre: $H \sim \mathcal{N}(0,10)$, $B \sim \mathcal{N}(0,10)$... What is the distribution of $R$?
+
+:::: {.columns}
+::: {.column width="50%"}
+
+$$
+\begin{gather*}
+R \sim \text{Cauchy}\left( 0, 1 \right)
+\end{gather*}
+$$
+
+$$
+\begin{align*}
+\expect{R} &= ☠️ \\
+\Var{R} &= ☠️ \\
+M_R(t) &= ☠️
+\end{align*}
+$$
+
+:::
+::: {.column width="50%"}
+
+![From @agnesi_analytical_1801 \[<a href='' target='_blank'>Internet Archive</a>\]](images/agnesi-crop.jpeg)
+
+:::
+::::
+
+::: {#cauchy-worse style="font-size: 70%"}
+
+Even worse, this is true regardless of variances: $D \sim \mathcal{N}(0,d)$ and $W \sim \mathcal{N}(0,w)$ $\implies R \sim \text{Cauchy}\left( 0,\frac{d}{w} \right)$...
+
+:::
+
+# Lab 4
+
+## Lab 4 Demo
+
+* [Lab 4 Demo Link](https://jfh.georgetown.domains/dsan5100/share-point/labs/lab-4/demo.html){target="_blank"}
+* Choose your own adventure:
+  * Official lab demo
+  * Math puzzle lab demo
+  * Move on to **Expectation, Variance, Moments**
+
+## Lab 4 Assignment Prep {.smaller .crunch-title .crunch-ul}
+
+One of my favorite math puzzles ever:
+
+::: {.callout-note icon="false" title="The Problem of the Broken Stick [@gardner_colossal_2001, 273-285]"}
+
+If a stick is broken at random into three pieces, what is the probability that the pieces can be put back together into a triangle?
+
+*This cannot be answered without additional information about the exact method of breaking!*
+
+* One method is to select, independently and at random, two points from the points that range uniformly along the stick, then break the stick at these two points
+* Suppose, however, that we interpret in a different way the statement "break a stick at random into three pieces". We break the stick at random, we select randomly one of the two pieces, and we break that piece at random.
+
+:::
+
+* Will these two interpretations result in the same probabilities?
+* If yes, what is that probability?
+* If no, what are the probabilities in each case?
+
+## Lab 4 Assignment
+
+* [Lab 4 Assignment Link](https://jfh.georgetown.domains/dsan5100/share-point/labs/lab-4/lab-4-assignment.html){target="_blank"}
+
+## References
+
+::: {#refs}
+:::
+
+## Appendix I: Dirac Delta Function {.smaller .crunch-title .footnotes-0}
+
+* $\delta(v)$ from the ["Top Secret Fun Fact" slide](#top-secret-fun-fact) is called the [**Dirac Delta function**](https://en.wikipedia.org/wiki/Dirac_delta_function)
+* Enables conversion of discrete distributions into continuous distributions as it represents an "infinite point mass" at $0$ that can be integrated[^details]:
+
+$$
+\delta(v) = \begin{cases}\infty & v = 0 \\ 0 & v \neq 0\end{cases}
+$$
+
+* Its integral also has a name: the [**Heaviside step function**](https://en.wikipedia.org/wiki/Heaviside_step_function){target="_blank"} $\theta(v)$:
+
+$$
+\int_{-\infty}^{\infty}\delta(v)dv = \theta(v) = \begin{cases} 1 & v = 0 \\ 0 & v \neq 0\end{cases}
+$$
+
+[^details]: This is leaving out some of the complexities of defining this function so it "works" in this way: for example, we need to use the [Lebesgue integral](https://en.wikipedia.org/wiki/Lebesgue_integration){target="_blank"} rather than the (standard) [Riemann integral](https://en.wikipedia.org/wiki/Riemann_integral){target="_blank"} for it to be defined at all, and even then it technically fails the conditions necessary for a fully-well-defined Lebesgue integral. For full details see <a href="https://en.wikipedia.org/wiki/Probability_density_function#Link_between_discrete_and_continuous_distributions" target="_blank">this section</a> from the Wiki article on PDFs, and follow the links therein.
+
+## Appendix II: Countability of $\mathbb{Q}$ {.smaller .small-math .crunch-title}
+
+* **Bad** definition: "$\mathbb{N}$ is countable because no $x \in \mathbb{N}$ between $0$ and $1$. $\mathbb{R}$ is uncountable because infinitely-many $x \in \mathbb{R}$ between $0$ and $1$." ($\Rightarrow \mathbb{Q}$ uncountable)
 * And yet, $\mathbb{Q}$ **is** countable...
 
 ::: columns
@@ -1274,3 +862,7 @@ $$
 ::: {.aside}
 Image credit: <a href="https://math.stackexchange.com/a/659373" target="_blank">Rebecca J. Stones, Math StackExchange</a>. Math credit: <a href="https://math.stackexchange.com/a/1067928" target="_blank">Thomas Andrews, Math StackExchange</a>
 :::
+
+## Appendix III: Binomial Triangle
+
+![](images/binomial_triangle.svg){fig-align="center"}

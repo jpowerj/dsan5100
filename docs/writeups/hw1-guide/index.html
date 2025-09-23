@@ -354,42 +354,48 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../w01/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 1: Aug 30</span></a>
+ <span class="menu-text">Week 1: Aug 29</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../w02/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 2: Sep 3</span></a>
+  <a href="../../w02a/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2A: Sep 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../w02b/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2B: Sep 2</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../w03/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 3: Sep 10</span></a>
+ <span class="menu-text">Week 3: Sep 16</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../w04/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 4: Sep 17</span></a>
+  <a href="../../w04a/index.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4A: Sep 22</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../w05/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 5: Sep 24</span></a>
+  <a href="../../w04b/index.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4B: Sep 23</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../w06/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 6: Oct 1</span></a>
+  <a href="../../w05/index.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5: Sep 30</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../w07/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w07/index.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 7: Oct 8</span></a>
   </div>
 </li>
@@ -457,7 +463,7 @@ window.Quarto = {
     </ul>
     </div>
 <div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
-<p><em>Updated 2025-09-22, 08:37:21 PM</em></p>
+<p><em>Updated 2025-09-23, 03:02:34 PM</em></p>
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -726,7 +732,7 @@ N = 10000
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>big_total_4ok <span class="ot">&lt;-</span> big_sample_hands<span class="sc">$</span>is_4ok <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>big_total_4ok <span class="sc">/</span> big_N</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.00043</code></pre>
+<pre><code>[1] 0.00047</code></pre>
 </div>
 </div>
 <p>Which is further away from the value we computed in Question 1.4. Thus, as an <strong>alternative approach</strong> to finding the answer to this question, we can “start over”, re-generating a collection of hands by <strong>sampling without replacement</strong> rather than sampling 5 cards independently with replacement.</p>
@@ -737,7 +743,7 @@ N = 10000
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_one_hand</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  6  6  5 13  2</code></pre>
+<pre><code>[1] 6 8 8 3 1</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -748,12 +754,12 @@ N = 10000
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>corrected_total_4ok <span class="ot">&lt;-</span> hands_df<span class="sc">$</span>is_4ok <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corrected_total_4ok)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6</code></pre>
+<pre><code>[1] 7</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>corrected_p_4ok <span class="ot">&lt;-</span> corrected_total_4ok <span class="sc">/</span> N_hands</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">format</span>(corrected_p_4ok, <span class="at">scientific=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0.00024"</code></pre>
+<pre><code>[1] "0.00028"</code></pre>
 </div>
 </div>
 <p>So, with these two approaches in mind, your job is to (a) understand the difference between them as best as possible, and then (b) select one that you think better matches the semantics of the question! Then, in your final submission, you can utilize your result from Q2.1 (if you go with Approach A) or generate new hands (if you go with Approach B), as the “input” to your Q2.3 code.</p>

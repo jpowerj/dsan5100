@@ -26,18 +26,20 @@ website:
       - "---"
       # - href: index.qmd
       #   text: "<i class='bi bi-house pe-1'></i> Section 03 Home"
-      - href: w01/index.qmd
-        text: "Week 1: Aug 30"
-      - href: w02/index.qmd
-        text: "Week 2: Sep 3"
-      - href: w03/index.qmd
-        text: "Week 3: Sep 10"
-      - href: w04/index.qmd
-        text: "Week 4: Sep 17"
-      - href: w05/index.qmd
-        text: "Week 5: Sep 24"
-      - href: w06/index.qmd
-        text: "Week 6: Oct 1"
+      - text: "Week 1: Aug 29"
+        href: w01/index.qmd
+      - text: "Week 2A: Sep 1"
+        href: w02a/index.qmd
+      - text: "Week 2B: Sep 2"
+        href: w02b/index.qmd
+      - text: "Week 3: Sep 16"
+        href: w03/index.qmd
+      - text: "Week 4A: Sep 22"
+        href: w04a/index.qmd
+      - text: "Week 4B: Sep 23"
+        href: w04b/index.qmd
+      - text: "Week 5: Sep 30"
+        href: w05/index.qmd
       - href: w07/index.qmd
         text: "Week 7: Oct 8"
       - href: w08/index.qmd

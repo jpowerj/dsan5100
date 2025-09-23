@@ -4,6 +4,25 @@
     "items": []
   },
   {
+    "listing": "/index.html",
+    "items": [
+      "/w01/index.html",
+      "/w02a/index.html",
+      "/w02b/index.html",
+      "/w03/index.html",
+      "/w04/index.html",
+      "/w05a/index.html",
+      "/w05b/index.html",
+      "/w08/index.html",
+      "/w06/index.html",
+      "/w09/index.html",
+      "/w10/index.html",
+      "/w11/index.html",
+      "/w12/index.html",
+      "/w14/index.html"
+    ]
+  },
+  {
     "listing": "/writeups/index.html",
     "items": [
       "/writeups/optimization/index.html",
@@ -25,23 +44,5 @@
   {
     "listing": "/recordings-archive/index.html",
     "items": []
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/w01/index.html",
-      "/w02/index.html",
-      "/w03/index.html",
-      "/w04/index.html",
-      "/w05/index.html",
-      "/w06/index.html",
-      "/w07/index.html",
-      "/w08/index.html",
-      "/w09/index.html",
-      "/w10/index.html",
-      "/w11/index.html",
-      "/w12/index.html",
-      "/w14/index.html"
-    ]
   }
 ]
