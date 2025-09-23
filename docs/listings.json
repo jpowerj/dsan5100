@@ -1,9 +1,5 @@
 [
   {
-    "listing": "/extra-videos/index.html",
-    "items": []
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/w01/index.html",
@@ -13,13 +9,13 @@
       "/w04/index.html",
       "/w05a/index.html",
       "/w05b/index.html",
-      "/w08/index.html",
       "/w06/index.html",
+      "/w07/index.html",
+      "/w08/index.html",
       "/w09/index.html",
       "/w10/index.html",
       "/w11/index.html",
-      "/w12/index.html",
-      "/w14/index.html"
+      "/w12/index.html"
     ]
   },
   {
@@ -43,6 +39,10 @@
   },
   {
     "listing": "/recordings-archive/index.html",
+    "items": []
+  },
+  {
+    "listing": "/extra-videos/index.html",
     "items": []
   }
 ]

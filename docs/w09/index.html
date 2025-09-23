@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jeff Jacobs">
+<meta name="author" content="Purna Gamage, Amineh Zadbood, and Jeff Jacobs">
 
-<title>Week 9: Statistical Inference – DSAN 5100-01</title>
+<title>Week 9: Parameter Estimation – DSAN 5100-01</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -334,7 +334,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../w09/index.html">Week 9: Oct 22</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../w09/index.html">Week 9: Oct 28</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -369,6 +369,18 @@ window.Quarto = {
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://georgetown.zoom.us/j/96432114052?pwd=Zu10rEdvX6Ca2uUjDv2RcntxPYkq8w.1" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Zoom Link <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="https://georgetown.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=c2b08bb7-3347-4b9e-828e-b361013c069e" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Recordings <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w01/index.html" class="sidebar-item-text sidebar-link">
@@ -413,53 +425,47 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../w07/index.qmd" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 7: Oct 8</span></a>
+  <a href="../w06/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 6: Oct 7</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../w07/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 7: Oct 14</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w08/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 8: Oct 15</span></a>
+ <span class="menu-text">Week 8: Oct 21</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w09/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Week 9: Oct 22</span></a>
+ <span class="menu-text">Week 9: Oct 28</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w10/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 10: Oct 29</span></a>
+ <span class="menu-text">Week 10: Nov 4</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w11/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 11: Nov 5</span></a>
+ <span class="menu-text">Week 11: Nov 11</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../w12/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Week 12: Nov 12</span></a>
+ <span class="menu-text">Week 12: Nov 18</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://georgetown.zoom.us/j/92478089466?pwd=cSBmcjACL6EJJW0vHbzIqimH7imkVx.1" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Zoom Link <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://georgetown.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=98022271-76d6-457f-83ee-b1dd00143dbc" class="sidebar-item-text sidebar-link" target="_blank">
- <span class="menu-text">Recordings <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
-  </div>
-</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../writeups/index.html" class="sidebar-item-text sidebar-link">
@@ -474,6 +480,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="https://jjacobs.me/meet" class="sidebar-item-text sidebar-link" target="_blank">
+ <span class="menu-text">Book Office Hours <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="https://jjacobs.me/dsps" class="sidebar-item-text sidebar-link" target="_blank">
  <span class="menu-text">Textbook <i class="bi bi-box-arrow-up-right ps-1" style="font-size: 75%;"></i></span></a>
   </div>
@@ -481,7 +493,7 @@ window.Quarto = {
     </ul>
     </div>
 <div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
-<p><em>Updated 2025-09-23, 03:02:34 PM</em></p>
+<p><em>Updated 2025-09-23, 03:18:39 PM</em></p>
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -490,50 +502,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#markov-models" id="toc-markov-models" class="nav-link active" data-scroll-target="#markov-models">Markov Models</a>
-  <ul class="collapse">
-  <li><a href="#finite-state-automata" id="toc-finite-state-automata" class="nav-link" data-scroll-target="#finite-state-automata">Finite-State Automata</a></li>
-  <li><a href="#enter-markov-chains" id="toc-enter-markov-chains" class="nav-link" data-scroll-target="#enter-markov-chains">Enter Markov Chains</a></li>
-  <li><a href="#hidden-markov-models" id="toc-hidden-markov-models" class="nav-link" data-scroll-target="#hidden-markov-models">Hidden Markov Models</a></li>
-  <li><a href="#pagerank-matrix-magic" id="toc-pagerank-matrix-magic" class="nav-link" data-scroll-target="#pagerank-matrix-magic">PageRank (Matrix Magic)</a></li>
-  <li><a href="#pagerank-visualized" id="toc-pagerank-visualized" class="nav-link" data-scroll-target="#pagerank-visualized">PageRank Visualized</a></li>
-  <li><a href="#chickens-and-eggs" id="toc-chickens-and-eggs" class="nav-link" data-scroll-target="#chickens-and-eggs">Chickens and Eggs</a></li>
-  <li><a href="#resolving-recursive-definitions" id="toc-resolving-recursive-definitions" class="nav-link" data-scroll-target="#resolving-recursive-definitions">Resolving Recursive Definitions</a></li>
-  <li><a href="#the-pagerank-process" id="toc-the-pagerank-process" class="nav-link" data-scroll-target="#the-pagerank-process">The PageRank Process</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  <li><a href="#matrix-magic" id="toc-matrix-magic" class="nav-link" data-scroll-target="#matrix-magic">Matrix Magic</a></li>
-  <li><a href="#solving-the-matrix-magic" id="toc-solving-the-matrix-magic" class="nav-link" data-scroll-target="#solving-the-matrix-magic">Solving the Matrix Magic</a></li>
-  <li><a href="#the-point-of-all-this" id="toc-the-point-of-all-this" class="nav-link" data-scroll-target="#the-point-of-all-this">The Point of All This</a></li>
-  </ul></li>
-  <li><a href="#statistical-inference" id="toc-statistical-inference" class="nav-link" data-scroll-target="#statistical-inference">Statistical Inference</a>
-  <ul class="collapse">
-  <li><a href="#statistical-inference-vs.-statistics" id="toc-statistical-inference-vs.-statistics" class="nav-link" data-scroll-target="#statistical-inference-vs.-statistics">Statistical <em>Inference</em> vs.&nbsp;Statistics</a></li>
-  <li><a href="#samples-vs.-populations" id="toc-samples-vs.-populations" class="nav-link" data-scroll-target="#samples-vs.-populations">Samples vs.&nbsp;Populations</a></li>
-  <li><a href="#inference-statistical-and-otherwise" id="toc-inference-statistical-and-otherwise" class="nav-link" data-scroll-target="#inference-statistical-and-otherwise">Inference (Statistical and Otherwise)</a></li>
-  <li><a href="#examples-abound" id="toc-examples-abound" class="nav-link" data-scroll-target="#examples-abound">Examples Abound!</a></li>
-  <li><a href="#zooming-in-on-euclid" id="toc-zooming-in-on-euclid" class="nav-link" data-scroll-target="#zooming-in-on-euclid">Zooming in on Euclid</a></li>
-  <li><a href="#inference-in-the-diagram" id="toc-inference-in-the-diagram" class="nav-link" data-scroll-target="#inference-in-the-diagram">Inference in the Diagram</a></li>
-  <li><a href="#completing-the-cycle" id="toc-completing-the-cycle" class="nav-link" data-scroll-target="#completing-the-cycle">Completing the Cycle</a></li>
-  <li><a href="#our-case" id="toc-our-case" class="nav-link" data-scroll-target="#our-case">Our Case</a></li>
-  </ul></li>
-  <li><a href="#asymptotic-laws-for-random-samples" id="toc-asymptotic-laws-for-random-samples" class="nav-link" data-scroll-target="#asymptotic-laws-for-random-samples">Asymptotic Laws for Random Samples</a>
-  <ul class="collapse">
-  <li><a href="#stability-out-of-randomness" id="toc-stability-out-of-randomness" class="nav-link" data-scroll-target="#stability-out-of-randomness">Stability out of Randomness</a></li>
-  <li><a href="#interactive-visualization" id="toc-interactive-visualization" class="nav-link" data-scroll-target="#interactive-visualization">Interactive Visualization</a></li>
-  <li><a href="#how-many-is-many" id="toc-how-many-is-many" class="nav-link" data-scroll-target="#how-many-is-many">How Many is “Many”?</a></li>
-  <li><a href="#the-sample-mean" id="toc-the-sample-mean" class="nav-link" data-scroll-target="#the-sample-mean">The Sample Mean</a></li>
-  <li><a href="#weak-law-of-large-numbers-wlln" id="toc-weak-law-of-large-numbers-wlln" class="nav-link" data-scroll-target="#weak-law-of-large-numbers-wlln">Weak Law of Large Numbers (WLLN)</a></li>
-  <li><a href="#strong-law-of-large-numbers-slln" id="toc-strong-law-of-large-numbers-slln" class="nav-link" data-scroll-target="#strong-law-of-large-numbers-slln">Strong Law of Large Numbers (SLLN)</a></li>
-  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem">Central Limit Theorem</a></li>
-  <li><a href="#formal-clt" id="toc-formal-clt" class="nav-link" data-scroll-target="#formal-clt">Formal CLT</a></li>
-  <li><a href="#when-is-mathcaln0-1-a-good-approximation" id="toc-when-is-mathcaln0-1-a-good-approximation" class="nav-link" data-scroll-target="#when-is-mathcaln0-1-a-good-approximation">When is <span class="math inline">\(\mathcal{N}(0, 1)\)</span> a “good” approximation?</a></li>
-  <li><a href="#q-q-plots" id="toc-q-q-plots" class="nav-link" data-scroll-target="#q-q-plots">Q-Q Plots</a></li>
-  </ul></li>
-  <li><a href="#estimating-parameters" id="toc-estimating-parameters" class="nav-link" data-scroll-target="#estimating-parameters">Estimating Parameters</a>
+  <li><a href="#estimating-parameters" id="toc-estimating-parameters" class="nav-link active" data-scroll-target="#estimating-parameters">Estimating Parameters</a>
   <ul class="collapse">
   <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link" data-scroll-target="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a></li>
   <li><a href="#probability-models-are-generative-models" id="toc-probability-models-are-generative-models" class="nav-link" data-scroll-target="#probability-models-are-generative-models">Probability Models are <em>Generative</em> Models</a></li>
   <li><a href="#generative-models" id="toc-generative-models" class="nav-link" data-scroll-target="#generative-models">Generative Models</a></li>
+  <li><a href="#week-10-lab" id="toc-week-10-lab" class="nav-link" data-scroll-target="#week-10-lab">Week 10 Lab!</a></li>
   <li><a href="#simulations-rightarrow-math" id="toc-simulations-rightarrow-math" class="nav-link" data-scroll-target="#simulations-rightarrow-math">Simulations <span class="math inline">\(\rightarrow\)</span> Math</a></li>
   <li><a href="#math-magic-1" id="toc-math-magic-1" class="nav-link" data-scroll-target="#math-magic-1">Math Magic 1</a></li>
   <li><a href="#math-magic-2" id="toc-math-magic-2" class="nav-link" data-scroll-target="#math-magic-2">Math Magic 2</a></li>
@@ -564,7 +538,6 @@ window.Quarto = {
   <li><a href="#appendix-2-derivation-of-mathbbemux_i" id="toc-appendix-2-derivation-of-mathbbemux_i" class="nav-link" data-scroll-target="#appendix-2-derivation-of-mathbbemux_i">Appendix 2: Derivation of <span class="math inline">\(\mathbb{E}[\mu^*X_i]\)</span></a></li>
   <li><a href="#appendix-3-derivation-of-mathbbesigma2_" id="toc-appendix-3-derivation-of-mathbbesigma2_" class="nav-link" data-scroll-target="#appendix-3-derivation-of-mathbbesigma2_">Appendix 3: Derivation of <span class="math inline">\(\mathbb{E}[\sigma^2_*]\)</span></a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  <li><a href="#week-9-lab" id="toc-week-9-lab" class="nav-link" data-scroll-target="#week-9-lab">Week 9 Lab</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/w09/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -575,35 +548,28 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Week 9: Statistical Inference</h1>
-<p class="subtitle lead"><em>DSAN 5100: Probabilistic Modeling and Statistical Computing</em><br>Section 03</p>
+<h1 class="title">Week 9: Parameter Estimation</h1>
+<p class="subtitle lead"><em>DSAN 5100: Probabilistic Modeling and Statistical Computing</em><br>Section 01</p>
   <div class="quarto-categories">
     <div class="quarto-category">Class Sessions</div>
   </div>
   </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">Jeff Jacobs </p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            <a href="mailto:jj1088@georgetown.edu" target="_blank"><code>jj1088@georgetown.edu</code></a>
-          </p>
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Purna Gamage, Amineh Zadbood, and Jeff Jacobs </p>
+          </div>
+  </div>
+    
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Tuesday, October 22, 2024</p>
+      <p class="date">Tuesday, October 28, 2025</p>
     </div>
   </div>
   
@@ -618,11 +584,16 @@ window.Quarto = {
 <center>
 <a class="h2" href="slides.html" target="_blank">Open slides in new window →</a>
 </center>
-<section id="markov-models" class="level1 page-columns page-full" data-stack-name="Markov Models">
-<h1 data-stack-name="Markov Models">Markov Models</h1>
+<section id="estimating-parameters" class="level1" data-stack-name="Estimators">
+<h1 data-stack-name="Estimators">Estimating Parameters</h1>
+<ul>
+<li>Maximum Likelihood Estimation (MLE)</li>
+<li>Generalized Method of Moments (GMM) Estimation</li>
+</ul>
 <div class="hidden">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../dsan-globals/_globals.r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <div class="hidden">
 <p><span class="math display">\[
@@ -630,10 +601,9 @@ window.Quarto = {
 \DeclareMathOperator*{\argmin}{argmin}
 \newcommand{\bigexp}[1]{\exp\mkern-4mu\left[ #1 \right]}
 \newcommand{\bigexpect}[1]{\mathbb{E}\mkern-4mu \left[ #1 \right]}
-\newcommand{\convergesAS}{\overset{\text{a.s.}}{\longrightarrow}}
-\newcommand{\definedas}{\overset{\text{def}}{=}}
-\newcommand{\definedalign}{\overset{\phantom{\text{def}}}{=}}
-\newcommand{\eqeventual}{\overset{\mathclap{\text{\small{eventually}}}}{=}}
+\newcommand{\definedas}{\overset{\small\text{def}}{=}}
+\newcommand{\definedalign}{\overset{\phantom{\text{defn}}}{=}}
+\newcommand{\eqeventual}{\overset{\text{eventually}}{=}}
 \newcommand{\Err}{\text{Err}}
 \newcommand{\expect}[1]{\mathbb{E}[#1]}
 \newcommand{\expectsq}[1]{\mathbb{E}^2[#1]}
@@ -644,13 +614,18 @@ window.Quarto = {
 \newcommand{\iid}{\overset{\text{\small{iid}}}{\sim}}
 \newcommand{\lik}{\mathcal{L}}
 \newcommand{\loglik}{\ell}
+\DeclareMathOperator*{\maximize}{maximize}
+\DeclareMathOperator*{\minimize}{minimize}
 \newcommand{\mle}{\textsf{ML}}
 \newcommand{\nimplies}{\;\not\!\!\!\!\implies}
 \newcommand{\orange}[1]{\color{orange}{#1}}
 \newcommand{\outcome}[1]{\textsf{#1}}
 \newcommand{\param}[1]{{\color{purple} #1}}
 \newcommand{\pgsamplespace}{\{\green{1},\green{2},\green{3},\purp{4},\purp{5},\purp{6}\}}
-\newcommand{\prob}[1]{P\left( #1 \right)}
+\newcommand{\pedge}[2]{\require{enclose}\enclose{circle}{~{#1}~} \rightarrow \; \enclose{circle}{\kern.01em {#2}~\kern.01em}}
+\newcommand{\pnode}[1]{\require{enclose}\enclose{circle}{\kern.1em {#1} \kern.1em}}
+\newcommand{\ponode}[1]{\require{enclose}\enclose{box}[background=lightgray]{{#1}}}
+\newcommand{\pnodesp}[1]{\require{enclose}\enclose{circle}{~{#1}~}}
 \newcommand{\purp}[1]{\color{purple}{#1}}
 \newcommand{\sign}{\text{Sign}}
 \newcommand{\spacecap}{\; \cap \;}
@@ -660,1205 +635,6 @@ window.Quarto = {
 \newcommand{\bigVar}[1]{\text{Var}\mkern-4mu \left[ #1 \right]}
 \]</span></p>
 </div>
-</div>
-<!-- ## Four Types {.smaller}
-
-| | Fully Observable | Partially Observable |
-| - | - | - |
-| **Autonomous** | Markov Chain<br> | Hidden Markov Model |
-| **Controlled** | Markov Decision Process | Partially-Observable MDP | -->
-<section id="finite-state-automata" class="level2 nostretch crunch-title smaller-table">
-<h2 class="nostretch crunch-title smaller-table anchored" data-anchor-id="finite-state-automata">Finite-State Automata</h2>
-<p>(Deterministic!) Only “accepts” strings with even number of <code>1</code>s:</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/automata.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-</div><div class="column" style="width:60%;">
-<table class="caption-top table" data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th">Input String</th>
-<th class="split-table" data-quarto-table-cell-role="th">Result</th>
-<th data-quarto-table-cell-role="th">Input String</th>
-<th data-quarto-table-cell-role="th">Result</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(\varepsilon\)</span></td>
-<td class="split-table">✅</td>
-<td><code>01</code></td>
-<td><i class="bi bi-x-lg" style="color: red;"></i></td>
-</tr>
-<tr class="even">
-<td><code>0</code></td>
-<td class="split-table">✅</td>
-<td><code>10</code></td>
-<td><i class="bi bi-x-lg" style="color: red;"></i></td>
-</tr>
-<tr class="odd">
-<td><code>1</code></td>
-<td class="split-table"><i class="bi bi-x-lg" style="color: red;"></i></td>
-<td><code>1000000</code></td>
-<td><i class="bi bi-x-lg" style="color: red;"></i></td>
-</tr>
-<tr class="even">
-<td><code>00</code></td>
-<td class="split-table">✅</td>
-<td><code>10000001</code></td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
-<!-- | Input String | Result | Input String | Result |
-| - | - | - | - |
-| $\varepsilon$ | ✅ | `01` | <i class='bi bi-x-lg' style='color: red;'></i> |
-| `0` | ✅ | `10` | <i class='bi bi-x-lg' style='color: red;'></i> |
-| `1` | <i class='bi bi-x-lg' style='color: red;'></i> | `1000000` | <i class='bi bi-x-lg' style='color: red;'></i> |
-| `00` | ✅ | `10000001` | ✅ | -->
-</div>
-</div>
-<ul>
-<li>…But we’re trying to model <strong>probabilistic</strong> evolution!</li>
-</ul>
-</section>
-<section id="enter-markov-chains" class="level2 crunch-title math-90 crunch-math">
-<h2 class="crunch-title math-90 crunch-math anchored" data-anchor-id="enter-markov-chains">Enter Markov Chains</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<center>
-Graphically
-</center>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/basic_no_self_loops.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/basic_self_loops.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<center>
-Mathematically
-</center>
-<p><span class="math display">\[
-\begin{array}{c c}
-&amp; \begin{array}{c c c} 1\phantom{1} &amp; \phantom{1}2\phantom{1} &amp; \phantom{1}3 \\ \end{array} \\
-\begin{array}{c c c}1 \\ 2 \\ 3 \end{array} &amp;
-\left[
-\begin{array}{c c c}
-0 &amp; 1/2 &amp; 1/2 \\
-1/3 &amp; 0 &amp; 2/3 \\
-1/3 &amp; 2/3 &amp; 0
-\end{array}
-\right]
-\end{array}
-\]</span></p>
-<p><br></p>
-<p><span class="math display">\[
-\begin{array}{c c}
-&amp; \begin{array}{c c c} 1\phantom{1} &amp; \phantom{2}2\phantom{2} &amp; \phantom{1}3 \\ \end{array} \\
-\begin{array}{c c c}1 \\ 2 \\ 3 \end{array} &amp;
-\left[
-\begin{array}{c c c}
-1/2 &amp; 1/3 &amp; 1/6 \\
-1/10 &amp; 1/2 &amp; 2/5 \\
-1/8 &amp; 3/8 &amp; 1/2
-\end{array}
-\right]
-\end{array}
-\]</span></p>
-</div>
-</div>
-</section>
-<section id="hidden-markov-models" class="level2" data-name="HMMs">
-<h2 data-name="HMMs" class="anchored" data-anchor-id="hidden-markov-models">Hidden Markov Models</h2>
-<ul>
-<li>Use <strong>observed</strong> data to infer <strong>unobserved</strong> variables</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/hmm.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<ul>
-<li>(What our brains are doing, most of the time!)</li>
-</ul>
-</section>
-<section id="pagerank-matrix-magic" class="level2">
-<h2 class="anchored" data-anchor-id="pagerank-matrix-magic">PageRank (Matrix Magic)</h2>
-<ul>
-<li>What is the relevance of this abstract topic? …🤑</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>goog_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"assets/google_yearly_revenue.csv"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(goog_df, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>revenue_billions)) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span>cbPalette[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Google Yearly Revenue, 2002-2022"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Revenue (Billion USD)"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"full"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/google-graph-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li>PageRank = The “spark” that ignited the Google flame</li>
-</ul>
-</section>
-<section id="pagerank-visualized" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="pagerank-visualized">PageRank Visualized</h2>
-<ul>
-<li>Nodes = Webpages, Edges = Links</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/pagerank.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<ul>
-<li>Goal: Rank the relative “importance” of a site <span class="math inline">\(S_i\)</span>, <strong>taking into account</strong> the importance of other sites that <strong>link to</strong> <span class="math inline">\(S_i\)</span>
-<ul>
-<li>“Important” sites: linked to often, and linked to often <strong>by other important sites</strong></li>
-</ul></li>
-</ul>
-</section>
-<section id="chickens-and-eggs" class="level2 smaller page-columns page-full">
-<h2 class="smaller anchored" data-anchor-id="chickens-and-eggs">Chickens and Eggs</h2>
-<ul>
-<li>Paradoxical at first: how are we supposed to figure out the <strong>importance of a site</strong> <span class="math inline">\(S_i\)</span>, when that’s determined by
-<ul>
-<li>the <strong>importance of sites <span class="math inline">\(S_j\)</span> that link to <span class="math inline">\(S_i\)</span></strong>, which is determined by
-<ul>
-<li>the <strong>importance of sites <span class="math inline">\(S_k\)</span> that link to sites <span class="math inline">\(S_j\)</span></strong>, which is determined by
-<ul>
-<li>the <strong>importance of the sites <span class="math inline">\(S_\ell\)</span> that link to those sites <span class="math inline">\(S_k\)</span></strong>, which is determined by…</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-<p><span class="math display">\[
-\begin{align*}
-\mathsf{Importance}(S_i) &amp;= f(\mathsf{Importance}(S_{j \rightarrow i})) = f(f(\mathsf{Importance}(S_{k \rightarrow j \rightarrow i}))) \\
-&amp;= f(f(f(\mathsf{Importance}(S_{\ell \rightarrow k \rightarrow j \rightarrow i})))) = \cdots
-\end{align*}
-\]</span></p>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Sanity hint: Remember infinite sums from calculus! They can converge, despite having infinitely-many terms… This is something like that, but for <strong>recursion</strong> (the mathematical term for an object whose definition refers to itself)</p>
-</div></div></section>
-<section id="resolving-recursive-definitions" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="resolving-recursive-definitions">Resolving Recursive Definitions</h2>
-<ul>
-<li>We <strong>can</strong> compute this importance ranking, despite its recursive definition!</li>
-<li>Recall, for example, the Fibonacci sequence: <span class="math inline">\(1, 1, 2, 3, 5, 8, 13, 21, \ldots\)</span></li>
-<li>Defined recursively!</li>
-</ul>
-<p><span class="math display">\[
-f(n) = \begin{cases}
-1 &amp; n = 1\text{ or }n = 2 \\
-f(n-2) + f(n-1) &amp; n &gt; 2
-\end{cases}
-\]</span></p>
-<ul>
-<li><p>And yet, a guy named <a href="https://en.wikipedia.org/wiki/Daniel_Bernoulli" target="_blank">Bernoulli</a> figured out</p>
-<p><span class="math display">\[
-f(n) = \frac{\varphi^n - \psi^n}{\varphi - \psi} = \frac{\varphi^n - \psi^n}{\sqrt{5}},
-\]</span></p>
-<p>where <span class="math inline">\(\varphi\)</span> is the “Golden Ratio” <span class="math inline">\(\frac{1 + \sqrt{5}}{2}\)</span> and <span class="math inline">\(\psi\)</span> its conjugate <span class="math inline">\(\frac{1 - \sqrt{5}}{2}\)</span>.</p></li>
-</ul>
-</section>
-<section id="the-pagerank-process" class="level2 smaller crunch-title crunch-ul">
-<h2 class="smaller crunch-title crunch-ul anchored" data-anchor-id="the-pagerank-process">The PageRank Process</h2>
-<ul>
-<li>Every site starts with <strong>equal</strong> PageRank score: <span class="math inline">\(r^{(0)}_1 = r^{(0)}_2 = r^{(0)}_3 = \frac{1}{3}\)</span>.</li>
-<li>Each link <span class="math inline">\(S_i \rightarrow S_j\)</span> is a <strong>vote of confidence</strong> that <span class="math inline">\(S_i\)</span> is giving to <span class="math inline">\(S_j\)</span></li>
-<li>At each time <span class="math inline">\(t\)</span>, a site <span class="math inline">\(S_i\)</span> <strong>“spends”</strong> whatever voting power it currently has (<span class="math inline">\(r^{(t)}_i\)</span>) on the sites it links to.
-<ul>
-<li><span class="math inline">\(S_1\)</span> casts one vote for itself and one vote for <span class="math inline">\(S_2\)</span>, thus spending <span class="math inline">\(\frac{1}{2}\)</span> of its total PageRank on itself and <span class="math inline">\(\frac{1}{2}\)</span> of its total PageRank on <span class="math inline">\(S_2\)</span>.</li>
-</ul></li>
-<li><strong>State</strong> of the process at time <span class="math inline">\(t\)</span>: <span class="math inline">\(\mathbf{r}^{(t)} = \begin{bmatrix}r^{(t)}_1 &amp; r^{(t)}_2 &amp; r^{(t)}_3\end{bmatrix}^\top\)</span></li>
-<li>Can form a <strong>matrix</strong> specifying how this state <strong>evolves</strong> from time <span class="math inline">\(t\)</span> to time <span class="math inline">\(t+1\)</span>!</li>
-</ul>
-<p><span class="math display">\[
-\mathbf{E} = \begin{bmatrix}
-\frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
-\frac{1}{2} &amp; 0 &amp; 1 \\
-0 &amp; \frac{1}{2} &amp; 0
-\end{bmatrix} \; \leadsto \; \mathbf{r}^{(t+1)} = \mathbf{E}\mathbf{r}^{(t)}
-\]</span></p>
-<div class="notes">
-<ul>
-<li>Given the “<span class="math inline">\(S_1\)</span> casts one vote for itself…” part, can you say exactly what <span class="math inline">\(S_1\)</span> will “spend” on itself and on <span class="math inline">\(S_2\)</span> at time <span class="math inline">\(t = 0\)</span> (in the first round)?</li>
-</ul>
-</div>
-</section>
-<section id="section" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="section"></h2>
-<ul>
-<li>We can use <span class="math inline">\(\mathbf{E}\)</span> to figure out the state at each step, starting from <span class="math inline">\(t = 0\)</span>!</li>
-</ul>
-<p><span class="math display">\[
-\begin{array}{c@{}c@{}c@{}c@{}c@{}c@{}c}
-\mathbf{r}^{(1)} &amp; = &amp; \mathbf{E}\mathbf{r}^{(0)} &amp; = &amp; \begin{bmatrix}
-\frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
-\frac{1}{2} &amp; 0 &amp; 1 \\
-0 &amp; \frac{1}{2} &amp; 0
-\end{bmatrix}\begin{bmatrix}
-\frac{1}{3} \\
-\frac{1}{3} \\
-\frac{1}{3}\end{bmatrix} &amp; = &amp; \begin{bmatrix}
-\frac{1}{3} \\
-\frac{1}{2} \\
-\frac{1}{6}
-\end{bmatrix} \\
-~ &amp; ~ &amp; ~ &amp; ~ &amp; ~ &amp; \swarrow &amp; ~ \\
-\mathbf{r}^{(2)} &amp; = &amp; \mathbf{E}\mathbf{r}^{(1)} &amp; = &amp; \begin{bmatrix}
-\frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
-\frac{1}{2} &amp; 0 &amp; 1 \\
-0 &amp; \frac{1}{2} &amp; 0
-\end{bmatrix}\begin{bmatrix}\frac{1}{3} \\ \frac{1}{2} \\ \frac{1}{6}\end{bmatrix} &amp; = &amp; \begin{bmatrix}\frac{5}{12} \\ \frac{1}{3} \\ \frac{1}{4}\end{bmatrix} \\
-~ &amp; ~ &amp; ~ &amp; ~ &amp; ~ &amp; \swarrow &amp; ~ \\
-\mathbf{r}^{(3)} &amp; = &amp; \mathbf{E}\mathbf{r}^{(2)} &amp; = &amp; \cdots &amp; ~ &amp; ~
-\end{array}
-\]</span></p>
-</section>
-<section id="matrix-magic" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="matrix-magic">Matrix Magic</h2>
-<ul>
-<li>(1) Won’t we just have to run this forever? (2) How do we know it’ll converge to something?</li>
-<li>Answers: (1) No! (2) because <strong>Markov matrix magic</strong>!</li>
-<li>“Steady state” = state where <span class="math inline">\(\mathbf{r}^{(t)} = \mathbf{r}^{(t+1)} = \mathbf{r}^{(t+2)} = \cdots \definedas \mathbf{r}^*\)</span>. But this means</li>
-</ul>
-<p><span class="math display">\[
-\mathbf{r}^{(t+1)} = \mathbf{r}^{(t)} \iff \mathbf{E}\mathbf{r}^{(t)} = \mathbf{r}^{(t)} \iff \mathbf{E}\mathbf{r}^* = \mathbf{r}^*
-\]</span></p>
-<ul>
-<li>This <span class="math inline">\(\mathbf{r}^*\)</span> is (by definition!) an <strong>Eigenvector</strong> of <span class="math inline">\(\mathbf{E}\)</span> with <strong>Eigenvalue</strong> <span class="math inline">\(\lambda = 1\)</span>!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
-</ul>
-<div class="notes">
-<ul>
-<li>In my opinion, along with e.g.&nbsp;insolubility of the quintic, this is maybe the most mind-blowing case of math magic :3</li>
-</ul>
-</div>
-</section>
-<section id="solving-the-matrix-magic" class="level2 smaller crunch-title">
-<h2 class="smaller crunch-title anchored" data-anchor-id="solving-the-matrix-magic">Solving the Matrix Magic</h2>
-<ul>
-<li><p>Since we already know the <strong>Eigenvalue</strong> of interest, <span class="math inline">\(\lambda = 1\)</span>, all that’s left is solving for its corresponding <strong>Eigenvector</strong>:</p>
-<p><span class="math display">\[
-  \mathbf{E}\mathbf{r}^* = \mathbf{r}^* \iff \mathbf{E}\mathbf{r}^* - \mathbf{r}^* = \mathbf{0} \iff (\mathbf{E} - \mathbf{I})\mathbf{r}^* = \mathbf{0}
-  \]</span></p></li>
-<li><p>Written out, we see that this gives us a system of linear equations:</p>
-<p><span class="math display">\[
-  \begin{bmatrix}
-  \frac{1}{2} &amp; \frac{1}{2} &amp; 0 \\
-  \frac{1}{2} &amp; 0 &amp; 1 \\
-  0 &amp; \frac{1}{2} &amp; 0
-  \end{bmatrix}\begin{bmatrix}r^*_1 \\ r^*_2 \\ r^*_3\end{bmatrix} = \begin{bmatrix}0 \\ 0 \\ 0\end{bmatrix} \iff \begin{array}{ccccccc}\frac{1}{2}r^*_1 &amp; + &amp; \frac{1}{2}r^*_2 &amp; ~ &amp; ~ &amp; = &amp; 0 \\ \frac{1}{2}r^*_1 &amp; ~ &amp; ~ &amp; + &amp; r^*_3 &amp; = &amp; 0 \\ ~ &amp; ~ &amp; \frac{1}{2}r^*_2 &amp; ~ &amp; ~ &amp; = &amp; 0\end{array}
-  \]</span></p>
-<p>which we can solve however we want!</p></li>
-<li><p>To handle the fact that this system is <strong>underspecified</strong>, impose additional restriction that <span class="math inline">\(r^*_1 + r^*_2 + r^*_3 = 1\)</span>, so that the ranks form a <strong>probability distribution</strong></p></li>
-</ul>
-</section>
-<section id="the-point-of-all-this" class="level2 crunch-title crunch-ul">
-<h2 class="crunch-title crunch-ul anchored" data-anchor-id="the-point-of-all-this">The Point of All This</h2>
-<ul>
-<li>The final restriction <span class="math inline">\(r^*_1 + r^*_2 + r^*_3 = 1\)</span> ensures that the resulting PageRank values form a <strong>probability distribution</strong></li>
-<li>This is called the <strong>Stationary Distribution</strong> of the <strong>Markov chain</strong>: represents the probability that a <strong>random walker</strong> through the chain will be at page <span class="math inline">\(S_i\)</span> at a given time!
-<ul>
-<li>Equivalently: <strong>expected proportion of total walking time</strong> a random-walker will spend at each node</li>
-</ul></li>
-<li><strong>Every Markov chain has a Stationary Distribution</strong>! This fact has cool implications even above and beyond the Google $$$ implications 😜</li>
-</ul>
-</section>
-</section>
-<section id="statistical-inference" class="level1 page-columns page-full" data-stack-name="Inference">
-<h1 data-stack-name="Inference">Statistical Inference</h1>
-<section id="statistical-inference-vs.-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-inference-vs.-statistics">Statistical <em>Inference</em> vs.&nbsp;Statistics</h2>
-<!-- {data-name="Overview"} -->
-<ul>
-<li>Moving from <em>understanding</em> probability to <em>getting things done</em> using probability!</li>
-<li>Everything up to this point: understanding the “rules” of stochastic processes</li>
-<li>Now: Using what we know to allow us to draw inferences about <strong>populations</strong> without having to carry out a <strong>census</strong></li>
-</ul>
-</section>
-<section id="samples-vs.-populations" class="level2">
-<h2 class="anchored" data-anchor-id="samples-vs.-populations">Samples vs.&nbsp;Populations</h2>
-<ul>
-<li><strong>Sample</strong> = The data you have</li>
-<li><strong>Population</strong> = The thing you want to learn about, by looking at the sample</li>
-<li>Like “success” vs.&nbsp;“failure” in Bernoulli trials, no exact definition of what counts as sample vs.&nbsp;population</li>
-<li>What we call the “sample” and the “population” is vocabulary there to help us know what to do</li>
-</ul>
-</section>
-<section id="inference-statistical-and-otherwise" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="inference-statistical-and-otherwise">Inference (Statistical and Otherwise)</h2>
-<p>What are we doing when we do science?</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<center>
-<strong>Science in General</strong>
-</center>
-<div class="cell" data-fig-width="5" data-fig-height="3" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="480" height="288" viewbox="0.00 0.00 373.38 209.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 205)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-205 369.38,-205 369.38,4 -4,4"></polygon>
-<g id="clust1" class="cluster">
-<title>cluster_01</title>
-<polygon fill="none" stroke="black" points="8,-8 8,-193 212.88,-193 212.88,-8 8,-8"></polygon>
-<text text-anchor="middle" x="110.44" y="-176.4" font-family="Times,serif" font-size="14.00">"Nature"</text>
-</g>
-<g id="clust4" class="cluster">
-<title>cluster_02</title>
-<polygon fill="none" stroke="black" points="268.88,-62 268.88,-139 357.38,-139 357.38,-62 268.88,-62"></polygon>
-<text text-anchor="middle" x="313.13" y="-122.4" font-family="Times,serif" font-size="14.00">"Science"</text>
-</g>
-<!-- Obs -->
-<g id="node1" class="node">
-<title>Obs</title>
-<ellipse fill="lightblue" stroke="black" cx="110.44" cy="-142" rx="88.56" ry="18"></ellipse>
-<text text-anchor="middle" x="110.44" y="-137.8" font-family="Times,serif" font-size="14.00">Thing(s) we can see</text>
-</g>
-<!-- Und -->
-<g id="node2" class="node">
-<title>Und</title>
-<ellipse fill="white" stroke="black" cx="110.44" cy="-34" rx="94.38" ry="18"></ellipse>
-<text text-anchor="middle" x="110.44" y="-29.8" font-family="Times,serif" font-size="14.00">Underlying processes</text>
-</g>
-<!-- Und&#45;&gt;Obs -->
-<g id="edge3" class="edge">
-<title>Und-&gt;Obs</title>
-<path fill="none" stroke="black" d="M110.44,-52.14C110.44,-72.65 110.44,-93.17 110.44,-113.68"></path>
-<polygon fill="black" stroke="black" points="106.94,-113.75 110.44,-123.75 113.94,-113.75 106.94,-113.75"></polygon>
-</g>
-<!-- Model -->
-<g id="node3" class="node">
-<title>Model</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="313.13" cy="-88" rx="36.5" ry="18"></ellipse>
-<text text-anchor="middle" x="313.13" y="-83.8" font-family="Times,serif" font-size="14.00">Model</text>
-</g>
-<!-- Und&#45;&gt;Model -->
-<g id="edge1" class="edge">
-<title>Und-&gt;Model</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M175.49,-51.23C210.71,-60.71 252.83,-72.04 280.91,-79.6"></path>
-<polygon fill="black" stroke="black" points="176.32,-47.83 165.75,-48.61 174.5,-54.59 176.32,-47.83"></polygon>
-</g>
-<!-- Model&#45;&gt;Obs -->
-<g id="edge2" class="edge">
-<title>Model-&gt;Obs</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M280.87,-96.41C252.52,-104.04 209.88,-115.51 174.47,-125.04"></path>
-<polygon fill="black" stroke="black" points="173.44,-121.69 164.7,-127.67 175.26,-128.45 173.44,-121.69"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<center>
-<strong>Example: Newton</strong>
-</center>
-<div class="cell" data-fig-width="5" data-fig-height="3.1" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="480" height="298" viewbox="0.00 0.00 429.94 209.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 205)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-205 425.94,-205 425.94,4 -4,4"></polygon>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="257.06,-62 257.06,-139 413.94,-139 413.94,-62 257.06,-62"></polygon>
-<text text-anchor="middle" x="335.5" y="-122.4" font-family="Times,serif" font-size="14.00">Isaac Newton</text>
-</g>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<g id="a_clust1"><a href="https://en.wikipedia.org/wiki/Woolsthorpe_Manor" title="<U>Woolsthorpe Manor</U>" target="_blank">
-<polygon fill="none" stroke="black" points="8,-8 8,-193 201.06,-193 201.06,-8 8,-8"></polygon>
-<text text-anchor="start" x="47.96" y="-177.4" font-family="Times,serif" text-decoration="underline" font-size="14.00">Woolsthorpe Manor</text>
-</a>
-</g>
-</g>
-<!-- Tree -->
-<g id="node1" class="node">
-<title>Tree</title>
-<g id="a_node1"><a href="https://www.popularmechanics.com/science/a5259/4343234/" title="<U>Falling Apple</U>" target="_blank">
-<ellipse fill="lightblue" stroke="black" cx="104.53" cy="-142" rx="64.33" ry="18"></ellipse>
-<text text-anchor="start" x="65.84" y="-138.8" font-family="Times,serif" text-decoration="underline" font-size="14.00">Falling Apple</text>
-</a>
-</g>
-</g>
-<!-- Physics -->
-<g id="node2" class="node">
-<title>Physics</title>
-<g id="a_node2"><a href="https://en.wikipedia.org/wiki/Fundamental_interaction" title="<U>Particle Interactions</U>" target="_blank">
-<ellipse fill="white" stroke="black" cx="104.53" cy="-34" rx="88.56" ry="18"></ellipse>
-<text text-anchor="start" x="48.36" y="-30.8" font-family="Times,serif" text-decoration="underline" font-size="14.00">Particle Interactions</text>
-</a>
-</g>
-</g>
-<!-- Physics&#45;&gt;Tree -->
-<g id="edge2" class="edge">
-<title>Physics-&gt;Tree</title>
-<path fill="none" stroke="black" d="M104.53,-52.14C104.53,-72.65 104.53,-93.17 104.53,-113.68"></path>
-<polygon fill="black" stroke="black" points="101.03,-113.75 104.53,-123.75 108.03,-113.75 101.03,-113.75"></polygon>
-</g>
-<!-- Newton -->
-<g id="node3" class="node">
-<title>Newton</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="335.5" cy="-88" rx="70.38" ry="18"></ellipse>
-<text text-anchor="middle" x="335.5" y="-83.8" font-family="Times,serif" font-size="14.00">Newton's Laws</text>
-</g>
-<!-- Physics&#45;&gt;Newton -->
-<g id="edge3" class="edge">
-<title>Physics-&gt;Newton</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M172.76,-49.86C208.06,-58.18 250.64,-68.22 283.24,-75.91"></path>
-<polygon fill="black" stroke="black" points="173.55,-46.45 163.01,-47.56 171.94,-53.26 173.55,-46.45"></polygon>
-</g>
-<!-- Newton&#45;&gt;Tree -->
-<g id="edge1" class="edge">
-<title>Newton-&gt;Tree</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M282.95,-100.16C247.77,-108.45 201.07,-119.47 164.42,-128.11"></path>
-<polygon fill="black" stroke="black" points="163.3,-124.78 154.37,-130.48 164.9,-131.59 163.3,-124.78"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Remember that the <strong>filled-in</strong> nodes represent things we can <strong>observe</strong>, while the <strong>non-filled</strong> nodes represent things we have to <strong>infer</strong> from the observable data.</p>
-</div></div></section>
-<section id="examples-abound" class="level2">
-<h2 class="anchored" data-anchor-id="examples-abound">Examples Abound!</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<center>
-<strong>Darwinian Evolution</strong>
-</center>
-<div class="cell" data-fig-width="5" data-fig-height="3" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="480" height="288" viewbox="0.00 0.00 445.23 209.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 205)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-205 441.23,-205 441.23,4 -4,4"></polygon>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<polygon fill="none" stroke="black" points="8,-8 8,-193 177.46,-193 177.46,-8 8,-8"></polygon>
-<text text-anchor="middle" x="92.73" y="-176.4" font-family="Times,serif" font-size="14.00">Galápagos Islands</text>
-</g>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="233.46,-62 233.46,-139 429.23,-139 429.23,-62 233.46,-62"></polygon>
-<text text-anchor="middle" x="331.35" y="-122.4" font-family="Times,serif" font-size="14.00">Charles Darwin</text>
-</g>
-<!-- Tree -->
-<g id="node1" class="node">
-<title>Tree</title>
-<g id="a_node1"><a href="https://en.wikipedia.org/wiki/Darwin%27s_finches" title="<U>Finches</U>" target="_blank">
-<ellipse fill="lightblue" stroke="black" cx="92.73" cy="-142" rx="41.16" ry="18"></ellipse>
-<text text-anchor="start" x="70.95" y="-138.8" font-family="Times,serif" text-decoration="underline" font-size="14.00">Finches</text>
-</a>
-</g>
-</g>
-<!-- Physics -->
-<g id="node2" class="node">
-<title>Physics</title>
-<ellipse fill="white" stroke="black" cx="92.73" cy="-34" rx="76.96" ry="18"></ellipse>
-<text text-anchor="middle" x="92.73" y="-29.8" font-family="Times,serif" font-size="14.00">Natural selection</text>
-</g>
-<!-- Physics&#45;&gt;Tree -->
-<g id="edge2" class="edge">
-<title>Physics-&gt;Tree</title>
-<path fill="none" stroke="black" d="M92.73,-52.14C92.73,-72.65 92.73,-93.17 92.73,-113.68"></path>
-<polygon fill="black" stroke="black" points="89.23,-113.75 92.73,-123.75 96.23,-113.75 89.23,-113.75"></polygon>
-</g>
-<!-- Newton -->
-<g id="node3" class="node">
-<title>Newton</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="331.35" cy="-88" rx="89.77" ry="18"></ellipse>
-<text text-anchor="middle" x="331.35" y="-83.8" font-family="Times,serif" font-size="14.00">Theory of Evolution</text>
-</g>
-<!-- Physics&#45;&gt;Newton -->
-<g id="edge3" class="edge">
-<title>Physics-&gt;Newton</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M158.51,-48.78C193.81,-56.84 237.16,-66.73 271.48,-74.57"></path>
-<polygon fill="black" stroke="black" points="158.84,-45.27 148.31,-46.46 157.28,-52.09 158.84,-45.27"></polygon>
-</g>
-<!-- Newton&#45;&gt;Tree -->
-<g id="edge1" class="edge">
-<title>Newton-&gt;Tree</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M271.35,-101.46C230.58,-110.77 177.14,-122.96 139.56,-131.54"></path>
-<polygon fill="black" stroke="black" points="138.38,-128.22 129.41,-133.86 139.94,-135.04 138.38,-128.22"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<center>
-<strong>Euclidean Geometry</strong>
-</center>
-<div class="cell" data-fig-width="5" data-fig-height="3" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="480" height="288" viewbox="0.00 0.00 492.39 209.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 205)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-205 488.39,-205 488.39,4 -4,4"></polygon>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<g id="a_clust1"><a href="https://www.britannica.com/biography/Euclid-Greek-mathematician" title="<U>Alexandria</U>" target="_blank">
-<polygon fill="none" stroke="black" points="8,-8 8,-193 223.05,-193 223.05,-8 8,-8"></polygon>
-<text text-anchor="start" x="84.43" y="-177.4" font-family="Times,serif" text-decoration="underline" font-size="14.00">Alexandria</text>
-</a>
-</g>
-</g>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="279.05,-62 279.05,-139 476.39,-139 476.39,-62 279.05,-62"></polygon>
-<text text-anchor="middle" x="377.72" y="-122.4" font-family="Times,serif" font-size="14.00">Euclid</text>
-</g>
-<!-- Actual -->
-<g id="node1" class="node">
-<title>Actual</title>
-<ellipse fill="lightblue" stroke="black" cx="115.52" cy="-142" rx="75.82" ry="18"></ellipse>
-<text text-anchor="middle" x="115.52" y="-137.8" font-family="Times,serif" font-size="14.00">Actual Triangles</text>
-</g>
-<!-- Platonic -->
-<g id="node2" class="node">
-<title>Platonic</title>
-<ellipse fill="white" stroke="black" cx="115.52" cy="-34" rx="99.55" ry="18"></ellipse>
-<text text-anchor="middle" x="115.52" y="-29.8" font-family="Times,serif" font-size="14.00">Platonic Ideal Triangle</text>
-</g>
-<!-- Platonic&#45;&gt;Actual -->
-<g id="edge2" class="edge">
-<title>Platonic-&gt;Actual</title>
-<path fill="none" stroke="black" d="M115.52,-52.14C115.52,-72.65 115.52,-93.17 115.52,-113.68"></path>
-<polygon fill="black" stroke="black" points="112.02,-113.75 115.52,-123.75 119.02,-113.75 112.02,-113.75"></polygon>
-</g>
-<!-- Euclid -->
-<g id="node3" class="node">
-<title>Euclid</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="377.72" cy="-88" rx="90.85" ry="18"></ellipse>
-<text text-anchor="middle" x="377.72" y="-83.8" font-family="Times,serif" font-size="14.00">Euclidean Geometry</text>
-</g>
-<!-- Platonic&#45;&gt;Euclid -->
-<g id="edge3" class="edge">
-<title>Platonic-&gt;Euclid</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M191.73,-49.61C230.61,-57.68 277.51,-67.41 314.35,-75.06"></path>
-<polygon fill="black" stroke="black" points="192.01,-46.09 181.51,-47.49 190.59,-52.95 192.01,-46.09"></polygon>
-</g>
-<!-- Euclid&#45;&gt;Actual -->
-<g id="edge1" class="edge">
-<title>Euclid-&gt;Actual</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M314.45,-100.92C274.8,-109.15 223.47,-119.81 183.02,-128.2"></path>
-<polygon fill="black" stroke="black" points="182.06,-124.82 172.98,-130.28 183.49,-131.68 182.06,-124.82"></polygon>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="zooming-in-on-euclid" class="level2 smaller crunch-figures crunch-title page-columns page-full">
-<h2 class="smaller crunch-figures crunch-title anchored" data-anchor-id="zooming-in-on-euclid">Zooming in on Euclid</h2>
-<div class="columns">
-<div class="column" style="width:47%;">
-<p><strong>Observations</strong></p>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/mountain_triangle.jpg" class="img-fluid figure-img"></p>
-<figcaption>Source: <a href="https://emilypiercemath221.weebly.com/math-221-blog/triangles-everywhere" target="_blank">Emily Pierce</a></figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/pyramids_giza_crop.jpg" class="img-fluid figure-img"></p>
-<figcaption>Source: <a href="https://commons.wikimedia.org/wiki/File:All_Gizah_Pyramids.jpg" target="_blank">Wikimedia</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/arrowhead.jpeg" class="img-fluid figure-img" style="width:30.0%"></p>
-<figcaption>Interactive visualization from <a href="https://archaeology.sites.unc.edu/home/rla/" target="_blank">UNC Archaeology</a></figcaption>
-</figure>
-</div>
-</div><div class="column" style="width:6%;">
-<div style="height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-<p>
-→
-</p>
-</div>
-</div><div class="column" style="width:47%;">
-<p><strong>Inference</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/euclid_crop.jpg" style="height:50.0%" class="figure-img"></p>
-<figcaption>13th-Century Arabic <em>Elements</em>, from <a href="http://www.sothebys.com/en/auctions/ecatalogue/2018/arts-of-the-islamic-world-l18220/lot.30.html" target="_blank">Sotheby’s</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>For an absolutely beautiful visual presentation of <em>Elements</em> see <a href="https://www.c82.net/euclid/book1/#prop25" target="_blank">here</a></p>
-</div></div></section>
-<section id="inference-in-the-diagram" class="level2">
-<h2 class="anchored" data-anchor-id="inference-in-the-diagram">Inference in the Diagram</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 562.16 321.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 317)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-317 558.16,-317 558.16,4 -4,4"></polygon>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="348.81,-128 348.81,-205 546.16,-205 546.16,-128 348.81,-128"></polygon>
-<text text-anchor="middle" x="447.49" y="-188.4" font-family="Times,serif" font-size="14.00">Euclid</text>
-</g>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<g id="a_clust1"><a href="https://www.britannica.com/biography/Euclid-Greek-mathematician" title="<U>Alexandria</U>" target="_blank">
-<polygon fill="none" stroke="black" points="8,-8 8,-305 263.05,-305 263.05,-8 8,-8"></polygon>
-<text text-anchor="start" x="104.43" y="-289.4" font-family="Times,serif" text-decoration="underline" font-size="14.00">Alexandria</text>
-</a>
-</g>
-</g>
-<!-- Actual -->
-<g id="node1" class="node">
-<title>Actual</title>
-<ellipse fill="lightblue" stroke="black" cx="135.52" cy="-234" rx="75.82" ry="18"></ellipse>
-<text text-anchor="middle" x="135.52" y="-229.8" font-family="Times,serif" font-size="14.00">Actual Triangles</text>
-</g>
-<!-- Euclid -->
-<g id="node3" class="node">
-<title>Euclid</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="447.49" cy="-154" rx="90.85" ry="18"></ellipse>
-<text text-anchor="middle" x="447.49" y="-149.8" font-family="Times,serif" font-size="14.00">Euclidean Geometry</text>
-</g>
-<!-- Actual&#45;&gt;Euclid -->
-<g id="edge1" class="edge">
-<title>Actual-&gt;Euclid</title>
-<path fill="none" stroke="black" d="M187.36,-220.88C240.45,-207.18 323.89,-185.64 381.68,-170.73"></path>
-<polygon fill="black" stroke="black" points="382.63,-174.1 391.44,-168.21 380.88,-167.32 382.63,-174.1"></polygon>
-<text text-anchor="start" x="271.05" y="-203.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Observe</text>
-</g>
-<!-- Platonic -->
-<g id="node2" class="node">
-<title>Platonic</title>
-<ellipse fill="white" stroke="black" cx="135.52" cy="-54" rx="99.55" ry="18"></ellipse>
-<text text-anchor="middle" x="135.52" y="-49.8" font-family="Times,serif" font-size="14.00">Platonic Ideal Triangle</text>
-</g>
-<!-- Platonic&#45;&gt;Actual -->
-<g id="edge2" class="edge">
-<title>Platonic-&gt;Actual</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M135.52,-82.39C135.52,-123.53 135.52,-164.67 135.52,-205.82"></path>
-<polygon fill="black" stroke="black" points="139.02,-82.28 135.52,-72.28 132.02,-82.28 139.02,-82.28"></polygon>
-<polygon fill="black" stroke="black" points="132.02,-206 135.52,-216 139.02,-206 132.02,-206"></polygon>
-<text text-anchor="start" x="32.49" y="-132.98" font-family="Times,serif" font-weight="bold" font-size="14.00">What goes here? </text>
-</g>
-<!-- Platonic&#45;&gt;Euclid -->
-<g id="edge3" class="edge">
-<title>Platonic-&gt;Euclid</title>
-<path fill="none" stroke="black" d="M194.52,-72.71C253.64,-91.78 344.23,-121.01 399.16,-138.73"></path>
-<polygon fill="black" stroke="black" points="195.55,-69.36 184.96,-69.62 193.4,-76.03 195.55,-69.36"></polygon>
-<text text-anchor="start" x="280.77" y="-117.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Infer</text>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="completing-the-cycle" class="level2">
-<h2 class="anchored" data-anchor-id="completing-the-cycle">Completing the Cycle</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 562.16 321.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 317)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-317 558.16,-317 558.16,4 -4,4"></polygon>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<g id="a_clust1"><a href="https://www.britannica.com/biography/Euclid-Greek-mathematician" title="<U>Alexandria</U>" target="_blank">
-<polygon fill="none" stroke="black" points="8,-8 8,-305 263.05,-305 263.05,-8 8,-8"></polygon>
-<text text-anchor="start" x="104.43" y="-289.4" font-family="Times,serif" text-decoration="underline" font-size="14.00">Alexandria</text>
-</a>
-</g>
-</g>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="348.81,-128 348.81,-205 546.16,-205 546.16,-128 348.81,-128"></polygon>
-<text text-anchor="middle" x="447.49" y="-188.4" font-family="Times,serif" font-size="14.00">Euclid</text>
-</g>
-<!-- Actual -->
-<g id="node1" class="node">
-<title>Actual</title>
-<ellipse fill="lightblue" stroke="black" cx="135.52" cy="-234" rx="75.82" ry="18"></ellipse>
-<text text-anchor="middle" x="135.52" y="-229.8" font-family="Times,serif" font-size="14.00">Actual Triangles</text>
-</g>
-<!-- Euclid -->
-<g id="node3" class="node">
-<title>Euclid</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="447.49" cy="-154" rx="90.85" ry="18"></ellipse>
-<text text-anchor="middle" x="447.49" y="-149.8" font-family="Times,serif" font-size="14.00">Euclidean Geometry</text>
-</g>
-<!-- Actual&#45;&gt;Euclid -->
-<g id="edge1" class="edge">
-<title>Actual-&gt;Euclid</title>
-<path fill="none" stroke="black" d="M187.36,-220.88C240.45,-207.18 323.89,-185.64 381.68,-170.73"></path>
-<polygon fill="black" stroke="black" points="382.63,-174.1 391.44,-168.21 380.88,-167.32 382.63,-174.1"></polygon>
-<text text-anchor="start" x="271.05" y="-203.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Observe</text>
-</g>
-<!-- Platonic -->
-<g id="node2" class="node">
-<title>Platonic</title>
-<ellipse fill="white" stroke="black" cx="135.52" cy="-54" rx="99.55" ry="18"></ellipse>
-<text text-anchor="middle" x="135.52" y="-49.8" font-family="Times,serif" font-size="14.00">Platonic Ideal Triangle</text>
-</g>
-<!-- Platonic&#45;&gt;Actual -->
-<g id="edge2" class="edge">
-<title>Platonic-&gt;Actual</title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M135.52,-82.39C135.52,-123.53 135.52,-164.67 135.52,-205.82"></path>
-<polygon fill="black" stroke="black" points="139.02,-82.28 135.52,-72.28 132.02,-82.28 139.02,-82.28"></polygon>
-<polygon fill="black" stroke="black" points="132.02,-206 135.52,-216 139.02,-206 132.02,-206"></polygon>
-<text text-anchor="start" x="13.4" y="-132.98" font-family="Times,serif" font-weight="bold" font-size="14.00">Hypothesis Testing! </text>
-</g>
-<!-- Platonic&#45;&gt;Euclid -->
-<g id="edge3" class="edge">
-<title>Platonic-&gt;Euclid</title>
-<path fill="none" stroke="black" d="M194.52,-72.71C253.64,-91.78 344.23,-121.01 399.16,-138.73"></path>
-<polygon fill="black" stroke="black" points="195.55,-69.36 184.96,-69.62 193.4,-76.03 195.55,-69.36"></polygon>
-<text text-anchor="start" x="280.77" y="-117.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Infer</text>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="our-case" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="our-case">Our Case</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<svg width="672" height="480" viewbox="0.00 0.00 387.36 329.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 325)">
-<title>grid</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-325 383.36,-325 383.36,4 -4,4"></polygon>
-<g id="clust1" class="cluster">
-<title>cluster_04</title>
-<polygon fill="none" stroke="black" points="8,-8 8,-313 177.77,-313 177.77,-8 8,-8"></polygon>
-<text text-anchor="middle" x="92.88" y="-296.4" font-family="Times,serif" font-size="14.00">The World</text>
-</g>
-<g id="clust2" class="cluster">
-<title>cluster_03</title>
-<polygon fill="none" stroke="black" points="263.54,-132 263.54,-209 371.36,-209 371.36,-132 263.54,-132"></polygon>
-<text text-anchor="middle" x="317.45" y="-192.4" font-family="Times,serif" font-size="14.00">Us</text>
-</g>
-<!-- Sample -->
-<g id="node1" class="node">
-<title>Sample</title>
-<ellipse fill="lightblue" stroke="black" cx="92.88" cy="-58" rx="40.01" ry="18"></ellipse>
-<text text-anchor="middle" x="92.88" y="-53.8" font-family="Times,serif" font-size="14.00">Sample</text>
-</g>
-<!-- Population -->
-<g id="node2" class="node">
-<title>Population</title>
-<ellipse fill="white" stroke="black" cx="92.88" cy="-238" rx="52.77" ry="18"></ellipse>
-<text text-anchor="middle" x="92.88" y="-233.8" font-family="Times,serif" font-size="14.00">Population</text>
-</g>
-<!-- Population&#45;&gt;Sample -->
-<g id="edge2" class="edge">
-<title>Population-&gt;Sample</title>
-<path fill="none" stroke="black" d="M92.88,-220C92.88,-175.46 92.88,-130.92 92.88,-86.39"></path>
-<polygon fill="black" stroke="black" points="96.38,-86.28 92.88,-76.28 89.38,-86.28 96.38,-86.28"></polygon>
-<text text-anchor="start" x="11.21" y="-136.37" font-family="Times,serif" font-weight="bold" font-size="14.00">Take Sample </text>
-</g>
-<!-- Stats -->
-<g id="node3" class="node">
-<title>Stats</title>
-<ellipse fill="none" stroke="black" stroke-dasharray="5,2" cx="317.45" cy="-158" rx="45.82" ry="18"></ellipse>
-<text text-anchor="middle" x="317.45" y="-153.8" font-family="Times,serif" font-size="14.00">Statistics</text>
-</g>
-<!-- Population&#45;&gt;Stats -->
-<g id="edge3" class="edge">
-<title>Population-&gt;Stats</title>
-<path fill="none" stroke="black" d="M139.73,-221.52C182.41,-206.18 245.02,-183.68 283.12,-169.98"></path>
-<polygon fill="black" stroke="black" points="138.37,-218.29 130.14,-224.97 140.73,-224.88 138.37,-218.29"></polygon>
-<text text-anchor="start" x="195.49" y="-207.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Infer</text>
-</g>
-<!-- Stats&#45;&gt;Sample -->
-<g id="edge1" class="edge">
-<title>Stats-&gt;Sample</title>
-<path fill="none" stroke="black" d="M277.02,-140.29C232.54,-120.3 161.3,-88.29 122.07,-70.67"></path>
-<polygon fill="black" stroke="black" points="275.8,-143.58 286.36,-144.48 278.67,-137.19 275.8,-143.58"></polygon>
-<text text-anchor="start" x="185.77" y="-124.2" font-family="Times,serif" font-weight="bold" font-size="14.00">Observe</text>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>If you’re wondering, “what happened to Hypothesis Testing?”, don’t worry, we’ll dive back into that over the next 2 weeks!</p>
-</div></div></section>
-</section>
-<section id="asymptotic-laws-for-random-samples" class="level1 page-columns page-full" data-stack-name="Asymptotic Laws">
-<h1 data-stack-name="Asymptotic Laws">Asymptotic Laws for Random Samples</h1>
-<ul>
-<li>Law of Large Numbers (LLN)</li>
-<li>Central Limit Theorem (CLT)</li>
-</ul>
-<section id="stability-out-of-randomness" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="stability-out-of-randomness">Stability out of Randomness</h2>
-<ul>
-<li><span class="math inline">\(X\)</span> = result of coin flip</li>
-<li>Remembering that <span class="math inline">\(X\)</span> is a <strong>random variable</strong>, so it maps <strong>outcomes</strong> to <strong>numbers</strong>: <span class="math inline">\(X(\)</span><span class="svg-span"><img src="images/puerto_rico_adobe_express.svg" height="70px" style="vertical-align: bottom; transform: translate(0, 18px)"></span><span class="math inline">\() = 0\)</span>, <span class="math inline">\(X(\)</span><span class="svg-span"><img src="images/quarter_adobe_express.svg" height="70px" style="display: inline-flex; vertical-align: bottom; transform: translate(0, 18px)"></span><span class="math inline">\() = 1\)</span></li>
-<li>We have no idea what the result of some <strong>single</strong> coin flip will be, yet we can be sure that the mean of <strong>many trials</strong> will converge to the <strong>expected value</strong> of <span class="math inline">\(0.5\)</span>!</li>
-</ul>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>To check that you understand: what value would the mean of many <strong>dice rolls</strong> converge to?</p>
-</div></div></section>
-<section id="interactive-visualization" class="level2 smaller crunch-title">
-<h2 class="smaller crunch-title anchored" data-anchor-id="interactive-visualization">Interactive Visualization</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/seeing-theory.jpeg" class="img-fluid figure-img"></p>
-<figcaption><a href="https://seeing-theory.brown.edu/basic-probability/index.html" target="_blank"><em>Seeing Theory</em>, Brown University</a></figcaption>
-</figure>
-</div>
-</section>
-<section id="how-many-is-many" class="level2">
-<h2 class="anchored" data-anchor-id="how-many-is-many">How Many is “Many”?</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5100</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">ceiling</span>(<span class="fu">sqrt</span>(<span class="dv">10</span>)), <span class="dv">10</span>, <span class="fu">ceiling</span>(<span class="dv">10</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">10</span>)), <span class="dv">100</span>, <span class="fu">ceiling</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">10</span>)), <span class="dv">1000</span>, <span class="fu">ceiling</span>(<span class="dv">1000</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">10</span>)), <span class="dv">10000</span>, <span class="fu">ceiling</span>(<span class="dv">10000</span><span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">10</span>)), <span class="dv">100000</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>heads_data <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>total_data <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> n_vals) {</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  coin_flips <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  num_heads <span class="ot">&lt;-</span> <span class="fu">sum</span>(coin_flips)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  heads_data <span class="ot">&lt;-</span> <span class="fu">c</span>(heads_data, num_heads)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  num_flipped <span class="ot">&lt;-</span> <span class="fu">length</span>(coin_flips)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  total_data <span class="ot">&lt;-</span> <span class="fu">c</span>(total_data, num_flipped)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n =</span> n_vals, <span class="at">heads=</span>heads_data, <span class="at">total=</span>total_data)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> results <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">head_prop =</span> heads <span class="sc">/</span> total)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#results</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x=</span>n, <span class="at">y=</span>head_prop)) <span class="sc">+</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept=</span><span class="fl">0.5</span>, <span class="at">linetype=</span><span class="st">'dashed'</span>), <span class="at">color=</span>cbPalette[<span class="dv">2</span>]) <span class="sc">+</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span><span class="st">'black'</span>), <span class="at">fill=</span>cbPalette[<span class="dv">1</span>], <span class="at">linewidth=</span>g_linewidth, <span class="at">color=</span>cbPalette[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span><span class="st">'black'</span>), <span class="at">size=</span>g_pointsize<span class="sc">*</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">""</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"purple"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Mean of n samples"</span>,<span class="st">"Expected Value"</span>)) <span class="sc">+</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="st">""</span>, <span class="at">values=</span><span class="st">"dashed"</span>, <span class="at">labels=</span><span class="st">"Expected Value"</span>) <span class="sc">+</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">""</span>, <span class="at">values=</span>cbPalette[<span class="dv">1</span>], <span class="at">labels=</span><span class="st">"95% CI"</span>) <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"full"</span>) <span class="sc">+</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"mm"</span>)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Estimates of Population Mean for Increasing Sample Sizes"</span>,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">"n (Sample Size)"</span>,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">"Sample Mean"</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"10"</span>, <span class="st">"100"</span>, <span class="st">"1000"</span>, <span class="st">"10000"</span>, <span class="st">"100000"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/large-nums-convergence-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="the-sample-mean" class="level2 crunch-title crunch-math crunch-ul math-90 inline-90 crunch-li-8">
-<h2 class="crunch-title crunch-math crunch-ul math-90 inline-90 crunch-li-8 anchored" data-anchor-id="the-sample-mean">The Sample Mean</h2>
-<ul>
-<li>Like the <strong>median</strong> we saw earlier (along with lots of other examples), <strong>sample mean</strong> is just a function of RVs</li>
-<li>Unlike the median, though, it is a <strong>function of a vector-valued RV <span class="math inline">\(\mathbf{X}_N\)</span></strong> (containing <span class="math inline">\(N\)</span> scalar RVs)!<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
-<li>Let <span class="math inline">\(\mathbf{X}_N = \{X_1, X_2, \ldots, X_n\}\)</span>, where <span class="math inline">\(X_1\)</span> is first observation, <span class="math inline">\(X_2\)</span> second observation, and so on. Then:</li>
-</ul>
-<p><span class="math display">\[
-\overline{X}_N = f(\mathbf{X}_N) = \frac{1}{n}\sum_{i=1}^{n}X_i
-\]</span></p>
-</section>
-<section id="weak-law-of-large-numbers-wlln" class="level2 crunch-title crunch-math crunch-ul math-80 inline-90">
-<h2 class="crunch-title crunch-math crunch-ul math-80 inline-90 anchored" data-anchor-id="weak-law-of-large-numbers-wlln">Weak Law of Large Numbers (WLLN)</h2>
-<ul>
-<li>Let <span class="math inline">\(\mathbf{X}_N = \{X_1, \ldots, X_n\} \iid \mathcal{D}\)</span> be a random sample from a distribution <span class="math inline">\(\mathcal{D}\)</span> with mean <span class="math inline">\(\mu\)</span>, finite variance. Let <span class="math inline">\(\overline{X}_N\)</span> denote the sample mean from previous slide. Then</li>
-</ul>
-<p><span class="math display">\[
-\overline{X}_N \stackrel{p}{\longrightarrow} \mu
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\mathfrak{X}(N) \stackrel{p}{\longrightarrow} c\)</span> means the Random Variable <span class="math inline">\(\mathfrak{X}(N)\)</span> (a <strong>function</strong> of the <strong>sample size</strong> <span class="math inline">\(N\)</span>) <strong>“converges in probability”</strong> to the scalar value <span class="math inline">\(c\)</span>. Formally:</li>
-</ul>
-<p><span class="math display">\[
-\mathfrak{X}(N) \overset{p}{\longrightarrow} c \iff \forall \varepsilon &gt; 0 \left[ \lim_{N \rightarrow \infty}\Pr\left( | \mathfrak{X}(N) - c | &lt; \varepsilon \right) = 1 \right]
-\]</span></p>
-</section>
-<section id="strong-law-of-large-numbers-slln" class="level2 crunch-title crunch-math crunch-ul math-90 inline-90 crunch-li-8">
-<h2 class="crunch-title crunch-math crunch-ul math-90 inline-90 crunch-li-8 anchored" data-anchor-id="strong-law-of-large-numbers-slln">Strong Law of Large Numbers (SLLN)</h2>
-<ul>
-<li>Same setup as last slide, but</li>
-</ul>
-<p><span class="math display">\[
-\overline{X}_N \convergesAS \mu
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\mathfrak{X}(N) \convergesAS c\)</span> means the Random Variable <span class="math inline">\(\mathfrak{X}(N)\)</span> (a <strong>function</strong> of the <strong>sample size</strong> <span class="math inline">\(N\)</span>) <strong>“converges almost surely”</strong> to the scalar value <span class="math inline">\(c\)</span>. Formally:</li>
-</ul>
-<p><span class="math display">\[
-\mathfrak{X}(N) \convergesAS c \iff \Pr\left( \lim_{N \rightarrow \infty} \mathfrak{X}(N) = c \right) = 1
-\]</span></p>
-<ul>
-<li>SLLN <span class="math inline">\(\implies\)</span> WLLN, but WLLN <span class="math inline">\(~\nimplies\)</span> SLLN!</li>
-<li>WLLN easy to prove, SLLN very un-easy to prove</li>
-</ul>
-</section>
-<section id="central-limit-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h2>
-<ul>
-<li>We’ll never actually reach <span class="math inline">\(N = \infty\)</span>, so we zoom in on <strong>how close</strong> our sample-based estimate gets to the true value</li>
-<li>Central Limit Theorem says: these “closeness” values are <strong>normally distributed</strong>!</li>
-<li><strong>LLN</strong> guarantees that <span class="math inline">\(X_N \; \; \eqeventual \; \; \mu\)</span></li>
-<li><strong>CLT</strong> tells us what the <strong>gap</strong> <span class="math inline">\((X_N - \mu)\)</span> looks like</li>
-</ul>
-</section>
-<section id="formal-clt" class="level2">
-<h2 class="anchored" data-anchor-id="formal-clt">Formal CLT</h2>
-<ul>
-<li>Sampled observations: <span class="math inline">\(\mathbf{X}_N = \{X_1, \ldots, X_n\}\)</span></li>
-<li><span class="math inline">\(\expect{X_i} = \mu, \Var{X_i} = \sigma^2 &lt; \infty\)</span></li>
-<li><span class="math inline">\(\overline{X}_N \definedas M_1(\mathbf{X}_N) = \frac{X_1 + \cdots + X_n}{N}\)</span></li>
-</ul>
-<p><span class="math display">\[
-\frac{\overline{X}_N - \mu}{\sigma / \sqrt{N}} \overset{\text{asymp}}{\sim} \mathcal{N}(0,1)
-\]</span></p>
-</section>
-<section id="when-is-mathcaln0-1-a-good-approximation" class="level2 smaller title-12 crunch-title crunch-code crunch-figures crunch-img crunch-quarto-layout-panel">
-<h2 class="smaller title-12 crunch-title crunch-code crunch-figures crunch-img crunch-quarto-layout-panel anchored" data-anchor-id="when-is-mathcaln0-1-a-good-approximation">When is <span class="math inline">\(\mathcal{N}(0, 1)\)</span> a “good” approximation?</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for all plots</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>max_n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>all_rolls <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  num_reps,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> max_n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">6</span>, <span class="dv">6</span>))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>gen_clt_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  exp_val <span class="ot">&lt;-</span> <span class="fl">3.5</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">35</span><span class="sc">/</span><span class="dv">12</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  denom <span class="ot">&lt;-</span> sigma <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the slice of all_rolls for this n</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  n_rolls <span class="ot">&lt;-</span> all_rolls[<span class="dv">1</span><span class="sc">:</span>n,]</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  sample_means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(n_rolls)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  norm_gaps <span class="ot">&lt;-</span> (sample_means <span class="sc">-</span> exp_val) <span class="sc">/</span> denom</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  n_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">norm_gap=</span>norm_gaps)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#if (n == 5) {</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  print(sample_means)</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  print(n_df)</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#}</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(n_df, <span class="fu">aes</span>(<span class="at">x =</span> norm_gap)) <span class="sc">+</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">binwidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_density() +</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>dnorm, <span class="at">size=</span>g_linesize) <span class="sc">+</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"n = "</span>,n),</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Normalized Sample Gap"</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="quarto-layout-panel" data-layout="[[1,1],[1,1]]">
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/clt-first-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/clt-1k-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/clt-100-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/clt-10k-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="q-q-plots" class="level2 smaller crunch-title crunch-code crunch-figures crunch-quarto-layout-panel">
-<h2 class="smaller crunch-title crunch-code crunch-figures crunch-quarto-layout-panel anchored" data-anchor-id="q-q-plots">Q-Q Plots</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gen_qq <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  n_rolls <span class="ot">&lt;-</span> all_rolls[<span class="dv">1</span><span class="sc">:</span>n,]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  sample_means <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(n_rolls)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  qq_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">smean =</span> sample_means)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  qq_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(qq_df, <span class="fu">aes</span>(<span class="at">sample =</span> smean)) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"n = "</span>,n)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(qq_plot)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="quarto-layout-panel" data-layout="[[1,1],[1,1]]">
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/qq-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/qq-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/qq-1k-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/qq-10k-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="estimating-parameters" class="level1" data-stack-name="Estimators">
-<h1 data-stack-name="Estimators">Estimating Parameters</h1>
-<ul>
-<li>Maximum Likelihood Estimation (MLE)</li>
-<li>Generalized Method of Moments (GMM) Estimation</li>
-</ul>
 <section id="maximum-likelihood-estimation" class="level2 crunch-title inline-90">
 <h2 class="crunch-title inline-90 anchored" data-anchor-id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h2>
 <ul>
@@ -1890,49 +666,49 @@ f(n) = \frac{\varphi^n - \psi^n}{\varphi - \psi} = \frac{\varphi^n - \psi^n}{\sq
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1948</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>obs_heads <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>num_flips <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>p_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">0.99</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>obs_matches <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(p_vals)) {</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  cur_p <span class="ot">&lt;-</span> p_vals[i]</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  theta_str <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, cur_p)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  sim_data <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    num_reps,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbinom</span>(num_flips, <span class="dv">1</span>, cur_p)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(sim_data)</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#data_str &lt;- paste0(sim_data, collapse=", ")</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  num_heads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(sim_data)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_heads)</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  num_matches <span class="ot">&lt;-</span> <span class="fu">sum</span>(num_heads <span class="sc">==</span> obs_heads)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  obs_matches <span class="ot">&lt;-</span> <span class="fu">c</span>(obs_matches, num_matches)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_matches)</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_heads)</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  num_tails <span class="ot">&lt;-</span> num_flips <span class="sc">-</span> num_heads</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_tails)</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  data_strs <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"["</span>,num_heads,<span class="st">" heads, "</span>,num_tails,<span class="st">" tails]"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  data_str <span class="ot">&lt;-</span> <span class="fu">paste0</span>(data_strs, <span class="at">collapse=</span><span class="st">", "</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#writeLines(paste0("p = ",theta_str,": ",data_str))</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#print(obs_matches)</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p=</span><span class="fu">as.character</span>(p_vals), <span class="at">num_matches=</span>obs_matches)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> result_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">prop_matches =</span> obs_matches <span class="sc">/</span> num_reps)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(result_df, <span class="fu">aes</span>(<span class="at">x=</span>p, <span class="at">y=</span>prop_matches)) <span class="sc">+</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">fill=</span>cbPalette[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theme(</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   axis.title.y = element_text(size = 12)</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ) +</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Likelihood of data (8 heads, 2 tails) given p"</span>,</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion of times (8,2) generated"</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1948</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>obs_heads <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>num_flips <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>p_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">0.99</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>obs_matches <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(p_vals)) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  cur_p <span class="ot">&lt;-</span> p_vals[i]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  theta_str <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, cur_p)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  sim_data <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    num_reps,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbinom</span>(num_flips, <span class="dv">1</span>, cur_p)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(sim_data)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#data_str &lt;- paste0(sim_data, collapse=", ")</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  num_heads <span class="ot">&lt;-</span> <span class="fu">colSums</span>(sim_data)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_heads)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  num_matches <span class="ot">&lt;-</span> <span class="fu">sum</span>(num_heads <span class="sc">==</span> obs_heads)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  obs_matches <span class="ot">&lt;-</span> <span class="fu">c</span>(obs_matches, num_matches)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_matches)</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_heads)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  num_tails <span class="ot">&lt;-</span> num_flips <span class="sc">-</span> num_heads</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(num_tails)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  data_strs <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"["</span>,num_heads,<span class="st">" heads, "</span>,num_tails,<span class="st">" tails]"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  data_str <span class="ot">&lt;-</span> <span class="fu">paste0</span>(data_strs, <span class="at">collapse=</span><span class="st">", "</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#writeLines(paste0("p = ",theta_str,": ",data_str))</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#print(obs_matches)</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">p=</span><span class="fu">as.character</span>(p_vals), <span class="at">num_matches=</span>obs_matches)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> result_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">prop_matches =</span> obs_matches <span class="sc">/</span> num_reps)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(result_df, <span class="fu">aes</span>(<span class="at">x=</span>p, <span class="at">y=</span>prop_matches)) <span class="sc">+</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">fill=</span>cb_palette[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theme(</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   axis.title.y = element_text(size = 12)</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ) +</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Likelihood of data (8 heads, 2 tails) given p"</span>,</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion of times (8,2) generated"</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1943,6 +719,12 @@ f(n) = \frac{\varphi^n - \psi^n}{\varphi - \psi} = \frac{\varphi^n - \psi^n}{\sq
 </div>
 </div>
 </div>
+</section>
+<section id="week-10-lab" class="level2">
+<h2 class="anchored" data-anchor-id="week-10-lab">Week 10 Lab!</h2>
+<ul>
+<li><a href="https://colab.research.google.com/drive/1tUxu40n--tYuY0shdc3vxdKKrQDfmLiw#scrollTo=-hq3B9yh6D9U" target="_blank">Link to Colab</a></li>
+</ul>
 </section>
 <section id="simulations-rightarrow-math" class="level2 crunch-title small-inline math-90 inline-90">
 <h2 class="crunch-title small-inline math-90 inline-90 anchored" data-anchor-id="simulations-rightarrow-math">Simulations <span class="math inline">\(\rightarrow\)</span> Math</h2>
@@ -1963,7 +745,7 @@ Time for some <strong>Math Magic</strong>…
 </section>
 <section id="math-magic-1" class="level2 crunch-title math-90">
 <h2 class="crunch-title math-90 anchored" data-anchor-id="math-magic-1">Math Magic 1</h2>
-<p>1. What are the individual <span class="math inline">\(\Pr(x_i \mid \param{p})\)</span> terms?<br></p>
+<p><i class="bi bi-1-circle"></i> What are the individual <span class="math inline">\(\Pr(x_i \mid \param{p})\)</span> terms?<br><br></p>
 <p><span class="math inline">\(X \sim \text{Bern}(\param{p})\)</span>, so</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -1978,11 +760,11 @@ Time for some <strong>Math Magic</strong>…
 <div class="quarto-layout-panel" data-layout="[2,1]">
 <div class="quarto-layout-row quarto-layout-valign-center">
 <div id="calculus-text" class="quarto-layout-cell" style="flex-basis: 66.7%;justify-content: flex-start;">
-<p>2. How do we maximize the product?</p>
+<p><i class="bi bi-2-circle"></i> How do we maximize the product?</p>
 <p><span class="math display">\[
 p^* = \argmax_{\param{p}} f(\param{p}) \implies f'(p^*) = 0
 \]</span></p>
-<p>To <strong>maximize</strong> likelihood, we need to find its <strong>derivative</strong><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, set equal to 0, and solve:</p>
+<p>To <strong>maximize</strong> likelihood, we need to find its <strong>derivative</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, set equal to 0, and solve:</p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <p><img src="images/koolaid_calculus.png" class="img-fluid" width="320"></p>
@@ -2011,7 +793,7 @@ p^* = \argmax_{\param{p}} f(\param{p}) \implies f'(p^*) = 0
 \]</span></p>
 <ul>
 <li>Complicating factor: <span class="math inline">\(\lik(x_i)\)</span> terms are all <strong>multiplied together</strong>, forcing us to use product rule: <span class="math inline">\(\frac{d}{d\param{p}}\left[\lik(x_1)\lik(x_2)\right] = \left(\frac{d}{d\param{p}}\lik(x_1)\right)\cdot \lik(x_2) + \lik(x_1)\cdot \left(\frac{d}{d\param{p}}\lik(x_2)\right)\)</span></li>
-<li>If we had terms that were <strong>added</strong> rather than <strong>multiplied</strong>, we’d have a much easier time: <span class="math inline">\(\frac{d}{d\param{p}}\left[ \lik(x_1) + \lik(x_2)\right] = \frac{d}{d\param{p}}\lik(x_1) + \frac{d}{d\param{p}} \lik(x_2)\)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li>If we had terms that were <strong>added</strong> rather than <strong>multiplied</strong>, we’d have a much easier time: <span class="math inline">\(\frac{d}{d\param{p}}\left[ \lik(x_1) + \lik(x_2)\right] = \frac{d}{d\param{p}}\lik(x_1) + \frac{d}{d\param{p}} \lik(x_2)\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 <li>So, what math operation do we know that turns <strong>multiplications</strong> into <strong>additions</strong>?</li>
 </ul>
 <!-- ::: {.aside}
@@ -2351,7 +1133,7 @@ X_1, X_2 \overset{iid}{\sim} \mathcal{N}( &amp;\hspace{-5mm}\mu\hspace{0.5mm}, &
 <section id="components-of-the-error-term" class="level2 math-80 inline-90 crunch-title crunch-ul crunch-p crunch-li">
 <h2 class="math-80 inline-90 crunch-title crunch-ul crunch-p crunch-li anchored" data-anchor-id="components-of-the-error-term">Components of the Error Term</h2>
 <ul>
-<li>We estimate “true” DGP <span class="math inline">\(Y = f(X)\)</span> with model <span class="math inline">\(\widehat{f}(X)\)</span><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and then we use <span class="math inline">\(\widehat{f}\)</span> to predict the value of <span class="math inline">\(Y\)</span> for a point <span class="math inline">\(x_0\)</span>.</li>
+<li>We estimate “true” DGP <span class="math inline">\(Y = f(X)\)</span> with model <span class="math inline">\(\widehat{f}(X)\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, and then we use <span class="math inline">\(\widehat{f}\)</span> to predict the value of <span class="math inline">\(Y\)</span> for a point <span class="math inline">\(x_0\)</span>.</li>
 <li>What is our <strong>expected error</strong> at this point, <span class="math inline">\(\Err(x_0)\)</span>?</li>
 </ul>
 <p><span class="math display">\[
@@ -2428,12 +1210,6 @@ Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2013. <em>The <span>Elem
 Tharwat, Alaa. 2019. <span>“Parameter Investigation of Support Vector Machine Classifier with Kernel Functions.”</span> <em>Knowledge and Information Systems</em> 61 (3): 1269–1302. <a href="https://doi.org/10.1007/s10115-019-01335-4">https://doi.org/10.1007/s10115-019-01335-4</a>.
 </div>
 </div>
-</section>
-<section id="week-9-lab" class="level2">
-<h2 class="anchored" data-anchor-id="week-9-lab">Week 9 Lab</h2>
-<ul>
-<li><a href="https://colab.research.google.com/drive/1o8cHv3T2zcfXOguIQ8NTxphtt62WSL98#scrollTo=RU91KcT9NHHA" target="_blank">Link here</a></li>
-</ul>
 
 
 </section>
@@ -2443,11 +1219,9 @@ Tharwat, Alaa. 2019. <span>“Parameter Investigation of Support Vector Machine 
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>This is because an <strong>Eigenvalue-Eigenvector pair</strong> for a matrix <span class="math inline">\(\mathbf{M}\)</span> is a vector <span class="math inline">\(\mathbf{v}\)</span> and scalar value <span class="math inline">\(\lambda\)</span> which satisfy <span class="math inline">\(\mathbf{M}\mathbf{v} = \lambda \mathbf{v}\)</span>. In words: the result of (left) <strong>matrix-multiplying</strong> <span class="math inline">\(\mathbf{v}\)</span> by <span class="math inline">\(\mathbf{M}\)</span> is the same as <strong>scalar-multiplying</strong> <span class="math inline">\(\mathbf{v}\)</span> by a factor of <span class="math inline">\(\lambda\)</span>. In our case the <strong>Eigenvector</strong> is <span class="math inline">\(\mathbf{r}^*\)</span> and the <strong>Eigenvalue</strong> is <span class="math inline">\(\lambda = 1\)</span>, since <span class="math inline">\(\mathbf{E}\mathbf{r}^* = 1 \cdot \mathbf{r}^*\)</span>.<br>For the math-curious, there are lots of fun results from matrix theory which assure us that <span class="math inline">\(\mathbf{E}\)</span> is <strong>guaranteed</strong> to have principal eigenvalue <span class="math inline">\(\lambda = 1\)</span> 💆<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note the capital <span class="math inline">\(N\)</span> for <strong>cardinality</strong> of observations, vs.&nbsp;(lowercase) <span class="math inline">\(1, 2, \ldots, n\)</span> for <strong>ordinal labels</strong> on each observation. This will spare you many headaches!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>And that’s why we used math magic to make <span class="math inline">\(\Pr(x_i \mid \param{p})\)</span> differentiable, in the previous slide!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>We achieve this simplification because the derivative operator is <strong>additive</strong>: <span class="math inline">\(\frac{d}{dx}\left[ f(x) + g(x) \right] = \frac{d}{dx}f(x) + \frac{d}{dx}g(x)\)</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>It’s even more complicated, since we don’t even know whether the features <span class="math inline">\(X\)</span> we’ve chosen are actually the features in the world that causally affect <span class="math inline">\(Y\)</span>, but that’s for later classes… Or see <span class="citation" data-cites="hastie_elements_2013">Hastie, Tibshirani, and Friedman (<a href="#ref-hastie_elements_2013" role="doc-biblioref">2013</a>)</span>!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>That’s why we used math magic to make <span class="math inline">\(\Pr(x_i \mid \param{p})\)</span> differentiable on prev slide!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We achieve this simplification because the derivative operator is <strong>additive</strong>: <span class="math inline">\(\frac{d}{dx}\left[ f(x) + g(x) \right] = \frac{d}{dx}f(x) + \frac{d}{dx}g(x)\)</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A complication we put aside for now: do the features <span class="math inline">\(X\)</span> we chose in fact causally impact <span class="math inline">\(Y\)</span>? See <span class="citation" data-cites="hastie_elements_2013">Hastie, Tibshirani, and Friedman (<a href="#ref-hastie_elements_2013" role="doc-biblioref">2013</a>)</span>!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

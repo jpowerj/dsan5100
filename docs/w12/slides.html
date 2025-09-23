@@ -10,8 +10,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.33">
 
-  <meta name="author" content="Jeff Jacobs">
-  <title>DSAN 5100-01 – Week 12: Hypothesis Testing</title>
+  <meta name="author" content="Purna Gamage, Amineh Zadbood, and Jeff Jacobs">
+  <title>DSAN 5100-01 – Week 12: Non-Parametric Statistics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -95,27 +95,7 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-    /* CSS for citations */
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-      margin-bottom: 0em;
-    }
-    .hanging-indent div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }  </style>
+  </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-e6c9235fa6a0e2ac7f4ad57beef24a14.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -217,25 +197,22 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Week 12: Hypothesis Testing</h1>
+  <h1 class="title">Week 12: Non-Parametric Statistics</h1>
   <p class="subtitle"><em>DSAN 5100: Probabilistic Modeling and Statistical Computing</em><br>Section 01</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jeff Jacobs 
+Purna Gamage, Amineh Zadbood, and Jeff Jacobs 
 </div>
-        <p class="quarto-title-affiliation">
-            <a href="mailto:jj1088@georgetown.edu" target="_blank"><code>jj1088@georgetown.edu</code></a>
-          </p>
-    </div>
+</div>
 </div>
 
-  <p class="date">Wednesday, November 12, 2025</p>
+  <p class="date">Tuesday, November 18, 2025</p>
 </section>
 <section>
-<section id="classical-hypothesis-testing" class="title-slide slide level1 center" data-stack-name="Classical Hypothesis Testing">
-<h1>Classical Hypothesis Testing</h1>
+<section id="non-parametric-statistics-overview" class="title-slide slide level1 center" data-stack-name="Overview">
+<h1>Non-Parametric Statistics: Overview</h1>
 <div class="hidden">
 <div class="cell">
 <details class="code-fold">
@@ -285,1515 +262,849 @@ Jeff Jacobs
 \]</span></p>
 </div>
 </section>
-<section id="classical-test-1-the-z-test" class="slide level2 smaller">
-<h2>Classical Test 1: The <span class="math inline">\(z\)</span>-Test</h2>
+<section id="how-is-non-parametric-different-from-what-weve-been-doing" class="slide level2 title-08 smaller crunch-title crunch-ul crunch-iframe">
+<h2>How is Non-Parametric <em>Different</em> from What We’ve Been Doing?</h2>
 <ul>
-<li>Null hypothesis: <span class="math inline">\(H_0: \mu = \mu_0\)</span>; Test statistic <span class="math inline">\(Z = \frac{\overline{X} - \mu_0}{\sigma / \sqrt{N}}\)</span></li>
+<li>Statistical models and hypothesis tests we’ve learned thus far were <strong>parametric</strong></li>
+<li>Meaning: Assume population follows <strong>this distribution</strong>, then estimate population parameters (e.g., <span class="math inline">\(\param{\mu}\)</span> and <span class="math inline">\(\param{\sigma}\)</span>) using MLE, GMM, etc.</li>
+</ul>
+<iframe width="100%" height="460" frameborder="0" src="https://observablehq.com/embed/@jpowerj/parametric-normal?cells=paramGrid%2Cchart"></iframe>
+</section>
+<section id="what-makes-it-non-parametric" class="slide level2 smaller crunch-img crunch-title crunch-quarto-figure crunch-quarto-layout-panel crunch-ul footnotes-0 scrollable">
+<h2>What Makes It “Non-Parametric”?</h2>
+<ul>
+<li>We’ve talked about how the Normal distribution is “standard” in multiple senses:
+<ul>
+<li><strong>Empirically</strong>: It arises from common processes in nature, like random walks</li>
+<li><strong>Theoretically</strong>: It is the maximum-entropy distribution which encodes <strong>only</strong><sup>1</sup> knowledge of a <strong>mean</strong> <span class="math inline">\(\mu\)</span> and a <strong>variance</strong> <span class="math inline">\(\sigma^2\)</span></li>
+</ul></li>
+<li>Then we talked about <strong>estimating</strong> these parameters (<span class="math inline">\(\param{\mu}\)</span> and <span class="math inline">\(\param{\sigma^2}\)</span>) from data: different ways to amalgamate information from an <strong>observed sample</strong> <span class="math inline">\(\mathbf{X} = (X_1, \ldots, X_n)\)</span> to <strong>estimate</strong> (unobserved) <span class="math inline">\(\param{\mu}\)</span> and <span class="math inline">\(\param{\sigma}^2\)</span> with <strong>minimal bias and variance</strong></li>
+</ul>
+<div class="quarto-layout-panel" data-layout="[1,1]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/normal-dist-inference.svg" class="quarto-figure quarto-figure-center" width="340"></p>
+</figure>
+</div>
+</div>
+<div id="nonparametric-right" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li>We therefore <strong>“funnel”</strong> all of the information contained in <span class="math inline">\(\mathbf{X}\)</span> down into estimates of <span class="math inline">\(\param{\mu}\)</span> and <span class="math inline">\(\param{\sigma^2}\)</span></li>
+<li>But… <strong>what if we’re wrong?</strong> What if the DGP is <strong>not</strong> based on a Normal distribution?</li>
+</ul>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Recall that any other distribution implicitly encodes <strong>additional assumptions</strong>: bounded range, nonnegative, etc.</p></li></ol></aside></section>
+<section id="what-if-were-wrong" class="slide level2 smaller crunch-title">
+<h2>What If We’re Wrong?</h2>
+<ul>
+<li>It is this concern: the fact that <strong>all of our results</strong>, <strong>all of our confidence</strong> about our estimates thus far, come as a result of making <strong>distributional assumptions</strong></li>
+<li><strong>Non-parametric</strong> analysis tries to avoid this potential catastrophe by making <strong>as few distributional assumptions as possible</strong></li>
+<li>Recall how parameters of a distribution determine <strong>all information</strong> you could possibly want to know about the distribution (via <strong>Moment Generating Function</strong>):</li>
 </ul>
 <table class="caption-top">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 30%">
+<col style="width: 5%">
+<col style="width: 30%">
+<col style="width: 5%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Alternative Hypothesis</th>
-<th>P-Value Determination</th>
+<th>Type of Distribution</th>
+<th>+</th>
+<th>Parameter Values</th>
+<th>=</th>
+<th>All Possible Info (MGF)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(H_A: \mu &gt; \mu_0\)</span></td>
-<td>Area under the standard normal curve to the right of <span class="math inline">\(z\)</span></td>
+<td>Normal <span class="math inline">\(~\mathcal{N}(\param{\mu}, \param{\sigma^2})\)</span></td>
+<td>+</td>
+<td><span class="math inline">\(\param{\mu} = m\)</span>, <span class="math inline">\(\param{\sigma^2} = s^2\)</span></td>
+<td>=</td>
+<td><span class="math inline">\(M_t(X) = \exp[mt + s^2t^2/2]\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(H_A: \mu &lt; \mu_0\)</span></td>
-<td>Area under the standard normal curve to the left of <span class="math inline">\(z\)</span></td>
+<td>Uniform <span class="math inline">\(~\mathcal{U}(\param{\alpha},\param{\beta})\)</span></td>
+<td>+</td>
+<td><span class="math inline">\(\param{\alpha} = a\)</span>, <span class="math inline">\(\param{\beta} = b\)</span></td>
+<td>=</td>
+<td><span class="math inline">\(M_t(X) = \frac{e^{tb} - e^{ta}}{t(b-a)}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(H_A: \mu \neq \mu_0\)</span></td>
-<td><span class="math inline">\(2~ \cdot\)</span> (Area under the standard normal curve to the right of <span class="math inline">\(|z|\)</span>)</td>
+<td>Poisson <span class="math inline">\(~\text{Pois}(\param{\lambda})\)</span></td>
+<td>+</td>
+<td><span class="math inline">\(\param{\lambda} = \ell\)</span></td>
+<td>=</td>
+<td><span class="math inline">\(M_t(X) = \exp[\ell(e^t - 1)]\)</span></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="avoiding-wrongness-disasters-the-sign-test" class="title-slide slide level1 center" data-stack-name="Sign Test">
+<h1>Avoiding Wrongness Disasters: The Sign Test</h1>
+
+</section>
+<section id="sign-test-intuition" class="slide level2 smaller crunch-title crunch-math math-80 inline-90 crunch-ul crunch-p crunch-li-5">
+<h2>Sign Test Intuition</h2>
+<ul>
+<li><p>Instead of trying to estimate <strong>all possible info</strong> about the underlying distribution, we only estimate <strong>one piece of information</strong> that we need to <strong>test a hypothesis</strong></p></li>
+<li><p>Example: for populations <span class="math inline">\(\chi\)</span>, <span class="math inline">\(\psi\)</span>, if <span class="math inline">\(H_A: \mu_\chi &gt; \mu_\psi\)</span>, skip intermediate step of estimating distributions <span class="math inline">\(\mathcal{D}_\chi(\param{\theta})\)</span>, <span class="math inline">\(\mathcal{D}_\psi(\param{\theta})\)</span> from samples <span class="math inline">\(\mathbf{X}\)</span>, <span class="math inline">\(\mathbf{Y}\)</span>!</p></li>
+<li><p>Instead, just directly “extract” <strong>greater than</strong> vs.&nbsp;<strong>not greater than</strong> info from <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> (<strong>median</strong> <span class="math inline">\(m\)</span> always exists as “pivot” for well-behaved <span class="math inline">\(X\)</span>, <span class="math inline">\(\Pr(X &gt; m) = 0.5\)</span>)</p></li>
+<li><p>It will help us to define <span class="math inline">\(\text{Sign}(x) = \begin{cases}\phantom{-}1 &amp;\text{if } x &gt; 0 \\ \phantom{-}0 &amp;\text{if }x = 0 \\ -1 &amp;\text{if }x &lt; 0\end{cases}\)</span></p></li>
+<li><p>If <span class="math inline">\(\mathbf{X} = (15, 7, 11, 3)\)</span>, <span class="math inline">\(\mathbf{Y} = (-3, 4, 1, 4)\)</span>, we can compute a “greater-than score”:</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+\sum_{i=1}^N \sign(X_i - Y_i) &amp;= \sign(15 - (-3)) + \sign(7-4) + \sign(11-1) + \sign(3-4) \\
+&amp;= 1 + 1 + 1 + -1 = 2
+\end{align*}
+\]</span></p>
+<ul>
+<li>So long as <strong>slots are comparable</strong> (notice <span class="math inline">\(\mathbf{X}, \mathbf{Y}\)</span> are <strong>ordered</strong>), we can compare this with <span class="math inline">\(0\)</span>, our expectation if <span class="math inline">\(\chi = \psi\)</span>, <strong>regardless of underlying distributions <span class="math inline">\(\mathcal{D}_\chi, \mathcal{D}_\psi\)</span></strong>.</li>
+</ul>
+</section>
+<section id="procedure-in-general" class="slide level2 smaller crunch-title crunch-math">
+<h2>Procedure in General</h2>
+<ul>
+<li><span class="math inline">\(\mathbf{X}\)</span>: size-<span class="math inline">\(N\)</span> sample from population <span class="math inline">\(\chi\)</span>; <span class="math inline">\(\mathbf{Y}\)</span>: size-<span class="math inline">\(N\)</span> sample from population <span class="math inline">\(\psi\)</span></li>
+<li>(Rather than estimating <span class="math inline">\(\mathcal{D}_\chi\)</span> from <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathcal{D}_\psi\)</span> from <span class="math inline">\(\mathbf{Y}\)</span>), we directly <strong>pair</strong> datapoints <span class="math inline">\(X_i \in \mathbf{X}\)</span> and <span class="math inline">\(Y_i \in \mathbf{Y}\)</span> and compute the <strong>sign</strong> of their difference:</li>
+</ul>
+<p><span class="math display">\[
+\text{GT}_i(X_i, Y_i) = \text{Sign}(X_{i} - Y_{i}) = \begin{cases}
+\phantom{-}1 &amp;\text{if }X_{i} &gt; Y_{i}, \\
+\phantom{-}0 &amp;\text{if }X_{i} = Y_{i}, \\
+-1 &amp;\text{if }X_{i} &lt; Y_{i}
+\end{cases}
+\]</span></p>
+<ul>
+<li><p>We can then <strong>sum</strong> each pair’s score into an aggregate score:</p>
+<p><span class="math display">\[
+  \text{GT}(\mathbf{X}, \mathbf{Y}) = \sum_{i=1}^NGT_i(X_i,Y_i)
+  \]</span></p>
+<p>such that if <span class="math inline">\(\chi\)</span> and <span class="math inline">\(\psi\)</span> are in fact <strong>the same population</strong>, we expect <span class="math inline">\(GT(\mathbf{X}, \mathbf{Y}) = 0\)</span> (positive and negative values of <span class="math inline">\(GT_i\)</span> cancel each other out, for sufficiently large <span class="math inline">\(N\)</span>)</p></li>
+<li><p>Non-parametric tests which use this value as a <strong>test statistic</strong> are called <strong>Sign tests</strong> <!-- * Note how I'm leaving it ambiguous how to **aggregate** individual scores $\text{GT}_i(X_i, Y_i)$ into an overall score $\text{GT}(\mathbf{X}, \mathbf{Y})$: this depends on the **context**, e.g., the particular **form** of the hypothesis you're trying to test --></p></li>
+</ul>
+</section></section>
+<section>
+<section id="mann-whitney-u-test-paired-observations-paired-samples" class="title-slide slide level1 center" data-stack-name="Mann-Whitney">
+<h1>Mann-Whitney U Test: Paired Observations → Paired Samples</h1>
+<ul>
+<li>Also called the Wilcoxon Rank Sum Test</li>
+</ul>
+</section>
+<section id="what-if-we-cant-pair-observations-one-to-one" class="slide level2 title-08">
+<h2>What If We <em>Can’t</em> Pair Observations One-to-One?</h2>
+<ul>
+<li>For example, what if samples aren’t the same size: <span class="math inline">\(N_X = |\mathbf{X}| \neq N_Y = |\mathbf{Y}|\)</span>?</li>
+<li><em>Intuition</em>: If there is no “natural” one-to-one pairing of the observations, we can instead consider <strong>all possible pairs</strong> <span class="math inline">\((X_{i}, Y_{j}) \in \mathbf{X} \times \mathbf{Y}\)</span></li>
+<li>We can then count how often <span class="math inline">\(X_i &gt; Y_j\)</span>, how often <span class="math inline">\(Y_j &gt; X_i\)</span>, and compare this to our <strong>expectation</strong> of how often these would occur if <span class="math inline">\(\chi = \psi\)</span> (that is, if <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> were in fact drawn from the <strong>same population</strong>)</li>
+</ul>
+<!-- * Another piece of information we could compute is the **rank** of each datapoint with respect to the **combination** of the two datasets:
+* If dataset 1 has size $N_1$ and dataset 2 has size $N_2$: The **greatest value across both datasets** has **rank 1**, the **second-greatest** has **rank 2**, and so on, up to the **lowest value across both datasets** having **rank $N_1 + N_2$** -->
+</section>
+<section id="computational-efficiency" class="slide level2">
+<h2>Computational Efficiency</h2>
+<ul>
+<li>We could just go ahead with this intuition, checking every pair and seeing how often <span class="math inline">\(X_i &gt; Y_j\)</span> vs.&nbsp;how often <span class="math inline">\(Y_j &gt; X_i\)</span>, but this is <strong>computationally expensive</strong> for large samples (requiring <span class="math inline">\(O(N_1N_2)\)</span> comparisons)</li>
+<li>So, let’s walk through an example with pairwise comparisons, but try to think of an equivalent yet <strong>sub-quadratic</strong> method for achieving the same results!</li>
+</ul>
+</section>
+<section id="pairwise-comparison-mode" class="slide level2 smaller crunch-title crunch-quarto-layout-panel crunch-ul">
+<h2>Pairwise Comparison Mode</h2>
+<ul>
+<li>Let <span class="math inline">\(\mathbf{X} = \{5, 9, 7\}, \mathbf{Y} = \{7, 6\}\)</span>, and consider <span class="math inline">\(X_i &gt; Y_j\)</span> vs.&nbsp;<span class="math inline">\(Y_j &gt; X_i\)</span> for all pairs:</li>
+<li>Give 1 point to <span class="math inline">\(\mathbf{X}\)</span> if <span class="math inline">\(X_i &gt; Y_j\)</span>, 1 point to <span class="math inline">\(\mathbf{Y}\)</span> if <span class="math inline">\(Y_j &gt; X_i\)</span>, 0.5 points to both if <span class="math inline">\(X_i = Y_j\)</span>.</li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(X_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y_j\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(&gt;\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(=\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(&lt;\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">+1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">+1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">+0.5</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">+1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Final</strong></td>
+<td style="text-align: center;"><strong>Score:</strong></td>
+<td style="text-align: center;"><span class="math inline">\(S_{\mathbf{X}} = 3.5\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(S_{\mathbf{Y}} = 2.5\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ranking-mode" class="slide level2 smaller crunch-title crunch-ul smaller-math inline-80">
+<h2>Ranking Mode</h2>
+<ul>
+<li>Now consider the <strong>combined dataset</strong> <span class="math inline">\(\mathbf{Z} = \mathbf{X} \oplus \mathbf{Y} = (5_X, 9_X, 7_X, 7_Y, 6_Y)\)</span></li>
+<li>Let’s see what we get when we <strong>rank the values</strong> in <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> separately, then rank the same values within <span class="math inline">\(\mathbf{Z}\)</span>, keeping track of whether each number is from <span class="math inline">\(\mathbf{X}\)</span> or <span class="math inline">\(\mathbf{Y}\)</span>:</li>
+</ul>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Values</strong></td>
+<td style="text-align: center;"><span class="math inline">\(5_X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6_Y\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7_X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7_Y\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(9_X\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Rank in <span class="math inline">\(\mathbf{X}\)</span></strong></td>
+<td style="text-align: center;"><span class="math inline">\([1]_{X/\mathbf{X}}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\([2]_{X/\mathbf{X}}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\([3]_{X/\mathbf{X}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Sigma_{X/\mathbf{X}} = [6]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Rank in <span class="math inline">\(\mathbf{Y}\)</span></strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\([1]_{Y/\mathbf{Y}}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\([2]_{Y/\mathbf{Y}}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\Sigma_{Y/\mathbf{Y}} = [3]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Rank in <span class="math inline">\(\mathbf{Z}\)</span></strong></td>
+<td style="text-align: center;"><span class="math inline">\([1]_{X/\mathbf{Z}}\)</span></td>
+<td style="text-align: center;">&nbsp;<br><span class="math inline">\([2]_{Y/\mathbf{Z}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([3.5]_{X/\mathbf{Z}}\)</span></td>
+<td style="text-align: center;">&nbsp;<br><span class="math inline">\([3.5]_{Y/\mathbf{Z}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([5]_{X/\mathbf{Z}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Sigma_{X/\mathbf{Z}} = [9.5]\)</span><br><span class="math inline">\(\Sigma_{Y/\mathbf{Z}} = [5.5]\)</span></td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>Assumptions: A normal population distribution with known value of <span class="math inline">\(\sigma\)</span>.</li>
+<li>Thus, by <strong>subtracting</strong> single-sample ranks from combined-sample ranks, we obtain:</li>
+<li><span class="math inline">\(S_{\mathbf{X}} = \Sigma_{X/\mathbf{Z}} - \Sigma_{X/\mathbf{X}} = 9.5 - 6 = 3.5\)</span></li>
+<li><span class="math inline">\(S_{\mathbf{Y}} = \Sigma_{Y/\mathbf{Z}} - \Sigma_{Y/\mathbf{Y}} = 5.5 - 3 = 2.5\)</span> 🤯</li>
+<li>And yet, this runs in <span class="math inline">\(O((N_1+N_2)\log(N_1+N_2)) &lt; O(N_1N_2)\)</span></li>
 </ul>
 </section>
-<section id="example-1-bird-wingspans" class="slide level2 smaller crunch-title crunch-ul crunch-code">
-<h2>Example 1: Bird Wingspans</h2>
+<section id="example-2022-world-cup" class="slide level2 smaller">
+<h2>Example: 2022 World Cup</h2>
 <ul>
-<li>Trying to figure out the <strong>population distribution</strong> of bird wingspans.</li>
-<li>We hypothesize <span class="math inline">\(\mu_0 = 120\text{cm}\)</span></li>
-<li>Somehow we know the <strong>population variance</strong> <span class="math inline">\(\sigma = 20\text{cm}\)</span>, and we know that bird wingspans form a <strong>normal distribution</strong>, but we don’t know the true <span class="math inline">\(\mu\)</span>:</li>
+<li>Heights (inches) of Welsh vs.&nbsp;US national football teams (<span class="math inline">\(N = 22\)</span> players total):</li>
 </ul>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Wales</strong></td>
+<td>78</td>
+<td>71</td>
+<td>76</td>
+<td>75</td>
+<td>72</td>
+<td>70</td>
+<td>68</td>
+<td>72</td>
+<td>69</td>
+<td>73</td>
+<td>67</td>
+<td style="text-align: right;"><span class="math inline">\(\overline{X} \approx 71.91\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>USA</strong></td>
+<td>75</td>
+<td>68</td>
+<td>75</td>
+<td>69</td>
+<td>70</td>
+<td>70</td>
+<td>72</td>
+<td>67</td>
+<td>72</td>
+<td>72</td>
+<td>70</td>
+<td style="text-align: right;"><span class="math inline">\(\overline{Y} \approx 70.73\)</span></td>
+</tr>
+</tbody>
+</table>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a></a>hyp_mu <span class="ot">&lt;-</span> <span class="dv">120</span></span>
-<span id="cb2-3"><a></a>sigma <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb2-4"><a></a>bird_dnorm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean=</span>hyp_mu, <span class="at">sd=</span>sigma)</span>
-<span id="cb2-5"><a></a>sigma_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb2-6"><a></a>    <span class="sc">~</span>x,</span>
-<span id="cb2-7"><a></a>    hyp_mu <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> sigma,</span>
-<span id="cb2-8"><a></a>    hyp_mu <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> sigma,</span>
-<span id="cb2-9"><a></a>    hyp_mu <span class="sc">-</span> <span class="dv">1</span> <span class="sc">*</span> sigma,</span>
-<span id="cb2-10"><a></a>    hyp_mu <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> sigma,</span>
-<span id="cb2-11"><a></a>    hyp_mu <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> sigma,</span>
-<span id="cb2-12"><a></a>    hyp_mu <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> sigma</span>
-<span id="cb2-13"><a></a>)</span>
-<span id="cb2-14"><a></a>sigma_df <span class="ot">&lt;-</span> sigma_df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb2-15"><a></a>    <span class="at">y =</span> <span class="dv">0</span>,</span>
-<span id="cb2-16"><a></a>    <span class="at">xend =</span> x,</span>
-<span id="cb2-17"><a></a>    <span class="at">yend =</span> <span class="fu">bird_dnorm</span>(x)</span>
-<span id="cb2-18"><a></a>)</span>
-<span id="cb2-19"><a></a>plot_rad <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">*</span> sigma</span>
-<span id="cb2-20"><a></a>plot_bounds <span class="ot">&lt;-</span> <span class="fu">c</span>(hyp_mu <span class="sc">-</span> plot_rad, hyp_mu <span class="sc">+</span> plot_rad)</span>
-<span id="cb2-21"><a></a>bird_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span>plot_bounds), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb2-22"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>bird_dnorm, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb2-23"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>hyp_mu), <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb2-24"><a></a>  <span class="fu">geom_segment</span>(<span class="at">data=</span>sigma_df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">xend=</span>xend, <span class="at">yend=</span>yend), <span class="at">linewidth=</span>g_linewidth, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb2-25"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb2-26"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-27"><a></a>    <span class="at">title =</span> <span class="st">"Our Hypothesized Bird Distribution"</span>,</span>
-<span id="cb2-28"><a></a>    <span class="at">x =</span> <span class="st">"Wingspan Values (m)"</span>,</span>
-<span id="cb2-29"><a></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span></span>
-<span id="cb2-30"><a></a>  )</span>
-<span id="cb2-31"><a></a>bird_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a></a><span class="co"># Manual (via tibble)</span></span>
+<span id="cb2-3"><a></a><span class="co"># us_heights &lt;- tibble(height=c(75, 68, 74, 68, 68, 70, 72, 67, 72, 72, 70))</span></span>
+<span id="cb2-4"><a></a><span class="co"># corrected</span></span>
+<span id="cb2-5"><a></a>us_heights <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">height=</span><span class="fu">c</span>(<span class="dv">75</span>, <span class="dv">68</span>, <span class="dv">75</span>, <span class="dv">69</span>, <span class="dv">70</span>, <span class="dv">70</span>, <span class="dv">72</span>, <span class="dv">67</span>, <span class="dv">72</span>, <span class="dv">72</span>, <span class="dv">68</span>))</span>
+<span id="cb2-6"><a></a>mean_us <span class="ot">&lt;-</span> <span class="fu">mean</span>(us_heights<span class="sc">$</span>height)</span>
+<span id="cb2-7"><a></a>us_heights <span class="ot">&lt;-</span> us_heights <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Team =</span> <span class="st">"US"</span>)</span>
+<span id="cb2-8"><a></a>wales_heights <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">height=</span><span class="fu">c</span>(<span class="dv">78</span>, <span class="dv">71</span>, <span class="dv">76</span>, <span class="dv">75</span>, <span class="dv">72</span>, <span class="dv">70</span>, <span class="dv">68</span>, <span class="dv">72</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">67</span>))</span>
+<span id="cb2-9"><a></a>mean_wales <span class="ot">&lt;-</span> <span class="fu">mean</span>(wales_heights<span class="sc">$</span>height)</span>
+<span id="cb2-10"><a></a><span class="co"># From csv</span></span>
+<span id="cb2-11"><a></a><span class="co"># https://www.fifa.com/en/match-centre/match/17/255711/285063/400235455</span></span>
+<span id="cb2-12"><a></a>team_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"assets/wc_usa_wales.csv"</span>)</span>
+<span id="cb2-13"><a></a><span class="co"># team_df |&gt; group_by(team) |&gt; summarize(height_mean = mean(height_in))</span></span>
+<span id="cb2-14"><a></a>mean_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mean_height =</span> <span class="fu">c</span>(mean_us, mean_wales), <span class="at">Team =</span> <span class="fu">c</span>(<span class="st">"US"</span>, <span class="st">"Wales"</span>))</span>
+<span id="cb2-15"><a></a>wales_heights <span class="ot">&lt;-</span> wales_heights <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Team =</span> <span class="st">"Wales"</span>)</span>
+<span id="cb2-16"><a></a>players <span class="ot">=</span> <span class="fu">bind_rows</span>(us_heights, wales_heights)</span>
+<span id="cb2-17"><a></a><span class="fu">ggplot</span>(players, <span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">fill=</span>Team)) <span class="sc">+</span></span>
+<span id="cb2-18"><a></a>  <span class="fu">geom_density</span>(</span>
+<span id="cb2-19"><a></a>    <span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">adjust=</span><span class="dv">4</span><span class="sc">/</span><span class="dv">5</span></span>
+<span id="cb2-20"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-21"><a></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb2-22"><a></a>    <span class="at">data=</span>mean_df,</span>
+<span id="cb2-23"><a></a>    <span class="fu">aes</span>(<span class="at">xintercept=</span>mean_height, <span class="at">color=</span>Team),</span>
+<span id="cb2-24"><a></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb2-25"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
+<span id="cb2-26"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb2-27"><a></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">65</span>,<span class="dv">80</span>)) <span class="sc">+</span></span>
+<span id="cb2-28"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
+<span id="cb2-29"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(cbPalette[<span class="dv">1</span>], cbPalette[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb2-30"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-31"><a></a>    <span class="at">title =</span> <span class="st">"Empirical Distribution of Team Heights"</span>,</span>
+<span id="cb2-32"><a></a>    <span class="at">x =</span> <span class="st">"Height (inches)"</span>,</span>
+<span id="cb2-33"><a></a>    <span class="at">y =</span> <span class="st">"Empirical Density"</span></span>
+<span id="cb2-34"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/z-test-hypothesized-dist-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="a-wild-sample-appears" class="slide level2 smaller small-inline">
-<h2>A Wild Sample Appears!</h2>
+<img data-src="index_files/figure-revealjs/height-hist-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="samples-rightarrow-populations" class="slide level2 crunch-code">
+<h2>Samples <span class="math inline">\(\rightarrow\)</span> Populations</h2>
 <ul>
-<li>While we are pondering, someone runs into the room and tosses us a big crate <span class="math inline">\(\mathbf{X}\)</span>, a <strong>random sample</strong> of <span class="math inline">\(N = 16\)</span> birds from the population 😰</li>
-<li>Recovering from the shock, we measure each bird’s wingspan <span class="math inline">\(X_i\)</span> and find <span class="math inline">\(\overline{X} = 131\text{cm}\)</span></li>
-<li>What can we infer about our hypothesized <span class="math inline">\(\mu\)</span>, now that we have a sample statistic <span class="math inline">\(\overline{X}\)</span>?</li>
-<li>We <strong>cannot</strong> just plot <span class="math inline">\(\overline{X} = 131\)</span> on the <strong>hypothesized bird distribution</strong> from the previous slide (an easy mistake to make!)</li>
-<li>Apples and oranges: the distribution below is a distribution of <strong>individual</strong> bird wingspans, but <span class="math inline">\(\overline{X}\)</span> is a <strong>mean</strong> of <strong>16 bird wingspans</strong></li>
-<li>What we <strong>can</strong> do is: think about what the <strong>distribution of sample means from <span class="math inline">\(N = 16\)</span> samples would look like if <span class="math inline">\(\mu = \mu_0\)</span>!</strong></li>
+<li>We know that the <strong>sampled</strong> heights of Welsh football players (<span class="math inline">\(\mathbf{X}\)</span>) are (on average) greater than the <strong>sampled</strong> heights of US football players (<span class="math inline">\(\mathbf{Y}\)</span>).</li>
+<li>But are heights in fact greater among the <strong>population</strong> of Welsh football players (<span class="math inline">\(\chi\)</span>), relative to the <strong>population</strong> of US football players (<span class="math inline">\(\psi\)</span>)?</li>
 </ul>
 </section>
-<section id="what-would-sample-means-look-like-if-hypothesis-was-true" class="slide level2 smaller title-08">
-<h2>What Would Sample Means Look Like If Hypothesis Was True?</h2>
+<section id="the-non-parametric-fork-in-the-road" class="slide level2 smaller">
+<h2>The Non-Parametric Fork in the Road</h2>
 <ul>
-<li>What we know, from asymptotic sample theory, is that <span class="math inline">\(Z = \frac{\overline{X} - \mu}{\sigma / \sqrt{N}}\)</span> is approximately standard normal, for sufficiently large values of <span class="math inline">\(N\)</span>!</li>
-<li>So, let’s (1) plot this <strong>distribution</strong>, for a bunch of <strong>potential sample means</strong>, and then (2) see where our actual <strong>observed sample mean</strong> lies on this distribution!</li>
-<li>Sanity check: let’s actually simulate taking sample means from 1000 size-16 samples:</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>simulate_sample_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(N, mu, sigma) {</span>
-<span id="cb3-2"><a></a>    samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, mu, sigma)</span>
-<span id="cb3-3"><a></a>    sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samples)</span>
-<span id="cb3-4"><a></a>    <span class="fu">return</span>(sample_mean)</span>
-<span id="cb3-5"><a></a>}</span>
-<span id="cb3-6"><a></a>N <span class="ot">&lt;-</span> <span class="dv">16</span></span>
-<span id="cb3-7"><a></a>obs_sample_mean <span class="ot">&lt;-</span> <span class="dv">129</span></span>
-<span id="cb3-8"><a></a>num_reps <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb3-9"><a></a>sample_means <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">replicate</span>(num_reps, <span class="fu">simulate_sample_mean</span>(N, hyp_mu, sigma)))</span>
-<span id="cb3-10"><a></a>asymp_dnorm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>((x <span class="sc">-</span> hyp_mu)<span class="sc">/</span>(sigma <span class="sc">/</span> <span class="fu">sqrt</span>(N)), <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb3-11"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb3-12"><a></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb3-13"><a></a>    <span class="at">data=</span>sample_means,</span>
-<span id="cb3-14"><a></a>    <span class="fu">aes</span>(<span class="at">x=</span>value, <span class="at">y=</span><span class="dv">5</span><span class="sc">*</span><span class="fu">after_stat</span>(density)),</span>
-<span id="cb3-15"><a></a>    <span class="at">binwidth=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a></a>  <span class="fu">stat_function</span>(</span>
-<span id="cb3-17"><a></a>    <span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">140</span>)),</span>
-<span id="cb3-18"><a></a>    <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">color=</span><span class="st">'asymp'</span>),</span>
-<span id="cb3-19"><a></a>    <span class="at">fun=</span>asymp_dnorm,</span>
-<span id="cb3-20"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb3-21"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb3-22"><a></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb3-23"><a></a>    <span class="fu">aes</span>(<span class="at">x =</span> obs_sample_mean, <span class="at">xend=</span>obs_sample_mean, <span class="at">y=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">yend=</span><span class="cn">Inf</span>, <span class="at">color=</span><span class="st">'obs'</span>),</span>
-<span id="cb3-24"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb3-25"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb3-26"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb3-27"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-28"><a></a>    <span class="at">x =</span> <span class="st">"Simulated Sample Mean"</span>,</span>
-<span id="cb3-29"><a></a>    <span class="at">y =</span> <span class="st">"(Empirical) Density"</span>,</span>
-<span id="cb3-30"><a></a>    <span class="at">title =</span> <span class="fu">paste0</span>(num_reps,<span class="st">" Simulated Sample Means, N = 16"</span>)</span>
-<span id="cb3-31"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb3-32"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'asymp'</span><span class="ot">=</span><span class="st">'black'</span>, <span class="st">'obs'</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>]), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'asymp'</span><span class="ot">=</span><span class="st">'Asymptotic</span><span class="sc">\n</span><span class="st">Distribution'</span>, <span class="st">'obs'</span><span class="ot">=</span><span class="st">'Observed</span><span class="sc">\n</span><span class="st">Sample Mean'</span>)) <span class="sc">+</span></span>
-<span id="cb3-33"><a></a>  <span class="fu">remove_legend_title</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/simulated-sample-means-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="right-tailed-test" class="slide level2 smaller crunch-title crunch-code crunch-ul crunch-img">
-<h2>Right-Tailed Test</h2>
-<ul>
-<li>Null hypothesis (in all cases) is <span class="math inline">\(H_0: \mu = \mu_0\)</span>; <strong>Right-tailed test</strong> is of alternative hypothesis <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span></li>
-<li>We <strong>reject</strong> the null if the observed sample mean <span class="math inline">\(\overline{X} = 131\)</span> is <strong>too unlikely</strong> in the world where the null is true: <span class="math inline">\(Z(\overline{X}) \approx 1.8\)</span></li>
-<li>What cutoff should we use for “too unlikely”? (See last week’s slides…) here we’ll use <span class="math inline">\(\alpha = 0.05\)</span>: <span class="math inline">\(\int_{1.645}^{\infty}\varphi(x)dx = 0.05\)</span>, so <span class="math inline">\(1.645\)</span> is our “critical” (cutoff) value</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>label_df_signif_int <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb4-2"><a></a>    <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb4-3"><a></a>    <span class="fl">0.55</span>, <span class="fl">0.04</span>, <span class="st">"95% Signif.</span><span class="sc">\n</span><span class="st">Cutoff"</span></span>
-<span id="cb4-4"><a></a>)</span>
-<span id="cb4-5"><a></a>signif_cutoff <span class="ot">&lt;-</span> <span class="fl">1.645</span></span>
-<span id="cb4-6"><a></a>funcShaded <span class="ot">&lt;-</span> <span class="cf">function</span>(x, lower_bound, upper_bound){</span>
-<span id="cb4-7"><a></a>    y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
-<span id="cb4-8"><a></a>    y[x <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> x <span class="sc">&gt;</span> upper_bound] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb4-9"><a></a>    <span class="fu">return</span>(y)</span>
-<span id="cb4-10"><a></a>}</span>
-<span id="cb4-11"><a></a>funcShadedIntercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, int_tstat, <span class="cn">Inf</span>)</span>
-<span id="cb4-12"><a></a>funcShadedSignif <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, signif_cutoff, <span class="cn">Inf</span>)</span>
-<span id="cb4-13"><a></a>compute_z_val <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb4-14"><a></a>    <span class="fu">return</span> ((x <span class="sc">-</span> hyp_mu) <span class="sc">/</span> (sigma <span class="sc">/</span> <span class="fu">sqrt</span>(N)))</span>
-<span id="cb4-15"><a></a>}</span>
-<span id="cb4-16"><a></a>obs_zval <span class="ot">&lt;-</span> <span class="fu">compute_z_val</span>(obs_sample_mean)</span>
-<span id="cb4-17"><a></a>obs_zval_str <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, obs_zval)</span>
-<span id="cb4-18"><a></a>sample_dnorm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(<span class="fu">compute_z_val</span>(x))</span>
-<span id="cb4-19"><a></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb4-20"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>dnorm, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb4-21"><a></a>  <span class="co">#geom_segment(data=sigma_df, aes(x=x, y=y, xend=xend, yend=yend), linewidth=g_linewidth, linetype="dashed") +</span></span>
-<span id="cb4-22"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedSignif, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.333</span>) <span class="sc">+</span></span>
-<span id="cb4-23"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> signif_cutoff), <span class="at">linewidth=</span>g_linewidth, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb4-24"><a></a>  <span class="fu">geom_text</span>(label_df_signif_int, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb4-25"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_zval, <span class="at">color=</span><span class="st">'sample_mean'</span>), <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb4-26"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb4-27"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-28"><a></a>    <span class="at">title =</span> <span class="st">"z-Test Distribution"</span>,</span>
-<span id="cb4-29"><a></a>    <span class="at">x =</span> <span class="st">"z Scores"</span>,</span>
-<span id="cb4-30"><a></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span></span>
-<span id="cb4-31"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb4-32"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'sample_mean'</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>]), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'sample_mean'</span><span class="ot">=</span><span class="st">'Z(Observed Sample Mean)'</span>)) <span class="sc">+</span></span>
-<span id="cb4-33"><a></a>  <span class="fu">remove_legend_title</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/z-dist-with-sample-mean-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"><ul>
-<li>Since <span class="math inline">\(Z(\overline{X}) &gt; 1.645\)</span>, we <strong>reject</strong> the null hypothesis that this sample mean was generated by a distribution with mean <span class="math inline">\(\mu_0\)</span>!</li>
+<li>Recall: in <strong>parametric tests</strong>, when comparing means, we analyzed the difference in the sample means <strong>relative to their variability</strong> and summarized the sample information in a test statistic: for example, <span class="math inline">\(t = \frac{\overline{X} - \mu_H}{\widehat{\sigma} / \sqrt{N}}\)</span></li>
+<li>We <strong>could</strong> compute this test statistic, but it would <strong>implicitly depend on</strong> an assumption of the underlying DGP: that heights follow a <strong>Normal</strong> distribution.</li>
+<li>Here, instead, we produce a test statistic based on the <strong>ranks</strong>!</li>
+<li>Test statistics should measure how <strong>surprised</strong> we would be if we observed what we observed in a world where the <strong>null hypothesis is true</strong></li>
+<li>Equivalently, it should be <strong>low</strong> if the observed difference could feasibly have occurred just due to random noise (i.e., if we’re looking at noisy data from world where <strong>null hypothesis is true</strong>)</li>
+<li>So, let’s think in these terms about the <strong>ranks</strong> of each datapoint, to develop a non-parametric <strong>test statistic</strong> based on the ranks</li>
 </ul>
 </section>
-<section id="two-tailed-test" class="slide level2 smaller crunch-title crunch-code crunch-ul inline-90 crunch-img">
-<h2>Two-Tailed Test</h2>
+<section id="choosing-non-parametric-hypotheses" class="slide level2 crunch-title title-09">
+<h2>Choosing <em>Non-Parametric</em> Hypotheses</h2>
 <ul>
-<li>Null hypothesis (in all cases) is <span class="math inline">\(H_0: \mu = \mu_0\)</span>; <strong>Two-tailed test</strong> is of alternative hypothesis <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> (the actual logical negation of the null hypothesis…)</li>
-<li><strong>Reject</strong> the null if observed sample mean <span class="math inline">\(\overline{X} = 131\)</span> is <strong>too unlikely</strong> in null world</li>
-<li>What cutoff should we use for “too unlikely”? Here we’ll use <span class="math inline">\(\alpha = 0.05\)</span>, but for a two tailed test we find <span class="math inline">\(\int_{-\infty}^{-1.96}\varphi(x)dx + \int_{1.96}^{\infty}\varphi(x)dx = 0.05\)</span>, so <span class="math inline">\(1.96\)</span> is our “critical” (cutoff) value</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>signif_cutoff <span class="ot">&lt;-</span> <span class="fl">1.96</span></span>
-<span id="cb5-2"><a></a>neg_signif_cutoff <span class="ot">&lt;-</span> <span class="sc">-</span>signif_cutoff</span>
-<span id="cb5-3"><a></a>label_df_signif_int <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb5-4"><a></a>    <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb5-5"><a></a>    <span class="sc">-</span><span class="fl">2.45</span>, <span class="fl">0.18</span>, <span class="fu">paste0</span>(<span class="st">"Left</span><span class="sc">\n</span><span class="st">Cutoff</span><span class="sc">\n</span><span class="st">("</span>,neg_signif_cutoff,<span class="st">")"</span>),</span>
-<span id="cb5-6"><a></a>    <span class="fl">2.45</span>, <span class="fl">0.18</span>, <span class="fu">paste0</span>(<span class="st">"Right</span><span class="sc">\n</span><span class="st">Cutoff</span><span class="sc">\n</span><span class="st">("</span>,signif_cutoff,<span class="st">")"</span>)</span>
-<span id="cb5-7"><a></a>)</span>
-<span id="cb5-8"><a></a>funcShaded <span class="ot">&lt;-</span> <span class="cf">function</span>(x, lower_bound, upper_bound){</span>
-<span id="cb5-9"><a></a>    y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
-<span id="cb5-10"><a></a>    y[x <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> x <span class="sc">&gt;</span> upper_bound] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb5-11"><a></a>    <span class="fu">return</span>(y)</span>
-<span id="cb5-12"><a></a>}</span>
-<span id="cb5-13"><a></a>funcShadedIntercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, int_tstat, <span class="cn">Inf</span>)</span>
-<span id="cb5-14"><a></a>funcShadedNegSignif <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, <span class="sc">-</span><span class="cn">Inf</span>, neg_signif_cutoff)</span>
-<span id="cb5-15"><a></a>funcShadedSignif <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, signif_cutoff, <span class="cn">Inf</span>)</span>
-<span id="cb5-16"><a></a>compute_z_val <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb5-17"><a></a>    <span class="fu">return</span> ((x <span class="sc">-</span> hyp_mu) <span class="sc">/</span> (sigma <span class="sc">/</span> <span class="fu">sqrt</span>(N)))</span>
-<span id="cb5-18"><a></a>}</span>
-<span id="cb5-19"><a></a>obs_zval <span class="ot">&lt;-</span> <span class="fu">compute_z_val</span>(obs_sample_mean)</span>
-<span id="cb5-20"><a></a>sample_dnorm <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(<span class="fu">compute_z_val</span>(x))</span>
-<span id="cb5-21"><a></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb5-22"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>dnorm, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb5-23"><a></a>  <span class="co">#geom_segment(data=sigma_df, aes(x=x, y=y, xend=xend, yend=yend), linewidth=g_linewidth, linetype="dashed") +</span></span>
-<span id="cb5-24"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedSignif, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.333</span>) <span class="sc">+</span></span>
-<span id="cb5-25"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedNegSignif, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.333</span>) <span class="sc">+</span></span>
-<span id="cb5-26"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> neg_signif_cutoff), <span class="at">linewidth=</span>g_linewidth, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb5-27"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> signif_cutoff), <span class="at">linewidth=</span>g_linewidth, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb5-28"><a></a>  <span class="fu">geom_text</span>(label_df_signif_int, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb5-29"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> obs_zval, <span class="at">color=</span><span class="st">'sample_mean'</span>), <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb5-30"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb5-31"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-32"><a></a>    <span class="at">title =</span> <span class="st">"z-Test Distribution"</span>,</span>
-<span id="cb5-33"><a></a>    <span class="at">x =</span> <span class="st">"z Scores"</span>,</span>
-<span id="cb5-34"><a></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span></span>
-<span id="cb5-35"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb5-36"><a></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'sample_mean'</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>]), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'sample_mean'</span><span class="ot">=</span><span class="st">'Z(Observed Sample Mean)'</span>)) <span class="sc">+</span></span>
-<span id="cb5-37"><a></a>  <span class="fu">remove_legend_title</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/z-dist-two-tailed-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"><ul>
-<li>Since <span class="math inline">\(|Z(\overline{X})| &lt; 1.96\)</span>, we <strong>fail to reject</strong> the null hypothesis that this sample mean was generated by a distribution with mean <span class="math inline">\(\mu_0\)</span>!</li>
+<li>The <strong>empirical distributions</strong> from the previous slide, and the <strong>small sample size</strong> (<span class="math inline">\(N_1 = N_2 = 11\)</span>), motivate our use of a nonparametric test!</li>
+<li>Assuming <span class="math inline">\(X \sim \mathcal{D}_1\)</span> and <span class="math inline">\(Y \sim \mathcal{D}_2\)</span> (but <strong>not</strong> assuming the <strong>parametric forms</strong> of <span class="math inline">\(\mathcal{D}_1\)</span> or <span class="math inline">\(\mathcal{D}_2\)</span>!), we can test:</li>
+<li><span class="math inline">\(H_0: \Pr(X &gt; Y) = \Pr(Y &gt; X)\)</span></li>
+<li><span class="math inline">\(H_1: \Pr(X &gt; Y) \neq \Pr(Y &gt; X)\)</span></li>
 </ul>
 </section>
-<section id="errors-in-classical-hypothesis-testing" class="slide level2 smaller">
-<h2>Errors in Classical Hypothesis Testing</h2>
-<ul>
-<li>Since we’re trying to infer something about the population using only a sample, we may make one of the following types of errors:</li>
-</ul>
-<div class="quarto-layout-panel" data-layout="[1,2]">
-<div class="quarto-layout-row quarto-layout-valign-center">
-<div id="error-types-text" class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<ul>
-<li><strong>Type I Error</strong></li>
-<li><strong>Type II Error</strong></li>
-</ul>
-</div>
-<div id="error-types-table" class="quarto-layout-cell" style="flex-basis: 66.7%;justify-content: center;">
-<table class="caption-top" data-quarto-postprocess="true">
+<section id="sorting-and-ranking-observations" class="slide level2 smaller crunch-title crunch-table-cells">
+<h2>Sorting and Ranking Observations</h2>
+<table class="centered-table table-line-2-3 table-line-4-5 caption-top" data-quarto-postprocess="true" style="border-collapse: collapse; font-size: 16pt;">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th colspan="2" style="text-align: left;" data-quarto-table-cell-role="th"><span class="math inline">\(H_0\)</span> is:</th>
+<th colspan="2" style="text-align: center; border-right: 2px solid black; font-size: 20pt !important;">Original Data</th>
+<th colspan="2" style="text-align: center; border-right: 2px solid black; font-size: 20pt !important;">Sorted Total Samples</th>
+<th colspan="2" style="text-align: center; font-size: 20pt !important;">Rank</th>
 </tr>
 <tr class="even">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Decision:</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">True</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">False</th>
+<th style="text-align: center; font-size: 18pt !important;">USA</th>
+<th style="text-align: center; font-size: 18pt !important; border-right: 2px solid black;">Wales</th>
+<th style="text-align: center; font-size: 18pt !important;">USA</th>
+<th style="text-align: center; font-size: 18pt !important; border-right: 2px solid black;">Wales</th>
+<th style="text-align: center; font-size: 18pt !important;">USA</th>
+<th style="text-align: center; font-size: 18pt !important;">Wales</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Do not reject <span class="math inline">\(H_0\)</span></td>
-<td style="text-align: left;">Correct decision</td>
-<td style="text-align: left;">Type II error</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">1.5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Reject <span class="math inline">\(H_0\)</span></td>
-<td style="text-align: left;">Type I error</td>
-<td style="text-align: left;">Correct decision</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;">71</td>
+<td style="text-align: center;">68</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">68</td>
+<td style="text-align: center; border-right-width: 0px !important;">4</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle; border-left: 0px;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">76</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center; border-right-width: 0px !important;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">69</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">69</td>
+<td style="text-align: center;">69</td>
+<td style="text-align: center; border-right-width: 0px !important;">6.5</td>
+<td style="text-align: center;">6.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">70</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">70</td>
+<td style="text-align: center;">9</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center; border-right-width: 0px !important;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">71</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="even">
+<td rowspan="2" style="text-align: center;">67</td>
+<td rowspan="2" style="text-align: center;">72</td>
+<td rowspan="2" style="text-align: center;">72</td>
+<td rowspan="3" style="text-align: center; vertical-align: middle; border-right-width: 2px !important;">72</td>
+<td rowspan="2" style="text-align: center;">14</td>
+<td rowspan="3" style="text-align: center; vertical-align: middle; border-right-width: 0px !important;">14</td>
+</tr>
+<tr class="odd">
+</tr>
+<tr class="even">
+<td rowspan="2" style="text-align: center; vertical-align: middle;">72</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">69</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">72</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle; border-right-width: 0px !important;">14</td>
+</tr>
+<tr class="odd">
+<td rowspan="3" style="text-align: center; vertical-align: middle; border-right-width: 2px !important;">72</td>
+<td rowspan="3" style="text-align: center; vertical-align: middle; border-right-width: 0px !important;">14</td>
+</tr>
+<tr class="even">
+<td rowspan="2" style="text-align: center;">72</td>
+<td rowspan="2" style="text-align: center;">73</td>
+<td rowspan="2" style="text-align: center;">72</td>
+<td rowspan="2" style="text-align: center; border-right-width: 0px !important;">14</td>
+</tr>
+<tr class="odd">
+</tr>
+<tr class="even">
+<td style="text-align: center; vertical-align: middle;">68</td>
+<td style="text-align: center; vertical-align: middle;">67</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">73</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center; vertical-align: middle;">75</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle; border-right-width: 2px !important;">75</td>
+<td style="text-align: center;">19</td>
+<td rowspan="2" style="text-align: center; vertical-align: middle;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center; border-right-width: 0px !important;">75</td>
+<td style="text-align: center; border-right-width: 0px !important;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">76</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">22</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section id="hypothesis-testing-for-regression-analysis" class="title-slide slide level1 center" data-stack-name="Regression">
-<h1>Hypothesis Testing for Regression Analysis</h1>
-
 </section>
-<section id="what-is-regression" class="slide level2">
-<h2>What Is Regression?</h2>
+<section id="our-rank-based-test-statistic" class="slide level2 smaller crunch-title crunch-ul crunch-math crunch-li">
+<h2>Our Rank-Based Test Statistic</h2>
 <ul>
-<li>If science is understanding relationships between variables, <strong>regression</strong> is the most basic but fundamental tool we have to start <strong>measuring</strong> these relationships</li>
-<li>Often exactly what humans do when we see data!</li>
+<li>Sums of ranks relative to the <strong>combined</strong> dataset: <span class="math inline">\(\Sigma_{X/\mathbf{Z}} = 112.5\)</span>, <span class="math inline">\(\Sigma_{Y/\mathbf{Z}} = 140.5\)</span>.</li>
+<li>And then sum the ranks in each group, relative to the same group… In general, if we have <span class="math inline">\(N\)</span> ranked datapoints (so, datapoints given labels <span class="math inline">\(\{1, 2, \ldots, N\}\)</span>), what will the <strong>sum</strong> of these individual ranks be?</li>
 </ul>
+<p><span class="math display">\[
+\sum_{i=1}^{N}i = \underbrace{\overbrace{(1 + N)}^{N + 1} + \overbrace{(2 + (N-1))}^{N + 1} + \cdots}_{N/2\text{ terms}} = \frac{N(N+1)}{2}
+\]</span></p>
+<ul>
+<li>So, in this case,</li>
+</ul>
+<p><span class="math display">\[
+\Sigma_{X/\mathbf{X}} = \Sigma_{Y/\mathbf{Y}} = \sum_{i=1}^{11}i = \frac{11(12)}{2} = 66
+\]</span></p>
+<ul>
+<li>Giving us the test statistics</li>
+</ul>
+<p><span class="math display">\[
+\begin{align*}
+U_X &amp;= 112.5 - 66 = 46.5, \; U_Y = 140.5 - 66 = 74.5 \\
+U &amp;= \min\{U_X, U_Y\} = \min\{46.5, 74.5\} = 46.5
+\end{align*}
+\]</span></p>
+</section>
+<section id="simulating-one-null-hypothesis-world" class="slide level2 smaller title-11">
+<h2>Simulating (One) Null-Hypothesis World</h2>
+<p>One simulation:</p>
 <div class="columns">
 <div class="column" style="width:48%;">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-2"><a></a><span class="fu">library</span>(tibble)</span>
-<span id="cb6-3"><a></a>x_data <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">1</span>, <span class="at">by=</span><span class="fl">0.02</span>)</span>
-<span id="cb6-4"><a></a>num_x <span class="ot">&lt;-</span> <span class="fu">length</span>(x_data)</span>
-<span id="cb6-5"><a></a>y_data <span class="ot">&lt;-</span> x_data <span class="sc">+</span> <span class="fu">runif</span>(num_x, <span class="dv">0</span>, <span class="fl">0.2</span>)</span>
-<span id="cb6-6"><a></a>reg_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span>x_data, <span class="at">y=</span>y_data)</span>
-<span id="cb6-7"><a></a><span class="fu">ggplot</span>(reg_df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span></span>
-<span id="cb6-8"><a></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize) <span class="sc">+</span></span>
-<span id="cb6-9"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">set.seed</span>(<span class="dv">5100</span>)</span>
+<span id="cb3-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-3"><a></a>N1 <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb3-4"><a></a>N2 <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb3-5"><a></a>N <span class="ot">&lt;-</span> N1 <span class="sc">+</span> N2</span>
+<span id="cb3-6"><a></a>totalRankSum <span class="ot">&lt;-</span> (N <span class="sc">*</span> (N<span class="sc">+</span><span class="dv">1</span>)) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb3-7"><a></a>s_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(N1)</span>
+<span id="cb3-8"><a></a>df_1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> s_1, <span class="at">team =</span> <span class="st">"A"</span>)</span>
+<span id="cb3-9"><a></a>s_2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(N2)</span>
+<span id="cb3-10"><a></a>df_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> s_2, <span class="at">team =</span> <span class="st">"B"</span>)</span>
+<span id="cb3-11"><a></a>df_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_1, df_2)</span>
+<span id="cb3-12"><a></a>df_combined[<span class="st">'rank'</span>] <span class="ot">&lt;-</span> <span class="fu">rank</span>(df_combined<span class="sc">$</span>x)</span>
+<span id="cb3-13"><a></a><span class="fu">writeLines</span>(<span class="fu">paste0</span>(<span class="st">"N1 = "</span>,N1,<span class="st">", N2 = "</span>,N2,<span class="st">" =&gt; Sum(1...(N1+N2)) = "</span>,totalRankSum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>N1 = 11, N2 = 11 =&gt; Sum(1...(N1+N2)) = 253</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>df_combined <span class="sc">|&gt;</span> <span class="fu">arrange</span>(rank) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/basic-scatter-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
+<div class="kable-table">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">x</th>
+<th style="text-align: left;">team</th>
+<th style="text-align: right;">rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0281644</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.0282184</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.0730575</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1343398</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.1351495</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1858087</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:4%;">
-<div style="height: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-<p>
-<span class="material-symbols-outlined" style="visibility: hidden;"> psychology </span> <span class="material-symbols-outlined gsym-medium" style="transform: translate(0px, 20px);"> psychology </span><br> <span class="material-symbols-outlined gsym-medium"> trending_flat </span>
-</p>
+<div style="height: 50px; width: 1px;">
+&nbsp;
 </div>
+<p>→</p>
 </div><div class="column" style="width:48%;">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(reg_df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize) <span class="sc">+</span></span>
-<span id="cb7-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> cbPalette[<span class="dv">1</span>], <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">linewidth =</span> g_linewidth<span class="sc">*</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/basic-regression-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section id="the-goal" class="slide level2">
-<h2>The Goal</h2>
-<ul>
-<li>Whenever you carry out a regression, keep the <strong>goal</strong> in the front of your mind:</li>
-</ul>
-<div class="r-fit-text" title="<i class='bi bi-info-circle'></i> The Goal of Regression">
-<div class="callout callout-tip no-icon callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong><i class="bi bi-info-circle"></i> The Goal of Regression</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Find a line <span class="math inline">\(\widehat{y} = mx + b\)</span> that best predicts <span class="math inline">\(Y\)</span> for given values of <span class="math inline">\(X\)</span></strong></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="how-do-we-define-best" class="slide level2 smaller crunch-title crunch-ul">
-<h2>How Do We Define “Best”?</h2>
-<ul>
-<li>Intuitively, two different ways to measure <strong>how well a line fits the data</strong>:</li>
-</ul>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">set.seed</span>(<span class="dv">5100</span>)</span>
-<span id="cb8-2"><a></a>N <span class="ot">&lt;-</span> <span class="dv">11</span></span>
-<span id="cb8-3"><a></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="dv">1</span> <span class="sc">/</span> (N <span class="sc">-</span> <span class="dv">1</span>))</span>
-<span id="cb8-4"><a></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="dv">0</span>, <span class="fl">0.25</span>)</span>
-<span id="cb8-5"><a></a>mean_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb8-6"><a></a>spread <span class="ot">&lt;-</span> y <span class="sc">-</span> mean_y</span>
-<span id="cb8-7"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">spread =</span> spread)</span>
-<span id="cb8-8"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span></span>
-<span id="cb8-9"><a></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">color=</span>cbPalette[<span class="dv">1</span>], <span class="at">linewidth=</span>g_linewidth<span class="sc">*</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb8-10"><a></a>  <span class="fu">geom_segment</span>(<span class="at">xend=</span>(x<span class="sc">+</span>y)<span class="sc">/</span><span class="dv">2</span>, <span class="at">yend=</span>(x<span class="sc">+</span>y)<span class="sc">/</span><span class="dv">2</span>, <span class="at">linewidth=</span>g_linewidth<span class="sc">*</span><span class="dv">2</span>, <span class="at">color=</span>cbPalette[<span class="dv">2</span>]) <span class="sc">+</span></span>
-<span id="cb8-11"><a></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize) <span class="sc">+</span></span>
-<span id="cb8-12"><a></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb8-13"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"full"</span>) <span class="sc">+</span></span>
-<span id="cb8-14"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-15"><a></a>    <span class="at">title =</span> <span class="st">"Principal Component Line"</span></span>
-<span id="cb8-16"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/pc-line-1.png" class="quarto-figure quarto-figure-center" width="432"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span></span>
-<span id="cb9-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize) <span class="sc">+</span></span>
-<span id="cb9-3"><a></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">color=</span>cbPalette[<span class="dv">1</span>], <span class="at">linewidth=</span>g_linewidth<span class="sc">*</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a></a>  <span class="fu">geom_segment</span>(<span class="at">xend=</span>x, <span class="at">yend=</span>x, <span class="at">linewidth=</span>g_linewidth<span class="sc">*</span><span class="dv">2</span>, <span class="at">color=</span>cbPalette[<span class="dv">2</span>]) <span class="sc">+</span></span>
-<span id="cb9-5"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"full"</span>) <span class="sc">+</span></span>
-<span id="cb9-6"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-7"><a></a>    <span class="at">title =</span> <span class="st">"Regression Line"</span></span>
-<span id="cb9-8"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb9-9"><a></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/pca-line-1.png" class="quarto-figure quarto-figure-center" width="432"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-
-<aside><div>
-<p>On the difference between these two lines, and why it matters, I cannot recommend <span class="citation" data-cites="gelman_data_2007">Gelman and Hill (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span> enough!</p>
-</div></aside></section>
-<section id="principal-component-analysis" class="slide level2 smaller crunch-title crunch-ul shift-footnotes-20 crunch-code">
-<h2>Principal Component Analysis</h2>
-<ul>
-<li><p><strong>Principal Component Line</strong> allows <strong>projecting</strong> data onto its <strong>dimension of highest variance</strong></p></li>
-<li><p>More simply: PCA can <strong>discover</strong> meaningful axes in data (<strong>unsupervised</strong> learning / <strong>exploratory</strong> data analysis settings)</p></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb10-2"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb10-3"><a></a>gdp_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"assets/gdp_pca.csv"</span>)</span>
-<span id="cb10-4"><a></a></span>
-<span id="cb10-5"><a></a>dist_to_line <span class="ot">&lt;-</span> <span class="cf">function</span>(x0, y0, a, c) {</span>
-<span id="cb10-6"><a></a>    numer <span class="ot">&lt;-</span> <span class="fu">abs</span>(a <span class="sc">*</span> x0 <span class="sc">-</span> y0 <span class="sc">+</span> c)</span>
-<span id="cb10-7"><a></a>    denom <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(a <span class="sc">*</span> a <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb10-8"><a></a>    <span class="fu">return</span>(numer <span class="sc">/</span> denom)</span>
-<span id="cb10-9"><a></a>}</span>
-<span id="cb10-10"><a></a><span class="co"># Finding PCA line for industrial vs. exports</span></span>
-<span id="cb10-11"><a></a>x <span class="ot">&lt;-</span> gdp_df<span class="sc">$</span>industrial</span>
-<span id="cb10-12"><a></a>y <span class="ot">&lt;-</span> gdp_df<span class="sc">$</span>exports</span>
-<span id="cb10-13"><a></a>lossFn <span class="ot">&lt;-</span> <span class="cf">function</span>(lineParams, x0, y0) {</span>
-<span id="cb10-14"><a></a>    a <span class="ot">&lt;-</span> lineParams[<span class="dv">1</span>]</span>
-<span id="cb10-15"><a></a>    c <span class="ot">&lt;-</span> lineParams[<span class="dv">2</span>]</span>
-<span id="cb10-16"><a></a>    <span class="fu">return</span>(<span class="fu">sum</span>(<span class="fu">dist_to_line</span>(x0, y0, a, c)))</span>
-<span id="cb10-17"><a></a>}</span>
-<span id="cb10-18"><a></a>o <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), lossFn, <span class="at">x0 =</span> x, <span class="at">y0 =</span> y)</span>
-<span id="cb10-19"><a></a><span class="fu">ggplot</span>(gdp_df, <span class="fu">aes</span>(<span class="at">x =</span> industrial, <span class="at">y =</span> exports)) <span class="sc">+</span></span>
-<span id="cb10-20"><a></a>    <span class="fu">geom_point</span>(<span class="at">size=</span>g_pointsize<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb10-21"><a></a>    <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">slope =</span> o<span class="sc">$</span>par[<span class="dv">1</span>], <span class="at">intercept =</span> o<span class="sc">$</span>par[<span class="dv">2</span>], <span class="at">color=</span><span class="st">"pca"</span>), <span class="at">linewidth=</span>g_linewidth, <span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb10-22"><a></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span><span class="st">"lm"</span>), <span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth=</span>g_linewidth, <span class="at">key_glyph =</span> <span class="st">"blank"</span>) <span class="sc">+</span></span>
-<span id="cb10-23"><a></a>    <span class="fu">scale_color_manual</span>(<span class="fu">element_blank</span>(), <span class="at">values=</span><span class="fu">c</span>(<span class="st">"pca"</span><span class="ot">=</span>cbPalette[<span class="dv">2</span>],<span class="st">"lm"</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>]), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Regression"</span>,<span class="st">"PCA"</span>)) <span class="sc">+</span></span>
-<span id="cb10-24"><a></a>    <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb10-25"><a></a>    <span class="fu">remove_legend_title</span>() <span class="sc">+</span></span>
-<span id="cb10-26"><a></a>    <span class="fu">labs</span>(</span>
-<span id="cb10-27"><a></a>      <span class="at">title =</span> <span class="st">"PCA Line vs. Regression Line"</span>,</span>
-<span id="cb10-28"><a></a>        <span class="at">x =</span> <span class="st">"Industrial Production (% of GDP)"</span>,</span>
-<span id="cb10-29"><a></a>        <span class="at">y =</span> <span class="st">"Exports (% of GDP)"</span></span>
-<span id="cb10-30"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/gdp-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
-<li>See <a href="https://juliasilge.com/blog/un-voting/">here</a> for an amazing blog post using PCA to explore UN voting patterns!</li>
-</ul>
-</section>
-<section id="create-your-own-dimension" class="slide level2">
-<h2>Create Your Own Dimension!</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(gdp_df, <span class="fu">aes</span>(pc1, .fittedPC2)) <span class="sc">+</span></span>
-<span id="cb11-2"><a></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> g_pointsize<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb11-3"><a></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">'PCA Line'</span>), <span class="at">linetype=</span><span class="st">'solid'</span>, <span class="at">size=</span>g_linesize) <span class="sc">+</span></span>
-<span id="cb11-4"><a></a>    <span class="fu">geom_rug</span>(<span class="at">sides =</span> <span class="st">"b"</span>, <span class="at">linewidth=</span>g_linewidth<span class="sc">/</span><span class="fl">1.2</span>, <span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"npc"</span>), <span class="at">color=</span>cbPalette[<span class="dv">3</span>]) <span class="sc">+</span></span>
-<span id="cb11-5"><a></a>    <span class="fu">expand_limits</span>(<span class="at">y=</span><span class="sc">-</span><span class="fl">1.6</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a></a>    <span class="fu">scale_color_manual</span>(<span class="fu">element_blank</span>(), <span class="at">values=</span><span class="fu">c</span>(<span class="st">"PCA Line"</span><span class="ot">=</span>cbPalette[<span class="dv">2</span>])) <span class="sc">+</span></span>
-<span id="cb11-7"><a></a>    <span class="fu">dsan_theme</span>(<span class="st">"full"</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a></a>    <span class="fu">remove_legend_title</span>() <span class="sc">+</span></span>
-<span id="cb11-9"><a></a>    <span class="fu">labs</span>(</span>
-<span id="cb11-10"><a></a>      <span class="at">title =</span> <span class="st">"Exports vs. Industrial Production in Principal Component Space"</span>,</span>
-<span id="cb11-11"><a></a>      <span class="at">x =</span> <span class="st">"First Principal Component (Dimension of Greatest Variance)"</span>,</span>
-<span id="cb11-12"><a></a>      <span class="at">y =</span> <span class="st">"Second Principal Component"</span></span>
-<span id="cb11-13"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/pca-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="and-use-it-for-eda" class="slide level2">
-<h2>And Use It for EDA</h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb12-2"><a></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb12-3"><a></a>plot_df <span class="ot">&lt;-</span> gdp_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">c</span>(country_code, pc1, agriculture, military))</span>
-<span id="cb12-4"><a></a>long_df <span class="ot">&lt;-</span> plot_df <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(country_code, pc1), <span class="at">names_to =</span> <span class="st">"var"</span>, <span class="at">values_to =</span> <span class="st">"val"</span>)</span>
-<span id="cb12-5"><a></a>long_df <span class="ot">&lt;-</span> long_df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
-<span id="cb12-6"><a></a>  <span class="at">var =</span> <span class="fu">case_match</span>(</span>
-<span id="cb12-7"><a></a>    var,</span>
-<span id="cb12-8"><a></a>    <span class="st">"agriculture"</span> <span class="sc">~</span> <span class="st">"Agricultural Production"</span>,</span>
-<span id="cb12-9"><a></a>    <span class="st">"military"</span> <span class="sc">~</span> <span class="st">"Military Spending"</span></span>
-<span id="cb12-10"><a></a>  )</span>
-<span id="cb12-11"><a></a>)</span>
-<span id="cb12-12"><a></a><span class="fu">ggplot</span>(long_df, <span class="fu">aes</span>(<span class="at">x =</span> pc1, <span class="at">y =</span> val, <span class="at">facet =</span> var)) <span class="sc">+</span></span>
-<span id="cb12-13"><a></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-14"><a></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(var), <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb12-15"><a></a>    <span class="fu">dsan_theme</span>(<span class="st">"full"</span>) <span class="sc">+</span></span>
-<span id="cb12-16"><a></a>    <span class="fu">labs</span>(</span>
-<span id="cb12-17"><a></a>        <span class="at">x =</span> <span class="st">"Industrial-Export Dimension"</span>,</span>
-<span id="cb12-18"><a></a>        <span class="at">y =</span> <span class="st">"% of GDP"</span></span>
-<span id="cb12-19"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/pca-facet-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="but-in-our-case" class="slide level2 crunch-title crunch-ul" data-name="Regression Hypothesis">
-<h2>But in Our Case…</h2>
-<ul>
-<li><span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> dimensions <strong>already have meaning</strong>, and we have a <strong>hypothesis</strong> about <span class="math inline">\(x \rightarrow y\)</span>!</li>
-</ul>
-<div title="The Regression Hypothesis $\mathcal{H}_{\text{reg}}$">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>The Regression Hypothesis <span class="math inline">\(\mathcal{H}_{\text{reg}}\)</span></strong></p>
-</div>
-<div class="callout-content">
-<p>Given data <span class="math inline">\((X, Y)\)</span>, we estimate <span class="math inline">\(\widehat{y} = \widehat{\beta_0} + \widehat{\beta_1}x\)</span>, hypothesizing that:</p>
-<ul>
-<li>Starting from <span class="math inline">\(y = \widehat{\beta_0}\)</span> when <span class="math inline">\(x = 0\)</span> (the intercept),</li>
-<li>An increase of <span class="math inline">\(x\)</span> by 1 unit is associated with an increase of <span class="math inline">\(y\)</span> by <span class="math inline">\(\widehat{\beta_1}\)</span> units (the coefficient)</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<ul>
-<li>We want to measure <strong>how well</strong> our line predicts <span class="math inline">\(y\)</span> for any given <span class="math inline">\(x\)</span> value <span class="math inline">\(\implies\)</span> <strong>vertical distance</strong> from regression line</li>
-</ul>
-</section>
-<section id="key-features-of-regression-line" class="slide level2 crunch-math smaller-math math-80 inline-80 crunch-title">
-<h2>Key Features of Regression Line</h2>
-<ul>
-<li>Regression line is <strong>BLUE</strong>: <strong>B</strong>est <strong>L</strong>inear <strong>U</strong>nbiased <strong>E</strong>stimator</li>
-<li>What exactly is it the “best” linear estimator of?</li>
-</ul>
-<p><span class="math display">\[
-\widehat{y} = \underbrace{\widehat{\beta_0}}_{\small\begin{array}{c}\text{Predicted} \\[-5mm] \text{intercept}\end{array}} + \underbrace{\widehat{\beta_1}}_{\small\begin{array}{c}\text{Predicted} \\[-4mm] \text{slope}\end{array}}\cdot x
-\]</span></p>
-<p>is chosen so that</p>
-<div class="smallmath">
-<p><span class="math display">\[
-\theta = \left(\widehat{\beta_0}, \widehat{\beta_1}\right) = \argmin_{\beta_0, \beta_1}\left[ \sum_{x_i \in X} \left(\overbrace{\widehat{y}(x_i)}^{\small\text{Predicted }y} - \overbrace{\expect{Y \mid X = x_i}}^{\small \text{Avg. }y\text{ when }x = x_i}\right)^2 \right]
-\]</span></p>
-</div>
-</section>
-<section id="regression-in-r" class="slide level2 crunch-output">
-<h2>Regression in <code>R</code></h2>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>lin_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(military <span class="sc">~</span> industrial, <span class="at">data=</span>gdp_df)</span>
-<span id="cb13-2"><a></a><span class="fu">summary</span>(lin_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = military ~ industrial, data = gdp_df)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--2.3354 -1.0997 -0.3870  0.6081  6.7508 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept)  0.61969    0.59526   1.041   0.3010  
-industrial   0.05253    0.02019   2.602   0.0111 *
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 1.671 on 79 degrees of freedom
-  (8 observations deleted due to missingness)
-Multiple R-squared:  0.07895,   Adjusted R-squared:  0.06729 
-F-statistic: 6.771 on 1 and 79 DF,  p-value: 0.01106</code></pre>
-</div>
-</div>
-</section>
-<section id="lm-syntax" class="slide level2">
-<h2><code>lm</code> Syntax</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">lm</span>(</span>
-<span id="cb15-2"><a></a>  <span class="at">formula =</span> dependent <span class="sc">~</span> independent <span class="sc">+</span> controls,</span>
-<span id="cb15-3"><a></a>  <span class="at">data =</span> my_df</span>
-<span id="cb15-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="interpreting-output" class="slide level2" data-name="Interpreting">
-<h2>Interpreting Output</h2>
-<pre>Call:
-lm(formula = military ~ industrial, data = gdp_df)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--2.3354 -1.0997 -0.3870  0.6081  6.7508 
-</pre>
-<pre class="highlight-block">Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept)  0.61969    0.59526   1.041   0.3010  
-industrial   0.05253    0.02019   2.602   0.0111 *
-</pre>
-<pre class="highlight-below">---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-Residual standard error: 1.671 on 79 degrees of freedom
-  (8 observations deleted due to missingness)
-Multiple R-squared:  0.07895,   Adjusted R-squared:  0.06729 
-F-statistic: 6.771 on 1 and 79 DF,  p-value: 0.01106
-</pre>
-</section>
-<section id="zooming-in-coefficients" class="slide level2 smaller-table">
-<h2>Zooming In: Coefficients</h2>
-<div class="coef-table">
-<table class="caption-top">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 24%">
-<col style="width: 24%">
-<col style="width: 16%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;"></th>
-<th style="text-align: center;">Estimate</th>
-<th>Std. Error</th>
-<th>t value</th>
-<th>Pr(&gt;|t|)</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;"><span class="cb1"><strong>(Intercept)</strong></span></td>
-<td style="text-align: center;"><span class="cb1 bold">0.61969</span></td>
-<td><span class="cb1 bold">0.59526</span></td>
-<td><span class="cb1">1.041</span></td>
-<td><span class="cb1">0.3010</span></td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><span class="cb2"><strong>industrial</strong></span></td>
-<td style="text-align: center;"><span class="cb2 bold">0.05253</span></td>
-<td><span class="cb2 bold">0.02019</span></td>
-<td><span class="cb2">2.602</span></td>
-<td><span class="cb2">0.0111</span></td>
-<td><span class="cb2">*</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"></td>
-<td style="text-align: center;"><span class="coef-label"><span class="math inline">\(\widehat{\beta}\)</span></span></td>
-<td><span class="coef-label">Uncertainty</span></td>
-<td><span class="coef-label">Test statistic</span></td>
-<td><span class="coef-label">How extreme is test stat?</span></td>
-<td><span class="coef-label">Statistical significance</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><span class="math display">\[
-\widehat{y} \approx \class{cb1}{\overset{\beta_0}{\underset{\small \pm 0.595}{0.620}}} +  \class{cb2}{\overset{\beta_1}{\underset{\small \pm 0.020}{0.053}}} \cdot x
-\]</span></p>
-</section>
-<section id="zooming-in-significance" class="slide level2 crunch-title smaller">
-<h2>Zooming In: Significance</h2>
-<div class="coef-table">
-<table class="caption-top">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 24%">
-<col style="width: 24%">
-<col style="width: 16%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;"></th>
-<th style="text-align: center;">Estimate</th>
-<th>Std. Error</th>
-<th>t value</th>
-<th>Pr(&gt;|t|)</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;"><span class="cb1"><strong>(Intercept)</strong></span></td>
-<td style="text-align: center;"><span class="cb1">0.61969</span></td>
-<td><span class="cb1">0.59526</span></td>
-<td><span class="cb1 bold">1.041</span></td>
-<td><span class="cb1 bold">0.3010</span></td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><span class="cb2"><strong>industrial</strong></span></td>
-<td style="text-align: center;"><span class="cb2">0.05253</span></td>
-<td><span class="cb2">0.02019</span></td>
-<td><span class="cb2 bold">2.602</span></td>
-<td><span class="cb2 bold">0.0111</span></td>
-<td><span class="cb2 bold">*</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"></td>
-<td style="text-align: center;"><span class="coef-label"><span class="math inline">\(\widehat{\beta}\)</span></span></td>
-<td><span class="coef-label">Uncertainty</span></td>
-<td><span class="coef-label">Test statistic</span></td>
-<td><span class="coef-label">How extreme is test stat?</span></td>
-<td><span class="coef-label">Statistical significance</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb16-2"><a></a>int_tstat <span class="ot">&lt;-</span> <span class="fl">1.041</span></span>
-<span id="cb16-3"><a></a>int_tstat_str <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%.02f"</span>, int_tstat)</span>
-<span id="cb16-4"><a></a>label_df_int <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb16-5"><a></a>    <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb16-6"><a></a>    <span class="fl">0.25</span>, <span class="fl">0.05</span>, <span class="fu">paste0</span>(<span class="st">"P(t &gt; "</span>,int_tstat_str,<span class="st">")</span><span class="sc">\n</span><span class="st">= 0.3"</span>)</span>
-<span id="cb16-7"><a></a>)</span>
-<span id="cb16-8"><a></a>label_df_signif_int <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb16-9"><a></a>    <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb16-10"><a></a>    <span class="fl">2.7</span>, <span class="fl">0.075</span>, <span class="st">"95% Signif.</span><span class="sc">\n</span><span class="st">Cutoff"</span></span>
-<span id="cb16-11"><a></a>)</span>
-<span id="cb16-12"><a></a>funcShaded <span class="ot">&lt;-</span> <span class="cf">function</span>(x, lower_bound, upper_bound){</span>
-<span id="cb16-13"><a></a>    y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
-<span id="cb16-14"><a></a>    y[x <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> x <span class="sc">&gt;</span> upper_bound] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb16-15"><a></a>    <span class="fu">return</span>(y)</span>
-<span id="cb16-16"><a></a>}</span>
-<span id="cb16-17"><a></a>funcShadedIntercept <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, int_tstat, <span class="cn">Inf</span>)</span>
-<span id="cb16-18"><a></a>funcShadedSignif <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, <span class="fl">1.96</span>, <span class="cn">Inf</span>)</span>
-<span id="cb16-19"><a></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb16-20"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>dnorm, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb16-21"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>int_tstat), <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb16-22"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fl">1.96</span>), <span class="at">linewidth=</span>g_linewidth, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb16-23"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedIntercept, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> cbPalette[<span class="dv">1</span>], <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb16-24"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedSignif, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.333</span>) <span class="sc">+</span></span>
-<span id="cb16-25"><a></a>  <span class="fu">geom_text</span>(label_df_int, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb16-26"><a></a>  <span class="fu">geom_text</span>(label_df_signif_int, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb16-27"><a></a>  <span class="co"># Add single additional tick</span></span>
-<span id="cb16-28"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, int_tstat, <span class="dv">2</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"-2"</span>,<span class="st">"0"</span>,int_tstat_str,<span class="st">"2"</span>)) <span class="sc">+</span></span>
-<span id="cb16-29"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb16-30"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-31"><a></a>    <span class="at">title =</span> <span class="st">"t Value for Intercept"</span>,</span>
-<span id="cb16-32"><a></a>    <span class="at">x =</span> <span class="st">"t"</span>,</span>
-<span id="cb16-33"><a></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
-<span id="cb16-34"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb16-35"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"black"</span>, cbPalette[<span class="dv">1</span>], <span class="st">"black"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/t-stat-intercept-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb17-2"><a></a>coef_tstat <span class="ot">&lt;-</span> <span class="fl">2.602</span></span>
-<span id="cb17-3"><a></a>coef_tstat_str <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%.02f"</span>, coef_tstat)</span>
-<span id="cb17-4"><a></a>label_df_coef <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb17-5"><a></a>    <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb17-6"><a></a>    <span class="fl">3.65</span>, <span class="fl">0.06</span>, <span class="fu">paste0</span>(<span class="st">"P(t &gt; "</span>,coef_tstat_str,<span class="st">")</span><span class="sc">\n</span><span class="st">= 0.01"</span>)</span>
-<span id="cb17-7"><a></a>)</span>
-<span id="cb17-8"><a></a>label_df_signif_coef <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb17-9"><a></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>label,</span>
-<span id="cb17-10"><a></a>  <span class="fl">1.05</span>, <span class="fl">0.03</span>, <span class="st">"95% Signif.</span><span class="sc">\n</span><span class="st">Cutoff"</span></span>
-<span id="cb17-11"><a></a>)</span>
-<span id="cb17-12"><a></a>funcShadedCoef <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">funcShaded</span>(x, coef_tstat, <span class="cn">Inf</span>)</span>
-<span id="cb17-13"><a></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb17-14"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun=</span>dnorm, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb17-15"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span>coef_tstat), <span class="at">linetype=</span><span class="st">"solid"</span>, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb17-16"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept=</span><span class="fl">1.96</span>), <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">linewidth=</span>g_linewidth) <span class="sc">+</span></span>
-<span id="cb17-17"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedCoef, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> cbPalette[<span class="dv">2</span>], <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb17-18"><a></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> funcShadedSignif, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.333</span>) <span class="sc">+</span></span>
-<span id="cb17-19"><a></a>  <span class="co"># Label shaded area</span></span>
-<span id="cb17-20"><a></a>  <span class="fu">geom_text</span>(label_df_coef, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb17-21"><a></a>  <span class="co"># Label significance cutoff</span></span>
-<span id="cb17-22"><a></a>  <span class="fu">geom_text</span>(label_df_signif_coef, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb17-23"><a></a>  <span class="fu">coord_cartesian</span>(<span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
-<span id="cb17-24"><a></a>  <span class="co"># Add single additional tick</span></span>
-<span id="cb17-25"><a></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>, coef_tstat, <span class="dv">4</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"-4"</span>, <span class="st">"-2"</span>,<span class="st">"0"</span>, <span class="st">"2"</span>, coef_tstat_str,<span class="st">"4"</span>)) <span class="sc">+</span></span>
-<span id="cb17-26"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb17-27"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb17-28"><a></a>    <span class="at">title =</span> <span class="st">"t Value for Coefficient"</span>,</span>
-<span id="cb17-29"><a></a>    <span class="at">x =</span> <span class="st">"t"</span>,</span>
-<span id="cb17-30"><a></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
-<span id="cb17-31"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb17-32"><a></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"black"</span>, cbPalette[<span class="dv">2</span>], <span class="st">"black"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/t-stat-coef-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section id="the-residual-plot" class="slide level2 crunch-title crunch-images crunch-ul inline-90 math-90">
-<h2>The Residual Plot</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>A key <strong>assumption</strong> required for OLS: <strong>“homoskedasticity”</strong></li>
-<li>Given our model <span class="math display">\[
-y_i = \beta_0 + \beta_1x_i + \varepsilon_i
-\]</span> the errors <span class="math inline">\(\varepsilon_i\)</span> <strong>should not vary systematically with <span class="math inline">\(i\)</span></strong></li>
-<li>Formally: <span class="math inline">\(\forall i \left[ \Var{\varepsilon_i} = \sigma^2 \right]\)</span></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(broom)</span>
-<span id="cb18-2"><a></a>gdp_resid_df <span class="ot">&lt;-</span> <span class="fu">augment</span>(lin_model)</span>
-<span id="cb18-3"><a></a><span class="fu">ggplot</span>(gdp_resid_df, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb18-4"><a></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> g_pointsize<span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb18-6"><a></a>    <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb18-7"><a></a>    <span class="fu">labs</span>(</span>
-<span id="cb18-8"><a></a>      <span class="at">title =</span> <span class="st">"Residual Plot for Industrial ~ Military"</span>,</span>
-<span id="cb18-9"><a></a>      <span class="at">x =</span> <span class="st">"Fitted Value"</span>,</span>
-<span id="cb18-10"><a></a>      <span class="at">y =</span> <span class="st">"Residual"</span></span>
-<span id="cb18-11"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/residual-plot-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">80</span></span>
-<span id="cb19-2"><a></a>errors <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x), <span class="dv">0</span>, x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">1000</span>)</span>
-<span id="cb19-3"><a></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> errors</span>
-<span id="cb19-4"><a></a>het_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb19-5"><a></a>df_het <span class="ot">&lt;-</span> <span class="fu">augment</span>(het_model)</span>
-<span id="cb19-6"><a></a><span class="fu">ggplot</span>(df_het, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb19-7"><a></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> g_pointsize <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb19-8"><a></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb19-9"><a></a>    <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb19-10"><a></a>    <span class="fu">labs</span>(</span>
-<span id="cb19-11"><a></a>        <span class="at">title =</span> <span class="st">"Residual Plot for Heteroskedastic Data"</span>,</span>
-<span id="cb19-12"><a></a>        <span class="at">x =</span> <span class="st">"Fitted Value"</span>,</span>
-<span id="cb19-13"><a></a>        <span class="at">y =</span> <span class="st">"Residual"</span></span>
-<span id="cb19-14"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/heteroskedastic-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section id="multiple-linear-regression" class="slide level2">
-<h2>Multiple Linear Regression</h2>
-<ul>
-<li>Notation: <span class="math inline">\(x_{i,j}\)</span> = value of independent variable <span class="math inline">\(j\)</span> for person/observation <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(M\)</span> = total number of independent variables</li>
-</ul>
-<p><span class="math display">\[
-\widehat{y}_i = \beta_0 + \beta_1x_{i,1} + \beta_2x_{i,2} + \cdots + \beta_M x_{i,M}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\beta_j\)</span> interpretation: a one-unit increase in <span class="math inline">\(x_{i,j}\)</span> is associated with a <span class="math inline">\(\beta_j\)</span> unit increase in <span class="math inline">\(y_i\)</span>, <strong>holding all other independent variables constant</strong></li>
-</ul>
-</section>
-<section id="the-f-test" class="slide level2">
-<h2>The <span class="math inline">\(F\)</span>-Test</h2>
-<ul>
-<li><span class="math inline">\(t\)</span>-test is to <strong>single-variable</strong> regression as <span class="math inline">\(F\)</span>-test is to <strong>multiple</strong> regression</li>
-<li><span class="math inline">\(H_A: (\beta_1 = 0) \wedge (\beta_2 = 0) \wedge \cdots \wedge (\beta_M = 0)\)</span>
-<ul>
-<li>(“Give up, it’s not worth doing this regression”)</li>
-</ul></li>
-<li><span class="math inline">\(H_0: (\beta_1 \neq 0) \vee (\beta_2 \neq 0) \vee \cdots \vee (\beta_M \neq 0)\)</span>
-<ul>
-<li>(“Your regression has at least one redeeming quality”)</li>
-</ul></li>
-</ul>
-</section></section>
-<section>
-<section id="moving-towards-bayesian-hypothesis-testing" class="title-slide slide level1 center" data-stack-name="Modern Hypothesis Testing">
-<h1>Moving Towards Bayesian Hypothesis Testing</h1>
-
-</section>
-<section id="key-insight-from-behavioral-economics" class="slide level2 scrollable">
-<h2>Key Insight From Behavioral Economics</h2>
-<ol type="1">
-<li><strong>Data always has an interpretive context</strong></li>
-<li><strong>Humans are not very good at placing data in that context</strong></li>
-</ol>
-</section>
-<section id="observations-vs.-base-rates" class="slide level2 crunch-title crunch-blockquote">
-<h2>Observations vs.&nbsp;Base Rates</h2>
-<div class="quarto-layout-panel" data-layout="[2,1]">
-<div class="quarto-layout-row quarto-layout-valign-center">
-<div id="thinking-left" class="quarto-layout-cell" style="flex-basis: 66.7%;justify-content: flex-start;">
-<blockquote>
-<p><em>Steve is very shy and withdrawn, invariably helpful but with very little interest in people or in the world of reality. A meek and tidy soul, he has a need for order and structure, and a passion for detail.</em></p>
-</blockquote>
-<p><span class="math inline">\(\Pr(\text{Steve is a librarian} \mid \text{description})?\)</span></p>
-</div>
-<div id="thinking-right" class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/thinkingfastandslow.jpg"></p>
-<figcaption>Example from <span class="citation" data-cites="kahneman_thinking_2011">Kahneman (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span></figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="base-rates" class="slide level2 smaller crunch-title crunch-code crunch-ul crunch-figures">
-<h2>Base Rates</h2>
-<ul>
-<li>Globally: ~<a href="https://blogs.ifla.org/lpa/2020/06/18/library-stat-of-the-week-23-on-average-there-are-1-32-academic-libraries-and-10-63-academic-library-workers-per-100-000-people-globally/" target="_blank"><strong>350,000 librarians</strong></a> vs.&nbsp;~<a href="https://worldmapper.org/maps/agricultural-workers-2015/" target="_blank"><strong>800 million farmers</strong></a></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb20-2"><a></a>num_librarians <span class="ot">&lt;-</span> <span class="dv">350000</span></span>
-<span id="cb20-3"><a></a>num_farmers <span class="ot">&lt;-</span> <span class="dv">800000000</span></span>
-<span id="cb20-4"><a></a>occu_df <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb20-5"><a></a>    <span class="sc">~</span>Occupation, <span class="sc">~</span>Count,</span>
-<span id="cb20-6"><a></a>    <span class="st">"Farmer"</span>, num_farmers,</span>
-<span id="cb20-7"><a></a>    <span class="st">"Librarian"</span>, num_librarians,</span>
-<span id="cb20-8"><a></a>)</span>
-<span id="cb20-9"><a></a></span>
-<span id="cb20-10"><a></a><span class="fu">ggplot</span>(occu_df, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(Occupation, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Librarian"</span>,<span class="st">"Farmer"</span>)), <span class="at">y=</span>Count, <span class="at">fill=</span>Occupation)) <span class="sc">+</span></span>
-<span id="cb20-11"><a></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb20-12"><a></a>  <span class="fu">dsan_theme</span>() <span class="sc">+</span></span>
-<span id="cb20-13"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb20-14"><a></a>    <span class="at">x =</span> <span class="st">"Occupation"</span>,</span>
-<span id="cb20-15"><a></a>    <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb20-16"><a></a>    <span class="at">title =</span> <span class="st">"Librarians vs. Farmers Globally"</span></span>
-<span id="cb20-17"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/base-rates-plot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="sampling-from-the-globe" class="slide level2">
-<h2>Sampling From The Globe</h2>
-<p><span class="math display">\[
-\begin{align*}
-\Pr(\text{Librarian}) &amp;= \frac{350K}{8\text{ Billion}} \approx 0.00004375 \\
-\Pr(\text{Farmer}) &amp;= \frac{800\text{ Million}}{8\text{ Billion}} = 0.1
-\end{align*}
-\]</span></p>
-<p>Meaning, if we sample 1 million people, we would expect:</p>
-<ul>
-<li>44 to be librarians</li>
-<li>100,000 to be farmers</li>
-</ul>
-</section>
-<section id="but-still" class="slide level2">
-<h2>But Still…</h2>
-<ul>
-<li>Let’s say you believe that only <strong>1% of farmers</strong> have these traits, while <strong>100% of librarians</strong> have these traits. Then, <strong>within our sample of 1 million</strong>, we would expect:</li>
-<li>44 to be librarians with these traits</li>
-<li>1,000 to be farmers with these traits</li>
-<li><span class="math inline">\(\implies\)</span> <strong>still 22.7 times more likely</strong> that Steve is a farmer</li>
-</ul>
-</section>
-<section id="the-math" class="slide level2 smaller math-80 crunch-title">
-<h2>The Math</h2>
-<p><span class="math display">\[
-\begin{align*}
-\Pr(\mathcal{H}_L \mid E) &amp;= \Pr(\text{Steve is librarian} \mid \text{description}) \\
-&amp;= \frac{\Pr(\text{description} \mid \text{Steve is librarian})\Pr(\text{Steve is librarian})}{\Pr(\text{description})} \\
-&amp;= \frac{(1)(0.00004375)}{\Pr(\text{description})} = \frac{0.00004375}{\Pr(\text{description})}
-\end{align*}
-\]</span></p>
-<hr>
-<p><span class="math display">\[
-\begin{align*}
-\Pr(\mathcal{H}_F \mid E) &amp;= \Pr(\text{Steve is farmer} \mid \text{description}) \\
-&amp;= \frac{\Pr(\text{description} \mid \text{Steve is farmer})\Pr(\text{Steve is farmer})}{\Pr(\text{description})} \\
-&amp;= \frac{(0.01)(0.1)}{\Pr(\text{description})} = \frac{0.001}{\Pr(\text{description})} \\
-\end{align*}
-\]</span></p>
-<hr>
-<p><span class="math display">\[
-\implies \frac{\Pr(\mathcal{H}_F \mid E)}{\Pr(\mathcal{H}_L \mid E)} = \frac{
-    \frac{0.001}{\Pr(\text{description})}
-}{
-    \frac{0.00004375}{\Pr(\text{description})}
-} = \frac{0.001}{0.00004375} \approx 23
-\]</span></p>
-</section>
-<section id="the-takeaway" class="slide level2">
-<h2>The Takeaway</h2>
-<ul>
-<li>Classical hypothesis testing, developed in a time before computers or calculators, was an attempt to test hypotheses <strong>solely</strong> on the basis of the experimental results (then maybe, after the fact, apply a correction to “sneak in” base rates)</li>
-<li>Bayesian hypothesis testing, developed in a time when we have computers, explicitly casts results of experiments as <strong>weighted averages</strong> of prior evidence and newly-acquired evidence!</li>
-</ul>
-</section></section>
-<section>
-<section id="types-of-hypotheses" class="title-slide slide level1 center" data-stack-name="Hypotheses">
-<h1>Types of Hypotheses</h1>
-
-</section>
-<section id="differences-vs.-ratios" class="slide level2 smaller crunch-title crunch-ul crunch-math inline-90 math-90 scrollable">
-<h2>Differences vs.&nbsp;Ratios</h2>
-<ul>
-<li><strong>Setting</strong>: We have a sample <span class="math inline">\(\mathbf{X}_1\)</span> taken from a population <span class="math inline">\(P_1\)</span> and a sample <span class="math inline">\(\mathbf{X}_2\)</span> taken from a population <span class="math inline">\(P_2\)</span>.</li>
-<li>We care about some variable <span class="math inline">\(v\)</span> that we measured as part of our sampling: in particular, we care about <span class="math inline">\(\mu^{(v)}_1\)</span>, the mean of this variable in <strong>population 1</strong>, and <span class="math inline">\(\mu^{(v)}_2\)</span>, the mean of this variable in <strong>population 2</strong><sup>1</sup></li>
-<li><strong>Goal</strong>: Test whether the <strong>mean</strong> of <span class="math inline">\(v\)</span> in population 1 is <strong>equal to</strong> the mean of <span class="math inline">\(v\)</span> in population 2. Formally, we test the hypothesis <span class="math inline">\(\mathcal{H}\)</span>:</li>
-</ul>
-<p><span class="math display">\[
-\mathcal{H}: \mu_1 = \mu_2
-\]</span></p>
-<ul>
-<li><p>It is ambiguous what <strong>test statistic</strong> we should use to check this(!), since</p>
-<p><span class="math display">\[
-  \begin{align*}
-  \mu_1 = \mu_2 &amp;\iff \mu_1 - \mu_2 = 0 \\
-  \mu_1 = \mu_2 &amp;\iff \frac{\mu_1}{\mu_2} = 0
-  \end{align*}
-  \]</span></p>
-<p>(where we assume, for the second equivalence, that <span class="math inline">\(\mu_2 \neq 0\)</span>)</p></li>
-</ul>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>From here onwards I drop the <span class="math inline">\((v)\)</span> superscript for brevity, but remember that we’re always talking about <span class="math inline">\(\mu^{(v)}_i\)</span>: the population mean of a <strong>particular variable</strong> <span class="math inline">\(v\)</span> in population <span class="math inline">\(i\)</span>!</p></li></ol></aside></section>
-<section id="the-difference-in-math" class="slide level2 smaller crunch-ul crunch-code crunch-math crunch-quarto-layout-panel">
-<h2>The Difference, In Math</h2>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb21-2"><a></a><span class="fu">library</span>(latex2exp)</span>
-<span id="cb21-3"><a></a>my_const <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">1</span></span>
-<span id="cb21-4"><a></a>my_ratio <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="sc">/</span>x</span>
-<span id="cb21-5"><a></a><span class="co">#data_df &lt;- data_df |&gt; mutate(</span></span>
-<span id="cb21-6"><a></a><span class="co">#  z = my_diff(x, y)</span></span>
-<span id="cb21-7"><a></a><span class="co">#)</span></span>
-<span id="cb21-8"><a></a><span class="co">#print(data_df)</span></span>
-<span id="cb21-9"><a></a>x_label <span class="ot">&lt;-</span> <span class="fu">TeX</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">mu_2$"</span>)</span>
-<span id="cb21-10"><a></a>td_title <span class="ot">&lt;-</span> <span class="fu">TeX</span>(<span class="st">"Stability of $t_d$"</span>)</span>
-<span id="cb21-11"><a></a>td_label <span class="ot">&lt;-</span> <span class="fu">TeX</span>(<span class="st">"$t'_d(</span><span class="sc">\\</span><span class="st">mu_2)$"</span>)</span>
-<span id="cb21-12"><a></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb21-13"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"quarter"</span>) <span class="sc">+</span></span>
-<span id="cb21-14"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb21-15"><a></a>    <span class="at">x =</span> x_label</span>
-<span id="cb21-16"><a></a>  )</span>
-<span id="cb21-17"><a></a>diff_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span> <span class="fu">stat_function</span>(</span>
-<span id="cb21-18"><a></a>    <span class="at">fun =</span> my_const,</span>
-<span id="cb21-19"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb21-20"><a></a>  ) <span class="sc">+</span> <span class="fu">labs</span>(</span>
-<span id="cb21-21"><a></a>    <span class="at">title =</span> td_title,</span>
-<span id="cb21-22"><a></a>    <span class="at">y =</span> td_label</span>
-<span id="cb21-23"><a></a>  )</span>
-<span id="cb21-24"><a></a>diff_plot</span>
-<span id="cb21-25"><a></a>tr_title <span class="ot">&lt;-</span> <span class="fu">TeX</span>(<span class="st">"Stability of $t_r$"</span>)</span>
-<span id="cb21-26"><a></a>tr_label <span class="ot">&lt;-</span> <span class="fu">TeX</span>(<span class="st">"$t'_r(</span><span class="sc">\\</span><span class="st">mu_2)$"</span>)</span>
-<span id="cb21-27"><a></a>ratio_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span> <span class="fu">stat_function</span>(</span>
-<span id="cb21-28"><a></a>    <span class="at">fun =</span> my_ratio,</span>
-<span id="cb21-29"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb21-30"><a></a>  ) <span class="sc">+</span> <span class="fu">labs</span>(</span>
-<span id="cb21-31"><a></a>    <span class="at">title =</span> tr_title,</span>
-<span id="cb21-32"><a></a>    <span class="at">y =</span> tr_label</span>
-<span id="cb21-33"><a></a>  )</span>
-<span id="cb21-34"><a></a>ratio_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="quarto-layout-panel" data-layout="[1,1]">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div id="test-stats-left" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<ul>
-<li><p>Our test statistic is some function <span class="math inline">\(t(\mu_1, \mu_2)\)</span>.</p></li>
-<li><p>Let <span class="math inline">\(t_d(\mu_1, \mu_2) = \mu_1 - \mu_2\)</span></p></li>
-<li><p>Let <span class="math inline">\(t_r(\mu_1, \mu_2) = \frac{\mu_1}{\mu_2}\)</span></p></li>
-<li><p>How <strong>sensitive</strong> are these two ways of defining <span class="math inline">\(t\)</span> to changes in the individual terms?</p>
-<p><span class="math display">\[
-  t'_d(\mu_2) = \frac{\partial t^-(\mu_1, \mu_2)}{\partial \mu_1} = 1,
-  \]</span></p>
-<p>whereas</p>
-<p><span class="math display">\[
-  t'_r(\mu_2) = \frac{\partial t^\div(\mu_1, \mu_2)}{\partial \mu_1} = \frac{1}{\mu_2}
-  \]</span></p></li>
-</ul>
-</div>
-<div id="test-stats-right" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/diff-plot-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/ratio-plot-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="the-takeaway-1" class="slide level2">
-<h2>The Takeaway</h2>
-<ul>
-<li>In scenarios where <span class="math inline">\(\mu\)</span> values are <strong>far from zero</strong>, both behave similarly</li>
-<li>But in scenarios where <span class="math inline">\(\mu\)</span> values are <strong>close to zero</strong>, need to be careful about using <span class="math inline">\(t_r(\mu_1, \mu_2) = \frac{\mu_1}{\mu_2}\)</span>!</li>
-<li>If <span class="math inline">\(\mu_2\)</span> could feasibly <strong>be</strong> zero… <span class="math inline">\(t_r(\mu_1, \mu_2) = 💀😵💀\)</span></li>
-</ul>
-</section></section>
-<section>
-<section id="the-t-test" class="title-slide slide level1 center" data-stack-name="Fancy Tests">
-<h1>The <span class="math inline">\(t\)</span>-Test</h1>
-
-</section>
-<section id="moving-from-known-rightarrow-unknown-sigma" class="slide level2 smaller">
-<h2>Moving From Known <span class="math inline">\(\rightarrow\)</span> Unknown <span class="math inline">\(\sigma\)</span></h2>
-<ul>
-<li>Last week: <span class="math inline">\(z\)</span>-test for scenario where we (somehow) <strong>know</strong> population variance <span class="math inline">\(\sigma\)</span></li>
-<li>This week: More realistic case where we <strong>don’t</strong> know <span class="math inline">\(\sigma\)</span>, so we <strong>estimate it</strong> from our sample <span class="math inline">\(\mathbf{X}\)</span>: <span class="math inline">\(\widehat{\sigma^2} = s^2_{\mathbf{X}}\)</span></li>
-<li>This means we have <strong>recursive uncertainty</strong> in our estimates!</li>
-</ul>
-<p><span class="math display">\[
-\begin{align*}
-\widehat{\mu}(\mathbf{X}) = f(\mathbf{X}) &amp;= \frac{1}{N}\sum_{i=1}^{N}X_i \\
-\widehat{\sigma^2}(\mathbf{X}) = g(\mathbf{X}, \widehat{\mu}(\mathbf{X})) &amp;= \frac{1}{N}\sum_{i=1}^N (X_i - \boxed{\widehat{\mu}(\mathbf{X})})^2 \\
-&amp;= \frac{1}{N}\sum_{i=1}^N\left(X_i - \boxed{\frac{1}{N}\sum_{j=1}^NX_j}\right)^2
-\end{align*}
-\]</span></p>
-</section>
-<section id="errors-now-make-our-estimates-exponentially-worse" class="slide level2 smaller title-10 crunch-title crunch-ul">
-<h2>Errors Now Make Our Estimates <em>Exponentially Worse</em>(!)</h2>
-<ul>
-<li>Imagine that when calculating <span class="math inline">\(\widehat{\mu} = \frac{1}{N}\sum_{i=1}^nX_i\)</span> (recall that this is an <strong>unbiased</strong> estimator for <span class="math inline">\(\mu\)</span>), we accidentally add <span class="math inline">\(\varepsilon\)</span> to every value <span class="math inline">\(X_i\)</span>, so that we instead compute <span class="math inline">\(\widetilde{\mu} = \frac{1}{N}\sum_{i=1}^n(X_i+\varepsilon) = \widehat{\mu} + \varepsilon\)</span></li>
-<li>This means our estimate of <span class="math inline">\(\mu\)</span> is now <strong>biased</strong> by some amount <span class="math inline">\(\varepsilon\)</span>: while <span class="math inline">\(\mathbb{E}[\widehat{\mu}] = \mu\)</span>, <span class="math inline">\(\mathbb{E}[\widetilde{\mu}] = \mu + {\color{red}\varepsilon}\)</span></li>
-<li>How does this affect subsequent estimates of the <strong>variance</strong> <span class="math inline">\(\widehat{\sigma^2}\)</span>? Even if we use an <strong>unbiased</strong> estimator <span class="math inline">\(\widehat{\sigma^2}\)</span>, so that <span class="math inline">\(\mathbb{E}[\widehat{\sigma^2}] = \sigma^2\)</span>, we get something that looks like the following (sweeping some details under the rug):</li>
-</ul>
-<p><span class="math display">\[
-\mathbb{E}[\widehat{\sigma^2}] = \cdots = \sigma^2 + \mathbb{E}[\varepsilon^2] - 2\varepsilon\mathbb{E}[X_i-\mu] = \sigma^2 + {\color{red}\varepsilon^2}
-\]</span></p>
-<ul>
-<li>While our estimate of the <strong>mean</strong> was off by <span class="math inline">\({\color{red}\varepsilon}\)</span>, our estimate of the <strong>variance</strong> is off by <span class="math inline">\({\color{red}\varepsilon^2}\)</span>!</li>
-<li>Taking square root to obtain the standard deviation <span class="math inline">\(\widehat{\sigma}\)</span> doesn’t “fix” this, either, since <span class="math inline">\(\sqrt{\sigma^2 + \varepsilon^2} \neq \sigma + \varepsilon\)</span> in general (e.g., <span class="math inline">\(\sqrt{2^2 + 3^2} = \sqrt{4+9} = \sqrt{13} \neq 2 + 3 = 5\)</span>)</li>
-</ul>
-</section>
-<section id="z-test-rightarrow-t-test" class="slide level2 smaller crunch-title crunch-ul crunch-quarto-layout-panel">
-<h2><span class="math inline">\(z\)</span>-Test <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(t\)</span>-Test</h2>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb22-2"><a></a>my_normal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x)</span>
-<span id="cb22-3"><a></a>my_st <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dt</span>(x, <span class="dv">2</span>)</span>
-<span id="cb22-4"><a></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
-<span id="cb22-5"><a></a>  <span class="fu">stat_function</span>(</span>
-<span id="cb22-6"><a></a>    <span class="fu">aes</span>(<span class="at">color=</span><span class="st">'norm'</span>),</span>
-<span id="cb22-7"><a></a>    <span class="at">fun=</span>my_normal,</span>
-<span id="cb22-8"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb22-9"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb22-10"><a></a>  <span class="fu">stat_function</span>(</span>
-<span id="cb22-11"><a></a>    <span class="fu">aes</span>(<span class="at">color=</span><span class="st">'st'</span>),</span>
-<span id="cb22-12"><a></a>    <span class="at">fun=</span>my_st,</span>
-<span id="cb22-13"><a></a>    <span class="at">linewidth =</span> g_linewidth</span>
-<span id="cb22-14"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb22-15"><a></a>  <span class="fu">dsan_theme</span>(<span class="st">"half"</span>) <span class="sc">+</span></span>
-<span id="cb22-16"><a></a>  <span class="fu">scale_color_manual</span>(</span>
-<span id="cb22-17"><a></a>    <span class="st">"Distribution"</span>,</span>
-<span id="cb22-18"><a></a>    <span class="at">values=</span><span class="fu">c</span>(<span class="st">'norm'</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>],<span class="st">'st'</span><span class="ot">=</span>cbPalette[<span class="dv">2</span>]),</span>
-<span id="cb22-19"><a></a>    <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'norm'</span><span class="ot">=</span><span class="st">"Standard Normal"</span>,<span class="st">'st'</span><span class="ot">=</span><span class="st">"Student's t (df=2)"</span>)</span>
-<span id="cb22-20"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb22-21"><a></a>  <span class="fu">remove_legend_title</span>() <span class="sc">+</span></span>
-<span id="cb22-22"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb22-23"><a></a>    <span class="at">title =</span> <span class="st">"Standard Normal vs. Student's t Distribution"</span></span>
-<span id="cb22-24"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="quarto-layout-panel" data-layout="[2,3]">
-<div class="quarto-layout-row">
-<div id="t-test-left" class="quarto-layout-cell" style="flex-basis: 40.0%;justify-content: flex-start;">
-<center>
-<strong>The Takeaway:</strong>
-</center>
-<ul>
-<li>When we <strong>know</strong> <span class="math inline">\(\sigma^2\)</span> but we <strong>estimate</strong> <span class="math inline">\(\mu\)</span> from a sample, we represent our uncertainty via test statistic <span class="math inline">\(z \sim \mathcal{N}(\widehat{\mu}, \sigma^2)\)</span></li>
-<li>When we estimate <strong>both</strong> <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> from a sample, we use a test statistic <span class="math inline">\(t\)</span> with a <em>wider</em> <strong>“Student’s <span class="math inline">\(t\)</span>”</strong> Distribution in place of the <strong>Normal</strong> Distribution: <span class="math inline">\(t \sim \mathcal{T}(\widehat{\mu}, \widehat{\sigma}^2, N)\)</span></li>
-<li>As <span class="math inline">\(N \rightarrow \infty\)</span>, <span class="math inline">\(\mathcal{T}_N(\widehat{\mu},\widehat{\sigma}^2,N) \rightarrow \mathcal{N}(\widehat{\mu},\widehat{\sigma}^2)\)</span></li>
-</ul>
-</div>
-<div id="t-test-right" class="quarto-layout-cell" style="flex-basis: 60.0%;justify-content: flex-start;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="index_files/figure-revealjs/normal-vs-t-dist-1.png" width="960"></p>
-<figcaption>A comparison of the two distributions, showing how the Student’s t Distribution has <strong>greater variance</strong>, representing the <strong>greater uncertainty</strong> when estimating two population parameters instead of just one</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="in-r" class="slide level2 smaller crunch-title">
-<h2>In R</h2>
-<ul>
-<li>Let’s create a tibble containing samples from <strong>two populations</strong></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb23-2"><a></a><span class="fu">library</span>(infer)</span>
-<span id="cb23-3"><a></a>nl_height_mean <span class="ot">&lt;-</span> <span class="fl">182.535</span></span>
-<span id="cb23-4"><a></a>nl_height_sd <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb23-5"><a></a>yemen_height_mean <span class="ot">&lt;-</span> <span class="fl">159.887</span></span>
-<span id="cb23-6"><a></a>yemen_height_sd <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb23-7"><a></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb23-8"><a></a>nl_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span>nl_height_mean, <span class="at">sd =</span> nl_height_sd)</span>
-<span id="cb23-9"><a></a>nl_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">height=</span>nl_sample, <span class="at">Country=</span><span class="st">"Netherlands"</span>)</span>
-<span id="cb23-10"><a></a>yemen_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span>yemen_height_mean, <span class="at">sd =</span> yemen_height_sd)</span>
-<span id="cb23-11"><a></a>yemen_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">height=</span>yemen_sample, <span class="at">Country=</span><span class="st">"Yemen"</span>)</span>
-<span id="cb23-12"><a></a>data_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(nl_df, yemen_df)</span>
-<span id="cb23-13"><a></a><span class="fu">ggplot</span>(data_df, <span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">fill=</span>Country)) <span class="sc">+</span></span>
-<span id="cb23-14"><a></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb23-15"><a></a>  <span class="fu">dsan_theme</span>() <span class="sc">+</span></span>
-<span id="cb23-16"><a></a>  <span class="co">#xlim(150,200) +</span></span>
-<span id="cb23-17"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb23-18"><a></a>    <span class="at">title =</span> <span class="st">"Mean Heights: Yemen (N=100) vs. Netherlands (N=100)"</span>,</span>
-<span id="cb23-19"><a></a>    <span class="at">x =</span> <span class="st">"Height (cm)"</span>,</span>
-<span id="cb23-20"><a></a>    <span class="at">y =</span> <span class="st">"Sample Probability Density"</span></span>
-<span id="cb23-21"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb23-22"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="st">"Country"</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">'Netherlands'</span><span class="ot">=</span>cbPalette[<span class="dv">1</span>], <span class="st">'Yemen'</span><span class="ot">=</span>cbPalette[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/two-pops-tibble-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
-<li><span class="math inline">\(H_0: \mu_{\text{NL}} - \mu_{\text{Yem}} = 0\)</span>, <span class="math inline">\(H_A: \mu_{\text{NL}} - \mu_{\text{Yem}} &gt; 0\)</span>, <span class="math inline">\(t = \overline{h}_{\text{NL}} - \overline{h}_{\text{Yem}}\)</span></li>
-</ul>
-</section>
-<section id="the-infer-package" class="slide level2 smaller">
-<h2>The <code>infer</code> Package</h2>
-<ul>
-<li><p>It’s easy to find resources on built-in <code>t.test()</code>, harder to find resources on <a href="https://infer.netlify.app/reference/t_test.html" target="_blank">newer, tidyverse-based <code>t_test()</code></a>! 😉</p></li>
-<li><p>Syntax is <code>t_test(df, formula, order, alternative)</code></p></li>
-<li><p><code>order = c(pop1, pop2)</code> <span class="math inline">\(\rightarrow H_0: \mu_1 - \mu_2 = 0\)</span></p></li>
-<li><p><code>alternative = {"two-sided", "greater", "less"}</code></p></li>
-<li><p><code>formula</code> slightly trickier, but tldr is:</p>
-<pre><code>variable you're computing means for ~ variable splitting df into two populations</code></pre></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>data_df <span class="sc">|&gt;</span> <span class="fu">t_test</span>(<span class="at">formula =</span> height <span class="sc">~</span> Country, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Netherlands"</span>, <span class="st">"Yemen"</span>), <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>df_combined <span class="sc">|&gt;</span> <span class="fu">group_by</span>(team) <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">ranksum =</span> <span class="fu">sum</span>(rank)) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">proportion =</span> ranksum <span class="sc">/</span> totalRankSum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="kable-table">
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 13%">
-<col style="width: 12%">
-<col style="width: 18%">
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 13%">
-</colgroup>
+<table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">t_df</th>
-<th style="text-align: right;">p_value</th>
-<th style="text-align: left;">alternative</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">lower_ci</th>
-<th style="text-align: right;">upper_ci</th>
+<th style="text-align: left;">team</th>
+<th style="text-align: right;">ranksum</th>
+<th style="text-align: right;">proportion</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">18.7634</td>
-<td style="text-align: right;">196.2509</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">greater</td>
-<td style="text-align: right;">20.13126</td>
-<td style="text-align: right;">18.35813</td>
-<td style="text-align: right;">Inf</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">0.56917</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">0.43083</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+</div></div>
 </section>
-<section id="the-chi-squared-test-of-independence" class="slide level2 not-title-slide crunch-title crunch-quarto-layout-panel title-10">
-<h2>The Chi-Squared Test of Independence</h2>
-<div class="quarto-layout-panel" data-layout="[1,1]">
-<div class="quarto-layout-row quarto-layout-valign-center">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/pooh_nobg.png" width="300"></p>
-<figcaption><span class="math inline">\(z\)</span>-Tests and <span class="math inline">\(t\)</span>-Tests</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/swole_pooh.jpeg" width="400"></p>
-<figcaption>The Chi-Squared Test</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="what-hypothesis-are-we-testing" class="slide level2 crunch-title crunch-math crunch-ul math-80 crunch-lists">
-<h2>What Hypothesis Are We Testing?</h2>
-<ul>
-<li><span class="math inline">\(z\)</span>-Tests and <span class="math inline">\(t\)</span>-Tests might feel a bit weak: they allow us to hypothesize about a single population parameter, which is nice, but throughout the course we have been talking about <strong>distributions</strong>, not just means or variances!</li>
-<li>The <strong>Chi-Squared Test</strong> allows us to hypothesize about distributions: for categorical random variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> we can test the null and alternative hypotheses:</li>
-</ul>
-<p><span class="math display">\[
-\begin{align*}
-H_0: X_1 \perp X_2 &amp;\iff \Pr(X_1 = v_1 \mid X_2 = v_2) = \Pr(X_1 = v_1) \\
-H_A: X_1 \not\perp X_2 &amp;\iff \Pr(X_1 = v_1 \mid X_2 = v_2) \neq \Pr(X_1 = v_1)
-\end{align*}
-\]</span></p>
-<ul>
-<li><span class="math inline">\(H_0\)</span> in words: “learning the value of <span class="math inline">\(X_2\)</span> does not give me any information about the value of <span class="math inline">\(X_1\)</span>, and vice-versa”</li>
-</ul>
-</section>
-<section id="base-notation" class="slide level2 smaller">
-<h2>Base Notation</h2>
-<ul>
-<li><em>(May seem tedious, but you will be thankful later if you use this notation!)</em></li>
-<li>Let <span class="math inline">\(N\)</span> be the total number of samples we have in our dataset</li>
-<li>Let <span class="math inline">\(K_1\)</span> be the total number of <strong>categories</strong> that <span class="math inline">\(X_1\)</span> can take on: formally, <span class="math inline">\(K_1 = |\mathcal{R}_{X_1}|\)</span>.</li>
-<li>Similarly, let <span class="math inline">\(K_2 = |\mathcal{R}_{X_2}|\)</span>, the cardinality of the support of <span class="math inline">\(X_2\)</span>.</li>
-<li>We will use a <strong>lowercase</strong> <span class="math inline">\(k_{1,i}\)</span> to represent the <strong><span class="math inline">\(i\)</span>th possible value</strong> of <span class="math inline">\(X_1\)</span>, (i.e., the <span class="math inline">\(i\)</span>th element of <span class="math inline">\(\mathcal{R}_{X_1}\)</span>), and <span class="math inline">\(k_{2,i}\)</span> to represent the <span class="math inline">\(i\)</span>th possible value of <span class="math inline">\(\mathcal{R}_{X_2}\)</span>.
-<ul>
-<li>e.g., <span class="math inline">\(k_{1,1}\)</span> is the first element of <span class="math inline">\(\mathcal{R}_{X_1}\)</span>, <span class="math inline">\(k_{1,2}\)</span> is the second element of <span class="math inline">\(\mathcal{R}_{X_2}\)</span>, and so on.</li>
-</ul></li>
-</ul>
-</section>
-<section id="joint-and-marginal-frequencies" class="slide level2 smaller crunch-title">
-<h2>Joint and Marginal Frequencies</h2>
-<ul>
-<li><p>Now we can define the central quantities that the chi-squared test involves: the <strong>frequencies</strong> (i.e., unnormalized probabilities) of observations with certain (categorical) variable values:</p></li>
-<li><p><span class="math inline">\(f_{i,j}\)</span>: The <strong>number of observations</strong> for which <span class="math inline">\(X_1 = k_{1,i}\)</span> (the <span class="math inline">\(i\)</span>th value that <span class="math inline">\(X_1\)</span> can take on) and <span class="math inline">\(X_2 = k_{2,j}\)</span> (the <span class="math inline">\(j\)</span>th value that <span class="math inline">\(X_2\)</span> can take on).</p>
-<ul>
-<li>Example: <span class="math inline">\(f_{1,3}\)</span>, represents the <strong>number of observations</strong> for which <span class="math inline">\(X_1 = k_{1,1}\)</span> and <span class="math inline">\(X_2 = k_{2,3}\)</span>.</li>
-</ul></li>
-<li><p>Let <span class="math inline">\(f_{i,\cdot} = \sum_{j=1}^{K_2}f_{i,j}\)</span> be the <strong>number of observations</strong> for which <span class="math inline">\(X_1 = k_{1,i}\)</span>, regardless of the value of <span class="math inline">\(X_2\)</span> (hence we call this the <strong>marginal frequency</strong> of <span class="math inline">\(X_1 = k_{1,i}\)</span>).</p>
-<ul>
-<li><span class="math inline">\(f_{7,\cdot}\)</span>, for example, represents the <strong>number of observations</strong> for which <span class="math inline">\(X_1 = k_{1,7}\)</span>, <strong>regardless</strong> of the values of <span class="math inline">\(X_2\)</span> across these observations.</li>
-<li>This is called “dot notation”, and makes it easy for us to notationally represent which marginal distributions we are talking about.</li>
-</ul></li>
-<li><p>Similarly, let <span class="math inline">\(f_{\cdot, j} = \sum_{i=1}^{K_1}f_{i,j}\)</span> be the <strong>marginal frequency</strong> with which songs have <span class="math inline">\(V_2 = k_j\)</span>. <span class="math inline">\(f_{\cdot, 2}\)</span>, for example, represents the <strong>number of songs</strong> for which the <strong>valence</strong> value is at level 2 (Moderate), <strong>regardless</strong> of its artist.</p></li>
-</ul>
-</section>
-<section id="we-made-it" class="slide level2">
-<h2>We Made It</h2>
-<ul>
-<li>We can finally compute the test statistic for the Chi-Squared Test, <span class="math inline">\(Q\)</span>!</li>
-</ul>
-<p><span class="math display">\[
-Q = \sum_{k_1=1}^{K_1}\sum_{k_2=1}^{K_2}\frac{\left(f_{k_1,k_2} - \frac{f_{k_1,\cdot}f_{\cdot,k_2}}{N}\right)^2}{\frac{f_{k_1,\cdot}f_{\cdot, k_2}}{N}}
-\]</span></p>
-<ul>
-<li>This test statistic has (by construction) a <strong>Chi-Squared Distribution</strong> with <span class="math inline">\((K_1 - 1)(K_2 - 1)\)</span> degrees of freedom</li>
-</ul>
-</section>
-<section id="in-r-1" class="slide level2">
-<h2>In R</h2>
-<p>We can compute this test statistic (somewhat laboriously) in R as follows: first let’s create variables representing the <strong>supports</strong> <span class="math inline">\(\mathcal{R}_{X_1}\)</span> and <span class="math inline">\(\mathcal{R}_{X_2}\)</span> for our two random variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>:</p>
+<section id="simulating-many-null-hypothesis-worlds" class="slide level2 smaller title-11 crunch-quarto-figure">
+<h2>Simulating Many Null-Hypothesis Worlds</h2>
+<p>And we can repeat this process (say) 10K times:</p>
+<div class="columns">
+<div class="column" style="width:30%;">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co">#(L1 &lt;- sort(unique(artist_df$artist_name)))</span></span>
-<span id="cb26-2"><a></a><span class="co">#K1 &lt;- length(L1)</span></span>
-<span id="cb26-3"><a></a><span class="co"># Here we set this manually, rather than using unique(), so we can obtain a specific ordering that we want</span></span>
-<span id="cb26-4"><a></a><span class="co">#(L2 &lt;- c("more negative", "Moderate", "more positive"))</span></span>
-<span id="cb26-5"><a></a><span class="co">#K2 &lt;- length(L2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="computing-marginal-frequencies" class="slide level2">
-<h2>Computing Marginal Frequencies</h2>
-<ul>
-<li>Next we pre-compute the <strong>marginal frequencies</strong> for all possible <span class="math inline">\(X_1\)</span> values (all elements of <span class="math inline">\(\mathcal{R}_{X_1}\)</span>) and then for all possible <span class="math inline">\(X_2\)</span> values (all elements of <span class="math inline">\(\mathcal{R}_{X_2}\)</span>):</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>simulate_ranksums <span class="ot">&lt;-</span> <span class="cf">function</span>(N1, N2) {</span>
+<span id="cb7-2"><a></a>  N <span class="ot">&lt;-</span> N1 <span class="sc">+</span> N2</span>
+<span id="cb7-3"><a></a>  totalRankSum <span class="ot">&lt;-</span> (N <span class="sc">*</span> (N<span class="sc">+</span><span class="dv">1</span>)) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb7-4"><a></a>  s_1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(N1)</span>
+<span id="cb7-5"><a></a>  df_1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> s_1, <span class="at">team =</span> <span class="st">"A"</span>)</span>
+<span id="cb7-6"><a></a>  s_2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(N2)</span>
+<span id="cb7-7"><a></a>  df_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> s_2, <span class="at">team =</span> <span class="st">"B"</span>)</span>
+<span id="cb7-8"><a></a>  df_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_1, df_2)</span>
+<span id="cb7-9"><a></a>  df_combined[<span class="st">'rank'</span>] <span class="ot">&lt;-</span> <span class="fu">rank</span>(df_combined<span class="sc">$</span>x)</span>
+<span id="cb7-10"><a></a>  ranksum_df <span class="ot">&lt;-</span> df_combined <span class="sc">|&gt;</span> <span class="fu">group_by</span>(team) <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">ranksum =</span> <span class="fu">sum</span>(rank))</span>
+<span id="cb7-11"><a></a>  <span class="fu">return</span>(ranksum_df<span class="sc">$</span>ranksum)</span>
+<span id="cb7-12"><a></a>}</span>
+<span id="cb7-13"><a></a>num_sims <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb7-14"><a></a>results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(num_sims, <span class="fu">simulate_ranksums</span>(<span class="dv">11</span>,<span class="dv">11</span>))</span>
+<span id="cb7-15"><a></a><span class="fu">t</span>(results[,<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
+<pre><code>      [,1] [,2]
+ [1,]  133  120
+ [2,]   98  155
+ [3,]  115  138
+ [4,]  166   87
+ [5,]  137  116
+ [6,]  140  113
+ [7,]  146  107
+ [8,]  157   96
+ [9,]  119  134
+[10,]  106  147</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">rowMeans</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 126.407 126.593</code></pre>
 </div>
 </div>
-</section>
-<section id="computing-the-test-statistic" class="slide level2">
-<h2>Computing the Test Statistic</h2>
-<ul>
-<li>Finally, we can compute the individual bin frequencies <span class="math inline">\(f_{i,j}\)</span> in a loop <em>(there are more efficient ways to do this, which we’d want to adopt instead if our dataset was much larger, for example)</em>:</li>
-</ul>
+</div><div class="column" style="width:70%;">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="co"># q_sum &lt;- 0</span></span>
-<span id="cb29-2"><a></a><span class="co"># for (k1 in 1:K1) {</span></span>
-<span id="cb29-3"><a></a><span class="co">#   artist_name_value &lt;- L1[k1]</span></span>
-<span id="cb29-4"><a></a><span class="co">#   artist_marginal_freq &lt;- L1_marginal_freqs[k1]</span></span>
-<span id="cb29-5"><a></a><span class="co">#   for (k2 in 1:K2) {</span></span>
-<span id="cb29-6"><a></a><span class="co">#     valence_value &lt;- L2[k2]</span></span>
-<span id="cb29-7"><a></a><span class="co">#     valence_marginal_freq &lt;- L2_marginal_freqs[k2]</span></span>
-<span id="cb29-8"><a></a><span class="co">#     print(paste0("(",artist_name_value,", ",valence_value,")"))</span></span>
-<span id="cb29-9"><a></a><span class="co">#     # Compute the frequency in this bin</span></span>
-<span id="cb29-10"><a></a><span class="co">#     bin_df &lt;- artist_df |&gt; filter(artist_name == artist_name_value &amp; valence_C == valence_value)</span></span>
-<span id="cb29-11"><a></a><span class="co">#     print(nrow(bin_df))</span></span>
-<span id="cb29-12"><a></a><span class="co">#     # And now, since we precomputed the marginal frequencies, we have everything we need!</span></span>
-<span id="cb29-13"><a></a><span class="co">#     joint_freq &lt;- nrow(bin_df)</span></span>
-<span id="cb29-14"><a></a><span class="co">#     marginal_ratio &lt;- (artist_marginal_freq * valence_marginal_freq) / N</span></span>
-<span id="cb29-15"><a></a><span class="co">#     numer &lt;- (joint_freq - marginal_ratio)^2</span></span>
-<span id="cb29-16"><a></a><span class="co">#     denom &lt;- marginal_ratio</span></span>
-<span id="cb29-17"><a></a><span class="co">#     cur_q_val &lt;- numer / denom</span></span>
-<span id="cb29-18"><a></a><span class="co">#     q_sum &lt;- q_sum + cur_q_val</span></span>
-<span id="cb29-19"><a></a><span class="co">#   }</span></span>
-<span id="cb29-20"><a></a><span class="co"># }</span></span>
-<span id="cb29-21"><a></a></span>
-<span id="cb29-22"><a></a><span class="co"># q_sum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="co"># Separate ranksums</span></span>
+<span id="cb11-2"><a></a>ranksum_A <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ranksum=</span>results[<span class="dv">1</span>,], <span class="at">team=</span><span class="st">"A"</span>)</span>
+<span id="cb11-3"><a></a>ranksum_A_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(ranksum_A<span class="sc">$</span>ranksum)</span>
+<span id="cb11-4"><a></a>ranksum_B <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ranksum=</span>results[<span class="dv">2</span>,], <span class="at">team=</span><span class="st">"B"</span>)</span>
+<span id="cb11-5"><a></a>ranksum_B_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(ranksum_B<span class="sc">$</span>ranksum)</span>
+<span id="cb11-6"><a></a>sim_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ranksum_A, ranksum_B)</span>
+<span id="cb11-7"><a></a><span class="co"># Means</span></span>
+<span id="cb11-8"><a></a>mean_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mean_value =</span> <span class="fu">c</span>(ranksum_A_mean, ranksum_B_mean), <span class="at">team=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>))</span>
+<span id="cb11-9"><a></a>mean_center <span class="ot">&lt;-</span> (ranksum_A_mean <span class="sc">+</span> ranksum_B_mean) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb11-10"><a></a>gen_ranksum_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">radius=</span><span class="cn">Inf</span>) {</span>
+<span id="cb11-11"><a></a>  ranksum_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sim_df, <span class="fu">aes</span>(<span class="at">x=</span>ranksum, <span class="at">fill=</span>team)) <span class="sc">+</span></span>
+<span id="cb11-12"><a></a>    <span class="fu">geom_density</span>(<span class="at">linewidth =</span> g_linewidth, <span class="at">alpha=</span><span class="fl">0.333</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb11-14"><a></a>        <span class="at">data=</span>mean_df,</span>
+<span id="cb11-15"><a></a>        <span class="fu">aes</span>(<span class="at">xintercept =</span> mean_value, <span class="at">color=</span>team),</span>
+<span id="cb11-16"><a></a>        <span class="at">linewidth =</span> g_linewidth</span>
+<span id="cb11-17"><a></a>    ) <span class="sc">+</span></span>
+<span id="cb11-18"><a></a>    <span class="fu">theme_classic</span>(<span class="at">base_size=</span><span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb11-19"><a></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(cbPalette[<span class="dv">1</span>], cbPalette[<span class="dv">2</span>]))</span>
+<span id="cb11-20"><a></a>    <span class="cf">if</span> (radius <span class="sc">!=</span> <span class="cn">Inf</span>) {</span>
+<span id="cb11-21"><a></a>        ranksum_plot <span class="ot">&lt;-</span> ranksum_plot <span class="sc">+</span></span>
+<span id="cb11-22"><a></a>        <span class="fu">xlim</span>(mean_center <span class="sc">-</span> radius, mean_center <span class="sc">+</span> radius)</span>
+<span id="cb11-23"><a></a>    }</span>
+<span id="cb11-24"><a></a>    <span class="fu">return</span>(ranksum_plot)</span>
+<span id="cb11-25"><a></a>}</span>
+<span id="cb11-26"><a></a><span class="fu">gen_ranksum_plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/ranksum-sim-plot-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
 </div>
-</section>
-<section id="interpretation" class="slide level2">
-<h2>Interpretation</h2>
-<ul>
-<li>Since we know this test statistic <span class="math inline">\(Q\)</span> follows (asymptotically/approximately) a chi-squared distribution with <span class="math inline">\((K_1 - 1)(K_2 - 1)\)</span> degrees of freedom, we can compute the <strong>probability</strong> of obtaining a test statistic value this high or higher (14.162598), using R’s built-in <code>dchisq()</code> function:</li>
-</ul>
+</div>
+</div>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="co">#(test_df &lt;- (K1 - 1) * (K2 - 2))</span></span>
-<span id="cb30-2"><a></a><span class="co">#dchisq(q_sum, test_df)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">gen_ranksum_plot</span>(<span class="at">radius=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/ranksum-sim-plot-zoomed-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
 </div>
+</div>
+</div>
+</div></div>
 </section>
-<section id="drawing-conclusions-in-classical-world" class="slide level2 smaller crunch-title title-10">
-<h2>Drawing Conclusions in Classical World</h2>
-<p>And so, finally: this tells us that under the <strong>null hypothesis</strong> that <code>artist_name</code> and <code>valence_C</code> represent draws from <strong>independent</strong> random variables, the likelihood of obtaining our dataset, or a dataset with a more extreme test statistic, is about 0.00042, or 0.042%.</p>
-<p>Therefore, if we are evaluating our hypothesis at the 5% confidence level (or 1% or even 0.1%, because this is a <strong>very low</strong> probability value/percentage), we conclude that we should <strong>reject</strong> the null hypothesis that artist name and valence are independent. Therefore (switching from a frequentist to a Bayesian interpretation, mercifully), we <strong>increase our degree of belief</strong> in the hypothesis that the valence of a song <strong>does</strong> depend upon the artist making the song.</p>
-</section>
-<section id="drawing-conclusions-in-modern-bayesian-world" class="slide level2 smaller crunch-title inline-90">
-<h2>Drawing Conclusions in Modern (Bayesian) World</h2>
-<p>This <strong>technical</strong> conclusion (which focuses only on the results of the statistical hypothesis test), combined with the Bayesian interpretation at the end, lets us say something about “what we’ve learned” about music:</p>
+<section id="wilcox.test-in-r" class="slide level2 crunch-title crunch-code crunch-ul">
+<h2><code>wilcox.test</code> in R</h2>
+<div class="cell" data-layout-align="center">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">wilcox.test</span>(height <span class="sc">~</span> Team, <span class="at">data=</span>players, <span class="at">exact =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  height by Team
+W = 48, p-value = 0.4262
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
 <ul>
-<li>Our Bayesian <strong>prior</strong> on the null hypothesis, <span class="math inline">\(\Pr(H_0) = \Pr(V \perp A)\)</span>, was probably quite small: before performing this analysis, we probably did not think that these two variables are independent, since we know that some artists tend to make more <strong>sad</strong> songs, while other artists tend to make more <strong>happy</strong> songs (though there are obviously exceptions: bands that tend to make a mix of sad and happy songs).</li>
-<li>Then we performed the analysis, and <strong>failed to reject</strong> the hypothesis that these two variables are independent.</li>
-<li>Therefore, our Bayesian <strong>posterior</strong> on <span class="math inline">\(\Pr(V \perp A)\)</span> should be slightly <strong>lower</strong>: If our prior probability on <span class="math inline">\(H_0\)</span> was some value <span class="math inline">\(p\)</span>, our posterior probability now that we’ve performed the study and failed to reject the null hypothesis should be <span class="math inline">\(p - \varepsilon\)</span>, for some appropriate value <span class="math inline">\(\varepsilon\)</span> representing the <strong>relative balance</strong> between (our view of) the veracity of the prior vs.&nbsp;the veracity of the test we performed.</li>
-<li>To make it concrete: if we previously believed that <span class="math inline">\(p = \Pr(H_0) = 0.1\)</span>, perhaps now we can update our beliefs such that <span class="math inline">\(p = \Pr(H_0) = 0.05\)</span>. This would represent the case where we lend <strong>equal credence</strong> in our prior and in our experiement, since then</li>
+<li>We confirm our computed test statistic of <strong>46.5</strong>, and obtain a p-value of about <strong>0.37</strong></li>
+<li>Thus, under most confidence levels (like my favorite <span class="math inline">\(\alpha = 0.11\)</span>), we <strong>fail to reject</strong> the null hypothesis <span class="math inline">\(\mathcal{H}_0\)</span></li>
+<li>Putting on our Bayes hats, we do <strong>not</strong> increase our degree of belief that height <strong>differs</strong> between the two populations.</li>
+</ul>
+</section></section>
+<section>
+<section id="kruskal-wallis-test" class="title-slide slide level1 center" data-stack-name="Kruskal-Wallis">
+<h1>Kruskal-Wallis Test</h1>
+<ul>
+<li>For comparing outcomes across <strong>more than two independent groups</strong></li>
+<li>Sometimes described as “ANOVA with Ranks”</li>
+</ul>
+</section>
+<section id="procedure" class="slide level2">
+<h2>Procedure</h2>
+<ul>
+<li>Pool observations from <span class="math inline">\(k\)</span> samples into one combined sample, keeping track of which sample each observation comes from, then rank lowest to highest.</li>
+<li>Test statistic:</li>
 </ul>
 <p><span class="math display">\[
-p_{post} = \frac{1}{2}\Pr(H_0) + \frac{1}{2}\text{Test Result} = \frac{1}{2}(0.1) + \frac{1}{2}(0) = 0.05.
+H = \frac{12}{N(N+1)}\sum_{j=1}^{k}\frac{R_j^2}{n_j} - 3(N+1)
 \]</span></p>
+<ul>
+<li>Reject <span class="math inline">\(\mathcal{H}_0\)</span> if <span class="math inline">\(H \geq \text{critical val}\)</span></li>
+</ul>
 </section>
-<section id="references" class="slide level2 smaller scrollable">
-<h2>References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-gelman_data_2007" class="csl-entry" role="listitem">
-Gelman, Andrew, and Jennifer Hill. 2007. <em>Data <span>Analysis Using Regression</span> and <span>Multilevel</span>/<span>Hierarchical Models</span></em>. Cambridge University Press. <a href="https://www.dropbox.com/scl/fi/asbumi3g0gqa4xl9va7wp/Andrew-Gelman-Jennifer-Hill-Data-Analysis-Using-Regression-and-Multilevel_Hierarchical-Models.pdf?rlkey=zf8icjhm7rswvxrpm7d10m65o&amp;dl=1">https://www.dropbox.com/scl/fi/asbumi3g0gqa4xl9va7wp/Andrew-Gelman-Jennifer-Hill-Data-Analysis-Using-Regression-and-Multilevel_Hierarchical-Models.pdf?rlkey=zf8icjhm7rswvxrpm7d10m65o&amp;dl=1</a>.
-</div>
-<div id="ref-kahneman_thinking_2011" class="csl-entry" role="listitem">
-Kahneman, Daniel. 2011. <em>Thinking, <span>Fast</span> and <span>Slow</span></em>. <span>Farrar, Straus and Giroux</span>.
-</div>
+<section id="kruskal.test-in-r" class="slide level2">
+<h2><code>kruskal.test</code> in R</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># kruskal.test(height ~ position, data=players)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
@@ -1802,7 +1113,7 @@ Kahneman, Daniel. 2011. <em>Thinking, <span>Fast</span> and <span>Slow</span></e
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
-<p>DSAN 5100-01 W12: Hypothesis Testing</p>
+<p>DSAN 5100 W12: Non-Parametric Statistics</p>
 </div>
 </div></div>
 
