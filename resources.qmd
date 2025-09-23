@@ -33,8 +33,8 @@ Once you complete DSAN 5100, you can then move on to classes like DSAN 5600 (App
 
 When we take observations and model them as events, we're trying to take statements like
 
-* $p$ = I rolled a die and the side that landed face up had 3 dots on it" and
-* $q$ = "I rolled a die and the side that landed face up had 5 dots on it"
+* $p$ = *"I rolled a die and the side that landed face up had 3 dots on it"* and
+* $q$ = *"I rolled a die and the side that landed face up had 5 dots on it"*
 
 and reason **logically** about the likelihoods of these things happening. By "reasoning logically", I mean, reason about the likelihoods of the statements $p$ and $q$ on their own, but also about **combinations** of these statements, joined by **"and"**s, **"or"**s, and **"not"**s.
 
