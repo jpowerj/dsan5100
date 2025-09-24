@@ -35,6 +35,7 @@ website:
         target: "_blank"
       # - href: index.qmd
       #   text: "<i class='bi bi-house pe-1'></i> Section 03 Home"
+      - "---"
       - text: "Week 1: Aug 29"
         href: w01/index.qmd
       - text: "Week 2A: Sep 1"
