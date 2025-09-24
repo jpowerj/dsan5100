@@ -119,7 +119,7 @@
     "href": "w05a/slides.html#first-attempt",
     "title": "Week 5A: Moments and Covariance",
     "section": "First Attempt",
-    "text": "First Attempt\n\nWhat properties should \\(\\text{Spread}(\\cdot)\\) have?\n\nShould be \\(0\\) if every data point is identical, then increase as they spread apart\n\nHow about: average difference between each point and the overall (arithmetic) mean? \\[\n\\text{Spread}(X) = M_1(X - \\overline{X}) = \\frac{(x_1 - \\overline{X}) + (x_2 - \\overline{X}) + \\cdots + (x_n - \\overline{X})}{n}\n\\]\n\n\n\n\n\nCode\nlibrary(tidyverse)\nlibrary(latex2exp)\nN &lt;- 10\nx &lt;- seq(1,N)\ny &lt;- rnorm(N, 0, 10)\nmean_y &lt;- mean(y)\nspread &lt;- y - mean_y\ndf &lt;- tibble(x=x, y=y, spread=spread)\nggplot(df, aes(x=x, y=y)) +\n  geom_hline(aes(yintercept=mean_y, linetype=\"dashed\"), color=\"purple\", size=g_linesize) +\n  geom_segment(aes(xend=x, yend=mean_y, color=ifelse(y&gt;0,\"Positive\",\"Negative\")), size=g_linesize) +\n  geom_point(size=g_pointsize) +\n  scale_linetype_manual(element_blank(), values=c(\"dashed\"=\"dashed\"), labels=c(\"dashed\"=unname(TeX(c(\"$M_1(X)$\"))))) +\n  dsan_theme(\"half\") +\n  scale_color_manual(\"Spread\", values=c(\"Positive\"=cbPalette[3],\"Negative\"=cbPalette[6]), labels=c(\"Positive\"=\"Positive\",\"Negative\"=\"Negative\")) +\n  scale_x_continuous(breaks=seq(0,10,2)) +\n  #remove_legend_title() +\n  theme(legend.spacing.y=unit(0.1,\"mm\")) +\n  labs(\n    title=paste0(N, \" Randomly-Generated Points, N(0,10)\"),\n    x=\"Index\",\n    y=\"Value\"\n  )\n\n\n\n\n\n\n\n\n\n\nThe result? To ten decimal places:\n\n\nCode\nspread_fmt &lt;- sprintf(\"%0.10f\", mean(df$spread))\nwriteLines(spread_fmt)\n\n\n-0.0000000000\n\n\n😞 What happened?"
+    "text": "First Attempt\n\nWhat properties should \\(\\text{Spread}(\\cdot)\\) have?\n\nShould be \\(0\\) if every data point is identical, then increase as they spread apart\n\nHow about: average difference between each point and the overall (arithmetic) mean? \\[\n\\text{Spread}(X) = M_1(X - \\overline{X}) = \\frac{(x_1 - \\overline{X}) + (x_2 - \\overline{X}) + \\cdots + (x_n - \\overline{X})}{n}\n\\]\n\n\n\n\n\nCode\nlibrary(tidyverse)\nlibrary(latex2exp)\nN &lt;- 10\nx &lt;- seq(1,N)\ny &lt;- rnorm(N, 0, 10)\nmean_y &lt;- mean(y)\nspread &lt;- y - mean_y\ndf &lt;- tibble(x=x, y=y, spread=spread)\nggplot(df, aes(x=x, y=y)) +\n  geom_hline(aes(yintercept=mean_y, linetype=\"dashed\"), color=\"purple\", size=g_linesize) +\n  geom_segment(aes(xend=x, yend=mean_y, color=ifelse(y&gt;0,\"Positive\",\"Negative\")), size=g_linesize) +\n  geom_point(size=g_pointsize) +\n  scale_linetype_manual(element_blank(), values=c(\"dashed\"=\"dashed\"), labels=c(\"dashed\"=unname(TeX(c(\"$M_1(X)$\"))))) +\n  dsan_theme(\"half\") +\n  scale_color_manual(\"Spread\", values=c(\"Positive\"=cbPalette[3],\"Negative\"=cbPalette[6]), labels=c(\"Positive\"=\"Positive\",\"Negative\"=\"Negative\")) +\n  scale_x_continuous(breaks=seq(0,10,2)) +\n  #remove_legend_title() +\n  theme(legend.spacing.y=unit(0.1,\"mm\")) +\n  labs(\n    title=paste0(N, \" Randomly-Generated Points, N(0,10)\"),\n    x=\"Index\",\n    y=\"Value\"\n  )\n\n\n\n\n\n\n\n\n\n\nThe result? To ten decimal places:\n\n\nCode\nspread_fmt &lt;- sprintf(\"%0.10f\", mean(df$spread))\nwriteLines(spread_fmt)\n\n\n0.0000000000\n\n\n😞 What happened?"
   },
   {
     "objectID": "w05a/slides.html#avoiding-cancellation",
@@ -1004,14 +1004,14 @@
     "href": "w10/slides.html#how-well-does-it-work",
     "title": "Week 10: Method of Moments and Bootstrap",
     "section": "How Well Does it Work?",
-    "text": "How Well Does it Work?\nAnswer: Absurdly, unreasonably well.\n\n\nCode\npop &lt;- rnorm(1000000, mean = 3, sd = 1)\n# Sampling 1k times\nrand_samples &lt;- replicate(\n  1000,\n  sample(pop, size=100, replace = FALSE)\n)\nsample_means &lt;- colMeans(rand_samples)\nsample_df &lt;- tibble(est = sample_means, Method = \"1000 Samples\")\n# Sampling 1 time and bootstrapping\nbs_sample &lt;- sample(pop, size = 100, replace = FALSE)\nsubsamples &lt;- replicate(1000, sample(bs_sample, size=100, replace = TRUE))\nbs_means &lt;- colMeans(subsamples)\nbs_df &lt;- tibble(est = bs_means, Method = \"Bootstrap (1 Sample)\")\nresult_df &lt;- bind_rows(sample_df, bs_df)\nsim_dnorm &lt;- function(x) dnorm(x, mean = 3, sd = 1)\nggplot(result_df, aes(x=est, fill=Method)) +\n  dsan_theme(\"full\") +\n  geom_density(alpha=0.2, linewidth=g_linewidth) +\n  geom_vline(aes(xintercept=3, linetype=\"value\"),linewidth=g_linewidth) +\n  scale_linetype_manual(\"\", values=c(\"density\"=\"solid\", \"value\"=\"dashed\"), labels=c(\"Population Mean\", \"testing\")) +\n  theme(\n    legend.title = element_blank(),\n    legend.spacing.y = unit(0, \"mm\")\n  ) +\n  labs(\n    title = \"Bootstrap vs. Multiple Samples\",\n    x = \"Sample / Subsample Means\",\n    y = \"Density\"\n  )\n\n\n\n\n\nCode\nsample_est &lt;- mean(sample_means)\nsample_str &lt;- sprintf(\"%.3f\", sample_est)\nsample_err &lt;- abs(sample_est - 3)\nsample_err_str &lt;- sprintf(\"%.3f\", sample_err)\nsample_output &lt;- paste0(\"1K samples estimate: \", sample_str, \" (abs. err: \", sample_err_str, \")\")\nbs_est &lt;- mean(bs_means)\nbs_str &lt;- sprintf(\"%.3f\", bs_est)\nbs_err &lt;- abs(bs_est - 3)\nbs_err_str &lt;- sprintf(\"%.3f\", bs_err)\nbs_output &lt;- paste0(\"Bootstrap estimate:  \", bs_str, \" (abs. err: \", bs_err_str, \")\")\nwriteLines(paste0(sample_output,\"\\n\",bs_output))\n\n\n1K samples estimate: 3.003 (abs. err: 0.003)\nBootstrap estimate:  2.926 (abs. err: 0.074)"
+    "text": "How Well Does it Work?\nAnswer: Absurdly, unreasonably well.\n\n\nCode\npop &lt;- rnorm(1000000, mean = 3, sd = 1)\n# Sampling 1k times\nrand_samples &lt;- replicate(\n  1000,\n  sample(pop, size=100, replace = FALSE)\n)\nsample_means &lt;- colMeans(rand_samples)\nsample_df &lt;- tibble(est = sample_means, Method = \"1000 Samples\")\n# Sampling 1 time and bootstrapping\nbs_sample &lt;- sample(pop, size = 100, replace = FALSE)\nsubsamples &lt;- replicate(1000, sample(bs_sample, size=100, replace = TRUE))\nbs_means &lt;- colMeans(subsamples)\nbs_df &lt;- tibble(est = bs_means, Method = \"Bootstrap (1 Sample)\")\nresult_df &lt;- bind_rows(sample_df, bs_df)\nsim_dnorm &lt;- function(x) dnorm(x, mean = 3, sd = 1)\nggplot(result_df, aes(x=est, fill=Method)) +\n  dsan_theme(\"full\") +\n  geom_density(alpha=0.2, linewidth=g_linewidth) +\n  geom_vline(aes(xintercept=3, linetype=\"value\"),linewidth=g_linewidth) +\n  scale_linetype_manual(\"\", values=c(\"density\"=\"solid\", \"value\"=\"dashed\"), labels=c(\"Population Mean\", \"testing\")) +\n  theme(\n    legend.title = element_blank(),\n    legend.spacing.y = unit(0, \"mm\")\n  ) +\n  labs(\n    title = \"Bootstrap vs. Multiple Samples\",\n    x = \"Sample / Subsample Means\",\n    y = \"Density\"\n  )\n\n\n\n\n\nCode\nsample_est &lt;- mean(sample_means)\nsample_str &lt;- sprintf(\"%.3f\", sample_est)\nsample_err &lt;- abs(sample_est - 3)\nsample_err_str &lt;- sprintf(\"%.3f\", sample_err)\nsample_output &lt;- paste0(\"1K samples estimate: \", sample_str, \" (abs. err: \", sample_err_str, \")\")\nbs_est &lt;- mean(bs_means)\nbs_str &lt;- sprintf(\"%.3f\", bs_est)\nbs_err &lt;- abs(bs_est - 3)\nbs_err_str &lt;- sprintf(\"%.3f\", bs_err)\nbs_output &lt;- paste0(\"Bootstrap estimate:  \", bs_str, \" (abs. err: \", bs_err_str, \")\")\nwriteLines(paste0(sample_output,\"\\n\",bs_output))\n\n\n1K samples estimate: 2.997 (abs. err: 0.003)\nBootstrap estimate:  3.102 (abs. err: 0.102)"
   },
   {
     "objectID": "w10/slides.html#bootstrapped-confidence-intervals",
     "href": "w10/slides.html#bootstrapped-confidence-intervals",
     "title": "Week 10: Method of Moments and Bootstrap",
     "section": "Bootstrapped “Confidence” Intervals",
-    "text": "Bootstrapped “Confidence” Intervals\n\nWe get a “confidence” interval for free!\n\\(\\alpha = 0.05\\)? Just take middle 95% of your bootstrapped estimates!\n\n\n\nCode\nquantile(bs_means, c(0.025, 0.975))\n\n\n    2.5%    97.5% \n2.732799 3.131477 \n\n\n\nEasily interpretable: “After repeating this process 1000 times, 95% of the results fell between 2.84 and 3.20”"
+    "text": "Bootstrapped “Confidence” Intervals\n\nWe get a “confidence” interval for free!\n\\(\\alpha = 0.05\\)? Just take middle 95% of your bootstrapped estimates!\n\n\n\nCode\nquantile(bs_means, c(0.025, 0.975))\n\n\n    2.5%    97.5% \n2.904766 3.309564 \n\n\n\nEasily interpretable: “After repeating this process 1000 times, 95% of the results fell between 2.84 and 3.20”"
   },
   {
     "objectID": "w10/slides.html#hypothesis-testing-via-bootstrap",
@@ -1266,7 +1266,7 @@
     "href": "w10/index.html#how-well-does-it-work",
     "title": "Week 10: Method of Moments and Bootstrap",
     "section": "How Well Does it Work?",
-    "text": "How Well Does it Work?\nAnswer: Absurdly, unreasonably well.\n\npop &lt;- rnorm(1000000, mean = 3, sd = 1)\n# Sampling 1k times\nrand_samples &lt;- replicate(\n  1000,\n  sample(pop, size=100, replace = FALSE)\n)\nsample_means &lt;- colMeans(rand_samples)\nsample_df &lt;- tibble(est = sample_means, Method = \"1000 Samples\")\n# Sampling 1 time and bootstrapping\nbs_sample &lt;- sample(pop, size = 100, replace = FALSE)\nsubsamples &lt;- replicate(1000, sample(bs_sample, size=100, replace = TRUE))\nbs_means &lt;- colMeans(subsamples)\nbs_df &lt;- tibble(est = bs_means, Method = \"Bootstrap (1 Sample)\")\nresult_df &lt;- bind_rows(sample_df, bs_df)\nsim_dnorm &lt;- function(x) dnorm(x, mean = 3, sd = 1)\nggplot(result_df, aes(x=est, fill=Method)) +\n  dsan_theme(\"full\") +\n  geom_density(alpha=0.2, linewidth=g_linewidth) +\n  geom_vline(aes(xintercept=3, linetype=\"value\"),linewidth=g_linewidth) +\n  scale_linetype_manual(\"\", values=c(\"density\"=\"solid\", \"value\"=\"dashed\"), labels=c(\"Population Mean\", \"testing\")) +\n  theme(\n    legend.title = element_blank(),\n    legend.spacing.y = unit(0, \"mm\")\n  ) +\n  labs(\n    title = \"Bootstrap vs. Multiple Samples\",\n    x = \"Sample / Subsample Means\",\n    y = \"Density\"\n  )\n\n\n\n\n\n\n\n\n\nsample_est &lt;- mean(sample_means)\nsample_str &lt;- sprintf(\"%.3f\", sample_est)\nsample_err &lt;- abs(sample_est - 3)\nsample_err_str &lt;- sprintf(\"%.3f\", sample_err)\nsample_output &lt;- paste0(\"1K samples estimate: \", sample_str, \" (abs. err: \", sample_err_str, \")\")\nbs_est &lt;- mean(bs_means)\nbs_str &lt;- sprintf(\"%.3f\", bs_est)\nbs_err &lt;- abs(bs_est - 3)\nbs_err_str &lt;- sprintf(\"%.3f\", bs_err)\nbs_output &lt;- paste0(\"Bootstrap estimate:  \", bs_str, \" (abs. err: \", bs_err_str, \")\")\nwriteLines(paste0(sample_output,\"\\n\",bs_output))\n\n1K samples estimate: 3.002 (abs. err: 0.002)\nBootstrap estimate:  2.999 (abs. err: 0.001)",
+    "text": "How Well Does it Work?\nAnswer: Absurdly, unreasonably well.\n\npop &lt;- rnorm(1000000, mean = 3, sd = 1)\n# Sampling 1k times\nrand_samples &lt;- replicate(\n  1000,\n  sample(pop, size=100, replace = FALSE)\n)\nsample_means &lt;- colMeans(rand_samples)\nsample_df &lt;- tibble(est = sample_means, Method = \"1000 Samples\")\n# Sampling 1 time and bootstrapping\nbs_sample &lt;- sample(pop, size = 100, replace = FALSE)\nsubsamples &lt;- replicate(1000, sample(bs_sample, size=100, replace = TRUE))\nbs_means &lt;- colMeans(subsamples)\nbs_df &lt;- tibble(est = bs_means, Method = \"Bootstrap (1 Sample)\")\nresult_df &lt;- bind_rows(sample_df, bs_df)\nsim_dnorm &lt;- function(x) dnorm(x, mean = 3, sd = 1)\nggplot(result_df, aes(x=est, fill=Method)) +\n  dsan_theme(\"full\") +\n  geom_density(alpha=0.2, linewidth=g_linewidth) +\n  geom_vline(aes(xintercept=3, linetype=\"value\"),linewidth=g_linewidth) +\n  scale_linetype_manual(\"\", values=c(\"density\"=\"solid\", \"value\"=\"dashed\"), labels=c(\"Population Mean\", \"testing\")) +\n  theme(\n    legend.title = element_blank(),\n    legend.spacing.y = unit(0, \"mm\")\n  ) +\n  labs(\n    title = \"Bootstrap vs. Multiple Samples\",\n    x = \"Sample / Subsample Means\",\n    y = \"Density\"\n  )\n\n\n\n\n\n\n\n\n\nsample_est &lt;- mean(sample_means)\nsample_str &lt;- sprintf(\"%.3f\", sample_est)\nsample_err &lt;- abs(sample_est - 3)\nsample_err_str &lt;- sprintf(\"%.3f\", sample_err)\nsample_output &lt;- paste0(\"1K samples estimate: \", sample_str, \" (abs. err: \", sample_err_str, \")\")\nbs_est &lt;- mean(bs_means)\nbs_str &lt;- sprintf(\"%.3f\", bs_est)\nbs_err &lt;- abs(bs_est - 3)\nbs_err_str &lt;- sprintf(\"%.3f\", bs_err)\nbs_output &lt;- paste0(\"Bootstrap estimate:  \", bs_str, \" (abs. err: \", bs_err_str, \")\")\nwriteLines(paste0(sample_output,\"\\n\",bs_output))\n\n1K samples estimate: 3.004 (abs. err: 0.004)\nBootstrap estimate:  2.924 (abs. err: 0.076)",
     "crumbs": [
       "Week 10: Oct 28"
     ]
@@ -1276,7 +1276,7 @@
     "href": "w10/index.html#bootstrapped-confidence-intervals",
     "title": "Week 10: Method of Moments and Bootstrap",
     "section": "Bootstrapped “Confidence” Intervals",
-    "text": "Bootstrapped “Confidence” Intervals\n\nWe get a “confidence” interval for free!\n\\(\\alpha = 0.05\\)? Just take middle 95% of your bootstrapped estimates!\n\n\n\nCode\nquantile(bs_means, c(0.025, 0.975))\n\n\n    2.5%    97.5% \n2.804566 3.189909 \n\n\n\nEasily interpretable: “After repeating this process 1000 times, 95% of the results fell between 2.84 and 3.20”",
+    "text": "Bootstrapped “Confidence” Intervals\n\nWe get a “confidence” interval for free!\n\\(\\alpha = 0.05\\)? Just take middle 95% of your bootstrapped estimates!\n\n\n\nCode\nquantile(bs_means, c(0.025, 0.975))\n\n\n    2.5%    97.5% \n2.753299 3.098284 \n\n\n\nEasily interpretable: “After repeating this process 1000 times, 95% of the results fell between 2.84 and 3.20”",
     "crumbs": [
       "Week 10: Oct 28"
     ]
@@ -2519,271 +2519,6 @@
     "text": "Why Are You Telling Us All This? How Does It Help Solve Problem 1?\nIf you’ve made it all the way to this point, you may be frustrated that I still haven’t pointed exactly to how these two conditions help us solve Problem 1.\nSince I can’t give away the solution for that particular problem, here I will show the applicability of these two conditions to a similar problem, and then your job is to think about how the way I work through this problem can help you work through problem 1.\nThe example problem: Given two random variables \\(X \\sim \\mathcal{U}[0,1]\\) and \\(Y \\sim \\mathcal{U}[0,1]\\), consider the joint distribution of the vector-valued random variable \\(Z = (X,Y)\\), where the possible realizations of \\(Z\\) are restricted to only those values of \\(X\\) and \\(Y\\) such that they lie within a circle of radius \\(1\\) around the origin: that is, \\(X^2 + Y^2 &lt; 1\\). This means that we could create a plot which “fills in” the possible values of \\(Z\\) more and more as we sample more points, by generating values of \\(X\\) sampled from from \\(\\mathcal{U}[0,1]\\) and values of \\(Y\\) sampled from \\(\\mathcal{U}[0,1]\\), then placing the points on the plot if they are “admissible” (if they form a valid realization of \\(Z\\)) and throwing the points away otherwise:\n\nlibrary(tidyverse)\nN &lt;- 2500\nx_vals &lt;- runif(N, -1, 1)\ny_vals &lt;- runif(N, -1, 1)\nsample_df &lt;- tibble(x=x_vals, y=y_vals)\nsample_df &lt;- sample_df |&gt;\n  mutate(\n    admissible = x^2 + y^2 &lt; 1\n  )\nsample_df |&gt; head()\n\n\n\n\n\nx\ny\nadmissible\n\n\n\n\n0.0853844\n0.4159406\nTRUE\n\n\n-0.4991692\n-0.6671818\nTRUE\n\n\n-0.5449181\n0.9697597\nFALSE\n\n\n-0.2142207\n-0.8855359\nTRUE\n\n\n0.8015973\n0.2324585\nTRUE\n\n\n-0.6283825\n-0.0055527\nTRUE\n\n\n\n\n\n\nWe see that, given how admissible is defined, plotting only the points for which admissible == TRUE will mean that we are “filling out” the subset of all possible values in the square \\([-1,1] \\times [-1,1]\\) that satisfy our contstraint:\n\nadmissible_df &lt;- sample_df |&gt;\n  filter(admissible)\nggplot(admissible_df, aes(x=x, y=y)) +\n  geom_point() +\n  dsan_theme() +\n  # If you were wondering how to make it an actual perfect circle\n  coord_fixed()\n\n\n\n\n\n\n\n\nAnd now we can finally use our two necessary conditions, albeit in reverse order:\n\nApplying Necessary Condition 2 (Simplified Version) To This Case:\nTo satisfy this condition, let’s literally just define a pdf \\(f_{X,Y}\\) that has some non-zero value \\(c\\) for points within the circle in the above plot, and has value \\(0\\) otherwise:\n\\[\nf_{X,Y}(x,y) = \\begin{cases}\nc &\\text{if }x^2 + y^2 &lt; 1, \\\\\n0 &\\text{otherwise.}\n\\end{cases}\n\\]\nSo far, we’ve satisfied Necessary Condition 1 (\\(NC_1\\)) for \\(f_{X,Y}\\) to be a valid pdf. Now if we can figure out how to also make this function satisfy Necessary Condition 2 (\\(NC_2\\)), we’ll know that we have a valid pdf for \\(Z = (X,Y)\\).\n\n\nApplying Necessary Condition 1 To This Case\nGiven that \\(X\\) and \\(Y\\) are both defined (in a nicely-behaved way) over the range \\([-1,1]\\), the remaining condition \\(NC_1\\) is satisfied if the following equality holds:\n\\[\n\\int_{-1}^{1}\\int_{-1}^{1}f_{X,Y}(x,y)dxdy = 1\n\\tag{1}\\]\nIf you calculate these two definite integrals (you could do it using fancy math, like variable substitution, or just using geometry, e.g. by thinking about what the integral would be given what you know about the areas of circles), you will find that this integral-filled equality reduces to the equality\n\\[\nc\\pi = 1\n\\]\nSo that, finally, we can solve for the value of \\(c\\) which now lets us “fill in this detail”: that if we choose \\(c = \\frac{1}{\\pi}\\), so that\n\\[\nf_{X,Y}(x,y) = \\begin{cases}\n\\frac{1}{\\pi} &\\text{if }x^2 + y^2 &lt; 1, \\\\\n0 &\\text{otherwise.}\n\\end{cases}\n\\]\nthen we get a nice chain of realizations:\n\nThe equality Equation 1 holds, so\nWe have satisfied \\(NC_1\\), after already satisfying \\(NC_2\\) above, so\nWe have now satisfied both \\(NC_1\\) and \\(NC_2\\),\nThis means we have satisfied \\(B\\), so that finally\nWe have defined a valid pdf \\(f_{X,Y}(x,y)\\) (since \\(B\\) is a sufficient condition for valid pdfs).\n\nI hope that helps somewhat: I wrote things out in excruciating detail, using necessary and sufficient conditions and etc., to try and show how there is a general logic to these types of problems (or at least, a general logic for how we can use the information we’re given to construct a distribution which encodes this information)."
   },
   {
-    "objectID": "w05b/slides.html#frequency-tables",
-    "href": "w05b/slides.html#frequency-tables",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequency Tables",
-    "text": "Frequency Tables\n\n\n\n\nWhat does Table 1 tell us on its own (before computing proportions in our heads) that is useful for probability?\nAnswer: Not much!\nBut, once we find the overall total, it tells us a lot (everything we need to know!)\n\n\n\n\n\n\n\n \n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\\(G = 11\\)\n6\n4\n\n\n\\(G = 12\\)\n7\n1\n\n\n\n\n\nTable 1: A frequency table of HS students(\\(G\\) = grade, \\(H\\) = honors status)Tells us, e.g., 5 honors students in grade 10\n\n\n\n\n\n\n\nA frequency table where each row corresponds to a grade in a certain senior high school, each column corresponds to honor-student-status (\\(H=1\\) represents honors, \\(H=0\\) represents non-honors), and each cell contains the number of students in that grade with that honors-status"
-  },
-  {
-    "objectID": "w05b/slides.html#why-do-we-need-the-total",
-    "href": "w05b/slides.html#why-do-we-need-the-total",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Why Do We Need The Total?",
-    "text": "Why Do We Need The Total?\n\nQ1: Someone asks the probability that a randomly-selected student will be an honor student in 11th grade.\nQ2: Someone asks what proportion of students are honors\nQ3: Someone asks what % of 12th grade are honors\n\nQ1, for example, is asking us for \\(\\Pr(G = 11, H = 1)\\), a question we can answer if we know the joint distribution \\(f_{G,H}(g, h)\\)"
-  },
-  {
-    "objectID": "w05b/slides.html#back-to-the-naïve-definition",
-    "href": "w05b/slides.html#back-to-the-naïve-definition",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Back to the Naïve Definition",
-    "text": "Back to the Naïve Definition\nUsing our naïve definition of probability, we can compute this probability using the frequencies in the table as\n\\[\n\\Pr(G = 11, H = 1) = \\frac{\\#[G = 11, H = 1]}{\\#\\text{ Students Total}}\n\\]\nPlugging in the values from Table 1, we obtain the answer:\n\\[\n\\Pr(G = 11, H = 1) = \\frac{4}{33} \\approx 0.121\n\\]"
-  },
-  {
-    "objectID": "w05b/slides.html#frequency-table-probability-table",
-    "href": "w05b/slides.html#frequency-table-probability-table",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequency Table → Probability Table",
-    "text": "Frequency Table → Probability Table\n\nWhen we divide by 33, we are normalizing the counts, producing probabilities (normalized counts)\nBy normalizing all cells in the table, we convert our frequency table into a probability table"
-  },
-  {
-    "objectID": "w05b/slides.html#computing-overall-total-by-column",
-    "href": "w05b/slides.html#computing-overall-total-by-column",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Computing Overall Total by Column",
-    "text": "Computing Overall Total by Column\nWe could compute the total by summing columns, then summing over our individual column totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\n\\(G = 11\\)\n6\n4\n\n\n\n\\(G = 12\\)\n7\n1\n\n\n\nTotal\n23\n10\n33"
-  },
-  {
-    "objectID": "w05b/slides.html#computing-overall-total-by-row",
-    "href": "w05b/slides.html#computing-overall-total-by-row",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Computing Overall Total by Row",
-    "text": "Computing Overall Total by Row\nOr, we could compute the total by summing rows, then summing over our individual row totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n\n\n33"
-  },
-  {
-    "objectID": "w05b/slides.html#bringing-both-methods-together",
-    "href": "w05b/slides.html#bringing-both-methods-together",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Bringing Both Methods Together",
-    "text": "Bringing Both Methods Together\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n23\n10\n33\n\n\n\n\n\n\nTable 2: The same frequency table as in Table 1, but now with row and column totals representing marginal frequencies"
-  },
-  {
-    "objectID": "w05b/slides.html#frequencies-to-probabilities",
-    "href": "w05b/slides.html#frequencies-to-probabilities",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequencies to Probabilities",
-    "text": "Frequencies to Probabilities\n\n\n\nNow let’s use overall total (33) to convert counts into probabilities:\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\nTable 3: Table from prev slide with all values normalized (divided by the total number of obs)"
-  },
-  {
-    "objectID": "w05b/slides.html#one-table-three-distributions",
-    "href": "w05b/slides.html#one-table-three-distributions",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "One Table, Three Distributions!",
-    "text": "One Table, Three Distributions!\nNow that we have normalized counts, different pieces of this table give different probability distributions:\n\n\n\nJoint Distribution \\(f_{G,H}(g, h)\\): Look at value in row \\(g\\), col \\(h\\)\nTwo Marginal Distributions\n\\(f_G(g)\\): Look at total for row \\(g\\)\n\\(f_H(h)\\): Look at total for column \\(h\\)\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)"
-  },
-  {
-    "objectID": "w05b/slides.html#summary-joint-marginal",
-    "href": "w05b/slides.html#summary-joint-marginal",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Summary: Joint → Marginal",
-    "text": "Summary: Joint → Marginal\n\nNote how marginal distributions were obtained by summing the joint distribution over a particular dimension:\nSumming each column (\\(H = 0\\) and \\(H = 1\\)) produced marginal distribution of \\(H\\):\n\n\n\n\n\n\n\n\\(\\Pr(H = 0, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 0)\\)\n\n\n\n\n\n\n\n\n\n\\(\\Pr(H = 1, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 1)\\)\n\n\n\n\n\n\nSumming each row (\\(G = 10\\), \\(G = 11\\), \\(G = 12\\)) produced marginal distribution of \\(G\\):\n\n\n\n\n\\(\\Pr(G = 10, H = 0)\\)\n+\n\\(\\Pr(G = 10, H = 1)\\)\n=\n\\(\\Pr(G = 10)\\)\n\n\n\\(\\Pr(G = 11, H = 0)\\)\n+\n\\(\\Pr(G = 11, H = 1)\\)\n=\n\\(\\Pr(G = 11)\\)\n\n\n\\(\\Pr(G = 12, H = 0)\\)\n+\n\\(\\Pr(G = 12, H = 1)\\)\n=\n\\(\\Pr(G = 12)\\)"
-  },
-  {
-    "objectID": "w05b/slides.html#whats-missing-conditional-distributions",
-    "href": "w05b/slides.html#whats-missing-conditional-distributions",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "What’s Missing? Conditional Distributions",
-    "text": "What’s Missing? Conditional Distributions\n\nConditional distribution does not represent a sum but a slice: we consider e.g. one particular row or one particular column of the table.\n🚨Warning🚨! unlike in joint and marginal cases, when computing conditional distributions we have to renormalize, since we are “entering world” where we only consider subsets of the table where condition is met!\nRecall slide about how all distributions are conditional distributions:\n\n\n\n\n\\(\\Pr(G = 10, H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10, H = 1 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10 \\mid H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\frac{\\Pr(G = 10, H = 1)}{\\Pr(H = 1)} \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1)}{\\#(H = 1)\\text{ 😳}}\n\\end{align*}\n\\]"
-  },
-  {
-    "objectID": "w05b/slides.html#conditional-distributions-from-columns",
-    "href": "w05b/slides.html#conditional-distributions-from-columns",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Conditional Distributions from Columns",
-    "text": "Conditional Distributions from Columns\nLet’s extract just the \\(H = 1\\) column:\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n5\n\n\n\\(G = 11\\)\n4\n\n\n\\(G = 12\\)\n1\n\n\nTotal\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{10}{10}\\)\n\n\n\n\n\n\nBefore, 10 was a particular marginal frequency of interest; now 10 is just a total that we use to renormalize"
-  },
-  {
-    "objectID": "w05b/slides.html#conditional-distributions-from-rows",
-    "href": "w05b/slides.html#conditional-distributions-from-rows",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Conditional Distributions from Rows",
-    "text": "Conditional Distributions from Rows\nLet’s extract just the \\(G = 10\\) row:\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n5\n10\n15\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{15}\\)\n\\(\\frac{10}{15}\\)\n\\(\\frac{15}{15}\\)\n\n\n\n\n\n\nBefore, 15 was a particular marginal frequency of interest; now 15 is just a total that we use to renormalize"
-  },
-  {
-    "objectID": "w05b/slides.html#discrete-world-summary",
-    "href": "w05b/slides.html#discrete-world-summary",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Discrete World Summary",
-    "text": "Discrete World Summary\nWe now have the link between three types of distributions derived from our table:\n\n\n\n\n\n\n\n\n\n\n\nDistribution Type\nHow Many?\nExample Value\n\n\n\n\nJoint Distribution\n1\n\\(\\Pr(G = 11, H = 1) = \\frac{4}{33}\\)\n\n\nMarginal Distributions\n2\n\\(\\Pr(H = 1) = \\frac{10}{33}\\)\n\n\nConditional Distributions\n6\n\\(\\Pr(G = 10 \\mid H = 1) = \\frac{5}{10}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{23}\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{23}\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{23}\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{23}{23}\\)\n\\(\\frac{10}{10}\\)"
-  },
-  {
-    "objectID": "w05b/slides.html#working-backwards",
-    "href": "w05b/slides.html#working-backwards",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Working Backwards",
-    "text": "Working Backwards\n\nHere we started from the joint distribution and derived marginal and conditional distributions\nSame intuition, plus math, lets us go in opposite direction: given marginal and conditional distributions, can derive joint distribution, since (conditional prob defn):\n\n\n\n\n\n\n\\(\\Pr(A \\mid B)\\)\n\\(=\\)\n\\(\\Pr(A, B)\\)\n\n\n\\(\\Pr(B)\\)\n\n\n\n\n\\[\n\\iff\n\\]\n\n\n\n\n\\(\\Pr(A,B)\\)\n\\(=\\)\n\\(\\Pr(A \\mid B)\\)\n\\(\\cdot\\)\n\\(\\Pr(B)\\)\n\n\n\n\n\n\nfrom which we can see that if we know the conditional distribution \\(\\Pr(B \\mid A)\\) and the marginal distribution \\(\\Pr(A)\\), we can combine these (via multiplication) to obtain the joint distribution \\(\\Pr(B,A)\\)."
-  },
-  {
-    "objectID": "w05b/index.html",
-    "href": "w05b/index.html",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "",
-    "text": "Open slides in new window →",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#frequency-tables",
-    "href": "w05b/index.html#frequency-tables",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequency Tables",
-    "text": "Frequency Tables\n\n\n\n\nWhat does Table 1 tell us on its own (before computing proportions in our heads) that is useful for probability?\nAnswer: Not much!\nBut, once we find the overall total, it tells us a lot (everything we need to know!)\n\n\n\n\n\n\nTable 1: A frequency table of HS students(\\(G\\) = grade, \\(H\\) = honors status)Tells us, e.g., 5 honors students in grade 10\n\n\n\n \n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\\(G = 11\\)\n6\n4\n\n\n\\(G = 12\\)\n7\n1\n\n\n\n\n\n\n\n\n\n\nA frequency table where each row corresponds to a grade in a certain senior high school, each column corresponds to honor-student-status (\\(H=1\\) represents honors, \\(H=0\\) represents non-honors), and each cell contains the number of students in that grade with that honors-status",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#why-do-we-need-the-total",
-    "href": "w05b/index.html#why-do-we-need-the-total",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Why Do We Need The Total?",
-    "text": "Why Do We Need The Total?\n\nQ1: Someone asks the probability that a randomly-selected student will be an honor student in 11th grade.\nQ2: Someone asks what proportion of students are honors\nQ3: Someone asks what % of 12th grade are honors\n\nQ1, for example, is asking us for \\(\\Pr(G = 11, H = 1)\\), a question we can answer if we know the joint distribution \\(f_{G,H}(g, h)\\)",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#back-to-the-naïve-definition",
-    "href": "w05b/index.html#back-to-the-naïve-definition",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Back to the Naïve Definition",
-    "text": "Back to the Naïve Definition\nUsing our naïve definition of probability, we can compute this probability using the frequencies in the table as\n\\[\n\\Pr(G = 11, H = 1) = \\frac{\\#[G = 11, H = 1]}{\\#\\text{ Students Total}}\n\\]\nPlugging in the values from Table 1, we obtain the answer:\n\\[\n\\Pr(G = 11, H = 1) = \\frac{4}{33} \\approx 0.121\n\\]",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#frequency-table-probability-table",
-    "href": "w05b/index.html#frequency-table-probability-table",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequency Table → Probability Table",
-    "text": "Frequency Table → Probability Table\n\nWhen we divide by 33, we are normalizing the counts, producing probabilities (normalized counts)\nBy normalizing all cells in the table, we convert our frequency table into a probability table",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#computing-overall-total-by-column",
-    "href": "w05b/index.html#computing-overall-total-by-column",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Computing Overall Total by Column",
-    "text": "Computing Overall Total by Column\nWe could compute the total by summing columns, then summing over our individual column totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\n\\(G = 11\\)\n6\n4\n\n\n\n\\(G = 12\\)\n7\n1\n\n\n\nTotal\n23\n10\n33",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#computing-overall-total-by-row",
-    "href": "w05b/index.html#computing-overall-total-by-row",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Computing Overall Total by Row",
-    "text": "Computing Overall Total by Row\nOr, we could compute the total by summing rows, then summing over our individual row totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n\n\n33",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#bringing-both-methods-together",
-    "href": "w05b/index.html#bringing-both-methods-together",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Bringing Both Methods Together",
-    "text": "Bringing Both Methods Together\n\n\n\nTable 2: The same frequency table as in Table 1, but now with row and column totals representing marginal frequencies\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n23\n10\n33",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#frequencies-to-probabilities",
-    "href": "w05b/index.html#frequencies-to-probabilities",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Frequencies to Probabilities",
-    "text": "Frequencies to Probabilities\n\n\n\nNow let’s use overall total (33) to convert counts into probabilities:\n\n\n\n\n\nTable 3: Table from prev slide with all values normalized (divided by the total number of obs)\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#one-table-three-distributions",
-    "href": "w05b/index.html#one-table-three-distributions",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "One Table, Three Distributions!",
-    "text": "One Table, Three Distributions!\nNow that we have normalized counts, different pieces of this table give different probability distributions:\n\n\n\nJoint Distribution \\(f_{G,H}(g, h)\\): Look at value in row \\(g\\), col \\(h\\)\nTwo Marginal Distributions\n\\(f_G(g)\\): Look at total for row \\(g\\)\n\\(f_H(h)\\): Look at total for column \\(h\\)\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#summary-joint-marginal",
-    "href": "w05b/index.html#summary-joint-marginal",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Summary: Joint → Marginal",
-    "text": "Summary: Joint → Marginal\n\nNote how marginal distributions were obtained by summing the joint distribution over a particular dimension:\nSumming each column (\\(H = 0\\) and \\(H = 1\\)) produced marginal distribution of \\(H\\):\n\n\n\n\n\n\n\n\\(\\Pr(H = 0, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 0)\\)\n\n\n\n\n\n\n\n\n\n\\(\\Pr(H = 1, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 1)\\)\n\n\n\n\n\n\nSumming each row (\\(G = 10\\), \\(G = 11\\), \\(G = 12\\)) produced marginal distribution of \\(G\\):\n\n\n\n\n\\(\\Pr(G = 10, H = 0)\\)\n+\n\\(\\Pr(G = 10, H = 1)\\)\n=\n\\(\\Pr(G = 10)\\)\n\n\n\\(\\Pr(G = 11, H = 0)\\)\n+\n\\(\\Pr(G = 11, H = 1)\\)\n=\n\\(\\Pr(G = 11)\\)\n\n\n\\(\\Pr(G = 12, H = 0)\\)\n+\n\\(\\Pr(G = 12, H = 1)\\)\n=\n\\(\\Pr(G = 12)\\)",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#whats-missing-conditional-distributions",
-    "href": "w05b/index.html#whats-missing-conditional-distributions",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "What’s Missing? Conditional Distributions",
-    "text": "What’s Missing? Conditional Distributions\n\nConditional distribution does not represent a sum but a slice: we consider e.g. one particular row or one particular column of the table.\n🚨Warning🚨! unlike in joint and marginal cases, when computing conditional distributions we have to renormalize, since we are “entering world” where we only consider subsets of the table where condition is met!\nRecall slide about how all distributions are conditional distributions:\n\n\n\n\n\\(\\Pr(G = 10, H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10, H = 1 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10 \\mid H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\frac{\\Pr(G = 10, H = 1)}{\\Pr(H = 1)} \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1)}{\\#(H = 1)\\text{ 😳}}\n\\end{align*}\n\\]",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#conditional-distributions-from-columns",
-    "href": "w05b/index.html#conditional-distributions-from-columns",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Conditional Distributions from Columns",
-    "text": "Conditional Distributions from Columns\nLet’s extract just the \\(H = 1\\) column:\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n5\n\n\n\\(G = 11\\)\n4\n\n\n\\(G = 12\\)\n1\n\n\nTotal\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{10}{10}\\)\n\n\n\n\n\n\nBefore, 10 was a particular marginal frequency of interest; now 10 is just a total that we use to renormalize",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#conditional-distributions-from-rows",
-    "href": "w05b/index.html#conditional-distributions-from-rows",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Conditional Distributions from Rows",
-    "text": "Conditional Distributions from Rows\nLet’s extract just the \\(G = 10\\) row:\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n5\n10\n15\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{15}\\)\n\\(\\frac{10}{15}\\)\n\\(\\frac{15}{15}\\)\n\n\n\n\n\n\nBefore, 15 was a particular marginal frequency of interest; now 15 is just a total that we use to renormalize",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#discrete-world-summary",
-    "href": "w05b/index.html#discrete-world-summary",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Discrete World Summary",
-    "text": "Discrete World Summary\nWe now have the link between three types of distributions derived from our table:\n\n\n\n\n\n\n\n\n\n\n\nDistribution Type\nHow Many?\nExample Value\n\n\n\n\nJoint Distribution\n1\n\\(\\Pr(G = 11, H = 1) = \\frac{4}{33}\\)\n\n\nMarginal Distributions\n2\n\\(\\Pr(H = 1) = \\frac{10}{33}\\)\n\n\nConditional Distributions\n6\n\\(\\Pr(G = 10 \\mid H = 1) = \\frac{5}{10}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{23}\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{23}\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{23}\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{23}{23}\\)\n\\(\\frac{10}{10}\\)",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
-    "objectID": "w05b/index.html#working-backwards",
-    "href": "w05b/index.html#working-backwards",
-    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
-    "section": "Working Backwards",
-    "text": "Working Backwards\n\nHere we started from the joint distribution and derived marginal and conditional distributions\nSame intuition, plus math, lets us go in opposite direction: given marginal and conditional distributions, can derive joint distribution, since (conditional prob defn):\n\n\n\n\n\n\n\\(\\Pr(A \\mid B)\\)\n\\(=\\)\n\\(\\Pr(A, B)\\)\n\n\n\\(\\Pr(B)\\)\n\n\n\n\n\\[\n\\iff\n\\]\n\n\n\n\n\\(\\Pr(A,B)\\)\n\\(=\\)\n\\(\\Pr(A \\mid B)\\)\n\\(\\cdot\\)\n\\(\\Pr(B)\\)\n\n\n\n\n\n\nfrom which we can see that if we know the conditional distribution \\(\\Pr(B \\mid A)\\) and the marginal distribution \\(\\Pr(A)\\), we can combine these (via multiplication) to obtain the joint distribution \\(\\Pr(B,A)\\).",
-    "crumbs": [
-      "Week 5B: Sep 23"
-    ]
-  },
-  {
     "objectID": "w04/slides.html#discrete-vs.-continuous",
     "href": "w04/slides.html#discrete-vs.-continuous",
     "title": "Week 4: Continuous Distributions",
@@ -3725,7 +3460,7 @@
     "href": "w03/index.html#applying-this-to-the-disease-data",
     "title": "Week 3: Discrete Distributions",
     "section": "Applying This to the Disease Data",
-    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0\"\n\n\n\n(Foreshadowing Monte Carlo methods)",
+    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 2\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 2e-04\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0.0002\"\n\n\n\n(Foreshadowing Monte Carlo methods)",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3735,7 +3470,7 @@
     "href": "w03/index.html#data-generating-process-test-results",
     "title": "Week 3: Discrete Distributions",
     "section": "Data-Generating Process: Test Results",
-    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n95 positive tests / 10000 total = 0.0095\n\n\n\n#disp(ppl_df %&gt;% head(50), obs_per_page = 3)\nppl_df |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0",
+    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n125 positive tests / 10000 total = 0.0125\n\n\n\n#disp(ppl_df %&gt;% head(50), obs_per_page = 3)\nppl_df |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3745,7 +3480,7 @@
     "href": "w03/index.html#zooming-in-on-positive-tests",
     "title": "Week 3: Discrete Distributions",
     "section": "Zooming In On Positive Tests",
-    "text": "Zooming In On Positive Tests\n\n\n\npos_ppl &lt;- ppl_df %&gt;% filter(test_result == 1)\n#disp(pos_ppl, obs_per_page = 10)\npos_ppl |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n150\n0\n1\n\n\n368\n0\n1\n\n\n441\n0\n1\n\n\n490\n0\n1\n\n\n498\n0\n1\n\n\n734\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)",
+    "text": "Zooming In On Positive Tests\n\n\n\npos_ppl &lt;- ppl_df %&gt;% filter(test_result == 1)\n#disp(pos_ppl, obs_per_page = 10)\npos_ppl |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n64\n0\n1\n\n\n182\n0\n1\n\n\n226\n0\n1\n\n\n228\n0\n1\n\n\n284\n0\n1\n\n\n335\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3755,7 +3490,7 @@
     "href": "w03/index.html#zooming-in-on-disease-havers",
     "title": "Week 3: Discrete Distributions",
     "section": "Zooming In On Disease-Havers",
-    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 60\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n3520\n1\n1\n\n\n\n\n\n\n\n\n#disp(simulate_disease(5000, 1/10000))\nsimulate_disease(5000, 1/10000)\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 52\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n2384\n1\n1",
+    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n723\n1\n1\n\n\n5003\n1\n1\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 2\nProportion with disease: 0.0004\nNumber of positive tests: 59\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1981\n1\n1\n\n\n4910\n1\n1\n\n\n\n\n\n\n\n\n#disp(simulate_disease(5000, 1/10000))\nsimulate_disease(5000, 1/10000)\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 53\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n3837\n1\n1",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3765,7 +3500,7 @@
     "href": "w03/index.html#worst-case-worlds",
     "title": "Week 3: Discrete Distributions",
     "section": "Worst-Case Worlds",
-    "text": "Worst-Case Worlds\n\n\n\nfor (i in seq(1,1000)) {\n  sim_result &lt;- simulate_disease(5000, 1/10000, verbose = FALSE, return_all_detected = FALSE, return_df = FALSE, return_info = TRUE)\n  if (!sim_result$all_detected) {\n    writeLines(paste0(\"World #\",i,\" / 1000 (\",sim_result$num_people,\" people):\"))\n    print(sim_result$df)\n    writeLines('\\n')\n  }\n}\n\nWorld #73 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   993           1           0\n2  3068           1           1\n\n\nWorld #92 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   809           1           1\n2  1500           1           0\n\n\nWorld #204 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1948           1           1\n2  3561           1           0\n\n\nWorld #523 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4657           1           0\n\n\nWorld #972 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1250           1           1\n2  1755           1           0\n\nformat(4 / 5000000, scientific = FALSE)\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\nresult_df &lt;- simulate_disease(1000000, 1/10000, verbose = FALSE, return_full_df = TRUE)\nfalse_negatives &lt;- result_df[result_df$has_disease == 1 & result_df$test_result == 0,]\nnum_false_negatives &lt;- nrow(false_negatives)\nwriteLines(paste0(\"False Negatives: \",num_false_negatives,\", Total Cases: \", nrow(result_df)))\n\nFalse Negatives: 2, Total Cases: 1000000\n\nfalse_negative_rate &lt;- num_false_negatives / nrow(result_df)\nfalse_negative_rate_decimal &lt;- format(false_negative_rate, scientific = FALSE)\nwriteLines(paste0(\"False Negative Rate: \", false_negative_rate_decimal))\n\nFalse Negative Rate: 0.000002\n\n\n(Perfect match!)",
+    "text": "Worst-Case Worlds\n\n\n\nfor (i in seq(1,1000)) {\n  sim_result &lt;- simulate_disease(5000, 1/10000, verbose = FALSE, return_all_detected = FALSE, return_df = FALSE, return_info = TRUE)\n  if (!sim_result$all_detected) {\n    writeLines(paste0(\"World #\",i,\" / 1000 (\",sim_result$num_people,\" people):\"))\n    print(sim_result$df)\n    writeLines('\\n')\n  }\n}\n\nWorld #103 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2512           1           0\n\n\nWorld #869 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3442           1           0\n\n\nWorld #895 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1943           1           0\n2  3889           1           1\n\nformat(4 / 5000000, scientific = FALSE)\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\nresult_df &lt;- simulate_disease(1000000, 1/10000, verbose = FALSE, return_full_df = TRUE)\nfalse_negatives &lt;- result_df[result_df$has_disease == 1 & result_df$test_result == 0,]\nnum_false_negatives &lt;- nrow(false_negatives)\nwriteLines(paste0(\"False Negatives: \",num_false_negatives,\", Total Cases: \", nrow(result_df)))\n\nFalse Negatives: 1, Total Cases: 1000000\n\nfalse_negative_rate &lt;- num_false_negatives / nrow(result_df)\nfalse_negative_rate_decimal &lt;- format(false_negative_rate, scientific = FALSE)\nwriteLines(paste0(\"False Negative Rate: \", false_negative_rate_decimal))\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3795,7 +3530,7 @@
     "href": "w03/index.html#birthday-problem",
     "title": "Week 3: Discrete Distributions",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n273\n\n\n1\n2\n113\n\n\n1\n3\n187\n\n\n1\n4\n311\n\n\n1\n5\n272\n\n\n1\n6\n365",
+    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n171\n\n\n1\n2\n314\n\n\n1\n3\n286\n\n\n1\n4\n245\n\n\n1\n5\n129\n\n\n1\n6\n134",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3805,7 +3540,7 @@
     "href": "w03/index.html#birthday-problem-1",
     "title": "Week 3: Discrete Distributions",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n# Inefficient version (return_num=FALSE) is for: if you want tibbles of *all* shared bdays for each room\nget_shared_bdays &lt;- function(df, is_grouped=NULL, return_num=FALSE, return_bool=FALSE) {\n  bday_pairs &lt;- tibble()\n  for (i in 1:(nrow(df)-1)) {\n    i_data &lt;- df[i,]\n    i_bday &lt;- i_data$birthday\n    for (j in (i+1):nrow(df)) {\n      j_data &lt;- df[j,]\n      j_bday &lt;- j_data$birthday\n      # Check if they're the same\n      same_bday &lt;- i_bday == j_bday\n      if (same_bday) {\n        if (return_bool) {\n          return(1)\n        }\n        pair_data &lt;- tibble(i=i,j=j,bday=i_bday)\n        if (!is.null(is_grouped)) {\n          i_room &lt;- i_data$room_num\n          pair_data['room'] &lt;- i_room\n        }\n        bday_pairs &lt;- bind_rows(bday_pairs, pair_data)\n      }\n    }\n  }\n  if (return_bool) {\n    return(0)\n  }\n  if (return_num) {\n    return(nrow(bday_pairs))\n  }\n  return(bday_pairs)\n}\n#get_shared_bdays(ppl_df)\nget_shared_bdays(ppl_df)\n\n\n\n\n\ni\nj\nbday\n\n\n\n\n4\n7\n311\n\n\n6\n29\n365",
+    "text": "Birthday Problem\n\n# Inefficient version (return_num=FALSE) is for: if you want tibbles of *all* shared bdays for each room\nget_shared_bdays &lt;- function(df, is_grouped=NULL, return_num=FALSE, return_bool=FALSE) {\n  bday_pairs &lt;- tibble()\n  for (i in 1:(nrow(df)-1)) {\n    i_data &lt;- df[i,]\n    i_bday &lt;- i_data$birthday\n    for (j in (i+1):nrow(df)) {\n      j_data &lt;- df[j,]\n      j_bday &lt;- j_data$birthday\n      # Check if they're the same\n      same_bday &lt;- i_bday == j_bday\n      if (same_bday) {\n        if (return_bool) {\n          return(1)\n        }\n        pair_data &lt;- tibble(i=i,j=j,bday=i_bday)\n        if (!is.null(is_grouped)) {\n          i_room &lt;- i_data$room_num\n          pair_data['room'] &lt;- i_room\n        }\n        bday_pairs &lt;- bind_rows(bday_pairs, pair_data)\n      }\n    }\n  }\n  if (return_bool) {\n    return(0)\n  }\n  if (return_num) {\n    return(nrow(bday_pairs))\n  }\n  return(bday_pairs)\n}\n#get_shared_bdays(ppl_df)\nget_shared_bdays(ppl_df)",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3815,7 +3550,7 @@
     "href": "w03/index.html#section",
     "title": "Week 3: Discrete Distributions",
     "section": "",
-    "text": "Let’s try more rooms…\n\n\n\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n[[1]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1     3   229\n2    17    21   144\n\n[[2]]\n# A tibble: 0 × 0\n\n[[3]]\n# A tibble: 0 × 0\n\n[[4]]\n# A tibble: 0 × 0\n\n[[5]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    30     2\n\n[[6]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    11    25    88\n\n[[7]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    30   131\n2    20    21    54\n\n[[8]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    27   197\n2    15    20   154\n\n[[9]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7    10   297\n\n[[10]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     9    10   139\n2    13    18   218\n\n\n\nNumber of shared birthdays per room:\n\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n [1] 2 0 0 0 1 1 2 2 1 2\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\nsum(shared_per_room &gt; 0) / num_rooms\n\n[1] 0.7",
+    "text": "Let’s try more rooms…\n\n\n\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n[[1]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     4     8    20\n2    17    23   358\n\n[[2]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    11   193\n2     2     6   114\n\n[[3]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    17    29   144\n\n[[4]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    20   255\n2     5    24    10\n\n[[5]]\n# A tibble: 6 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    20   287\n2     6     8   115\n3    11    13   126\n4    11    30   126\n5    13    30   126\n6    25    27   301\n\n[[6]]\n# A tibble: 4 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7    15   250\n2    11    12    63\n3    14    25    36\n4    16    27    83\n\n[[7]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    19    22   334\n\n[[8]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    10    20   346\n\n[[9]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    19    25   328\n\n[[10]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    18    29   261\n\n\n\nNumber of shared birthdays per room:\n\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n [1] 2 2 1 2 6 4 1 1 1 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\nsum(shared_per_room &gt; 0) / num_rooms\n\n[1] 1",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -3825,7 +3560,7 @@
     "href": "w03/index.html#section-1",
     "title": "Week 3: Discrete Distributions",
     "section": "",
-    "text": "How about A THOUSAND ROOMS?\n\n\nnum_rooms_many &lt;- 100\nmany_rooms_df &lt;- gen_bday_rooms(num_rooms_many)\nanyshared_per_room &lt;- many_rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_bool = TRUE))\nanyshared_per_room &lt;- unlist(anyshared_per_room)\nanyshared_per_room\n\n  [1] 1 1 1 1 0 1 1 1 0 1 1 1 1 1 1 0 1 1 0 1 1 1 1 0 0 0 1 1 1 1 0 1 1 1 0 0 1\n [38] 1 0 0 1 1 0 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 1 1 0 0 1 1 1 0 1 1 1 0 0 1 0 0\n [75] 1 0 1 1 1 1 1 0 0 1 0 0 0 0 0 1 1 1 0 1 1 1 1 1 1 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n# And now the probability estimate\nsum(anyshared_per_room &gt; 0) / num_rooms_many\n\n[1] 0.69\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n(exact_solution &lt;- 1 - (prod(seq(337,366))) / (366^30))\n\n[1] 0.7053034",
+    "text": "How about A THOUSAND ROOMS?\n\n\nnum_rooms_many &lt;- 100\nmany_rooms_df &lt;- gen_bday_rooms(num_rooms_many)\nanyshared_per_room &lt;- many_rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_bool = TRUE))\nanyshared_per_room &lt;- unlist(anyshared_per_room)\nanyshared_per_room\n\n  [1] 1 1 1 1 1 1 0 1 0 1 1 0 0 1 1 0 0 1 1 0 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1\n [38] 1 0 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 0 1 1 0 0 1 0 1 0 1 0 1 1 1 1 1 1 0\n [75] 1 0 1 1 0 1 1 1 1 1 1 0 1 1 1 0 0 1 1 1 0 1 1 1 1 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n# And now the probability estimate\nsum(anyshared_per_room &gt; 0) / num_rooms_many\n\n[1] 0.75\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n(exact_solution &lt;- 1 - (prod(seq(337,366))) / (366^30))\n\n[1] 0.7053034",
     "crumbs": [
       "Week 3: Sep 9"
     ]
@@ -4142,35 +3877,35 @@
     "href": "w03/slides.html#applying-this-to-the-disease-data",
     "title": "Week 3: Discrete Distributions",
     "section": "Applying This to the Disease Data",
-    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 4\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 4e-04\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0.0004\"\n\n\n\n(Foreshadowing Monte Carlo methods)"
+    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0\"\n\n\n\n(Foreshadowing Monte Carlo methods)"
   },
   {
     "objectID": "w03/slides.html#data-generating-process-test-results",
     "href": "w03/slides.html#data-generating-process-test-results",
     "title": "Week 3: Discrete Distributions",
     "section": "Data-Generating Process: Test Results",
-    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n99 positive tests / 10000 total = 0.0099\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0"
+    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n102 positive tests / 10000 total = 0.0102\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0"
   },
   {
     "objectID": "w03/slides.html#zooming-in-on-positive-tests",
     "href": "w03/slides.html#zooming-in-on-positive-tests",
     "title": "Week 3: Discrete Distributions",
     "section": "Zooming In On Positive Tests",
-    "text": "Zooming In On Positive Tests\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n23\n0\n1\n\n\n73\n0\n1\n\n\n449\n0\n1\n\n\n520\n0\n1\n\n\n560\n0\n1\n\n\n944\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)"
+    "text": "Zooming In On Positive Tests\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n110\n0\n1\n\n\n236\n0\n1\n\n\n516\n0\n1\n\n\n525\n0\n1\n\n\n685\n0\n1\n\n\n789\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)"
   },
   {
     "objectID": "w03/slides.html#zooming-in-on-disease-havers",
     "href": "w03/slides.html#zooming-in-on-disease-havers",
     "title": "Week 3: Discrete Distributions",
     "section": "Zooming In On Disease-Havers",
-    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1853\n1\n1\n\n\n2402\n1\n1\n\n\n8728\n1\n1\n\n\n9179\n1\n1\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 51\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1485\n1\n1\n\n\n\n\n\n\n\n\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 60\n\n\n\n\n\n\nid\nhas_disease\ntest_result"
+    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 42\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\n\n\n\nNum with disease: 2\nProportion with disease: 0.0004\nNumber of positive tests: 66\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1109\n1\n1\n\n\n3249\n1\n1"
   },
   {
     "objectID": "w03/slides.html#worst-case-worlds",
     "href": "w03/slides.html#worst-case-worlds",
     "title": "Week 3: Discrete Distributions",
     "section": "Worst-Case Worlds",
-    "text": "Worst-Case Worlds\n\n\n\n\nWorld #109 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4371           1           0\n\n\nWorld #436 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3236           1           0\n\n\nWorld #482 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2118           1           0\n\n\nWorld #485 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2627           1           1\n2  3897           1           0\n\n\nWorld #562 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4344           1           0\n\n\nWorld #619 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2342           1           0\n\n\nWorld #753 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4847           1           0\n\n\nWorld #843 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2498           1           0\n\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\n\nFalse Negatives: 1, Total Cases: 1000000\n\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)"
+    "text": "Worst-Case Worlds\n\n\n\n\nWorld #121 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2320           1           0\n\n\nWorld #260 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4995           1           0\n\n\nWorld #413 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3616           1           0\n\n\nWorld #539 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2035           1           0\n\n\nWorld #816 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1564           1           0\n\n\nWorld #828 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   232           1           0\n\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\n\nFalse Negatives: 1, Total Cases: 1000000\n\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)"
   },
   {
     "objectID": "w03/slides.html#bayes-takeaway",
@@ -4191,28 +3926,28 @@
     "href": "w03/slides.html#birthday-problem",
     "title": "Week 3: Discrete Distributions",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n37\n\n\n1\n2\n110\n\n\n1\n3\n221\n\n\n1\n4\n64\n\n\n1\n5\n101\n\n\n1\n6\n317"
+    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n245\n\n\n1\n2\n88\n\n\n1\n3\n57\n\n\n1\n4\n63\n\n\n1\n5\n152\n\n\n1\n6\n142"
   },
   {
     "objectID": "w03/slides.html#birthday-problem-1",
     "href": "w03/slides.html#birthday-problem-1",
     "title": "Week 3: Discrete Distributions",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n\n\n\n\n\ni\nj\nbday\n\n\n\n\n8\n29\n299"
+    "text": "Birthday Problem"
   },
   {
     "objectID": "w03/slides.html#section",
     "href": "w03/slides.html#section",
     "title": "Week 3: Discrete Distributions",
     "section": "",
-    "text": "Let’s try more rooms…\n\n\n\n\nCode\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n\n[[1]]\n# A tibble: 4 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     5    21    43\n2     5    28    43\n3    10    29   277\n4    21    28    43\n\n[[2]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    11    23   273\n2    15    30   244\n\n[[3]]\n# A tibble: 0 × 0\n\n[[4]]\n# A tibble: 0 × 0\n\n[[5]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     8    19    64\n\n[[6]]\n# A tibble: 3 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     5    17    36\n2     8    15   341\n3    19    25   278\n\n[[7]]\n# A tibble: 4 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    26    74\n2     6    19   229\n3     8    20   169\n4    25    30     5\n\n[[8]]\n# A tibble: 4 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     5    25   265\n2     7    13   296\n3    11    26   160\n4    20    27   230\n\n[[9]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3     9   354\n2    12    23   149\n\n[[10]]\n# A tibble: 0 × 0\n\n\n\nNumber of shared birthdays per room:\n\n\nCode\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n\n [1] 4 2 0 0 1 3 4 4 2 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\n\n[1] 0.7"
+    "text": "Let’s try more rooms…\n\n\n\n\nCode\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n\n[[1]]\n# A tibble: 3 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    23    94\n2    11    24    29\n3    18    21   101\n\n[[2]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    18    28   304\n\n[[3]]\n# A tibble: 0 × 0\n\n[[4]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3     8   235\n\n[[5]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    24    21\n2    14    18   256\n\n[[6]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    26   335\n\n[[7]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    17    27   107\n\n[[8]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    26   362\n2     3    12    14\n\n[[9]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    26   288\n\n[[10]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    10    14   297\n\n\n\nNumber of shared birthdays per room:\n\n\nCode\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n\n [1] 3 1 0 1 2 1 1 2 1 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\n\n[1] 0.9"
   },
   {
     "objectID": "w03/slides.html#section-1",
     "href": "w03/slides.html#section-1",
     "title": "Week 3: Discrete Distributions",
     "section": "",
-    "text": "How about A THOUSAND ROOMS?\n\n\n\n  [1] 1 1 1 1 1 1 1 1 1 0 0 1 0 1 1 0 0 0 1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 0 1 0 1\n [38] 1 1 0 1 0 1 1 1 1 1 1 1 0 0 1 1 0 0 1 0 0 0 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1\n [75] 1 1 0 1 1 1 1 1 0 1 0 1 1 0 1 0 1 0 1 1 1 1 1 1 1 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n\n[1] 0.7\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n\n[1] 0.7053034"
+    "text": "How about A THOUSAND ROOMS?\n\n\n\n  [1] 0 0 1 1 0 1 1 1 1 0 1 1 1 1 0 1 1 1 0 0 1 0 0 1 0 1 1 1 1 1 1 1 1 1 0 1 1\n [38] 1 0 0 1 0 0 1 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 1 1 1 1 1 1 0 1 1 1 0 0 1\n [75] 1 1 1 0 0 1 1 1 0 1 0 1 1 1 1 1 1 1 0 0 1 0 1 1 0 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n\n[1] 0.69\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n\n[1] 0.7053034"
   },
   {
     "objectID": "w03/slides.html#wrapping-up",
@@ -4320,18 +4055,269 @@
     "text": "Appendix: Countability of \\(\\mathbb{Q}\\)\n\nBad definition: “\\(\\mathbb{N}\\) is countable because no \\(x \\in \\mathbb{N}\\) between \\(0\\) and \\(1\\). \\(\\mathbb{R}\\) is uncountable because infinitely-many \\(x \\in \\mathbb{R}\\) between \\(0\\) and \\(1\\).” (\\(\\implies \\mathbb{Q}\\) uncountable)\nAnd yet, \\(\\mathbb{Q}\\) is countable…\n\n\n\n\n\n\n\n\n\n\\[\n\\begin{align*}\n\\begin{array}{ll}\ns: \\mathbb{N} \\leftrightarrow \\mathbb{Z} & s(n) = (-1)^n \\left\\lfloor \\frac{n+1}{2} \\right\\rfloor \\\\\nh_+: \\mathbb{Z}^+ \\leftrightarrow \\mathbb{Q}^+ & p_1^{a_1}p_2^{a_2}\\cdots \\mapsto p_1^{s(a_1)}p_2^{s(a_2)}\\cdots \\\\\nh: \\mathbb{Z} \\leftrightarrow \\mathbb{Q} & h(n) = \\begin{cases}h_+(n) &n &gt; 0 \\\\ 0 & n = 0 \\\\\n-h_+(-n) & n &lt; 0\\end{cases} \\\\\n(h \\circ s): \\mathbb{N} \\leftrightarrow \\mathbb{Q} & ✅🤯\n\\end{array}\n\\end{align*}\n\\]\n\n\n\n\n\nImage credit: Rebecca J. Stones, Math StackExchange. Math credit: Thomas Andrews, Math StackExchange"
   },
   {
-    "objectID": "recordings-archive/index.html",
-    "href": "recordings-archive/index.html",
-    "title": "Lecture Recordings Archive",
+    "objectID": "w05b/index.html",
+    "href": "w05b/index.html",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
     "section": "",
-    "text": "Use the listing below to view lecture recordings for previous iterations of DSAN 5100!\n\n\n\n\n\n\n\n\n\n\nWeek\n\n\n\nTitle\n\n\n\nLast Updated\n\n\n\n\n\n\n\n\n14\n\n\nWeek 14 Presentation Recordings\n\n\nThursday Nov 30, 2023\n\n\n\n\n\n\n13\n\n\nWeek 13 Lecture Recording\n\n\nThursday Nov 16, 2023\n\n\n\n\n\n\n13\n\n\nWeek 13 Guest Lecture: Dr. Kerrie Carfagno\n\n\nThursday Nov 16, 2023\n\n\n\n\n\n\n12\n\n\nWeek 12 Lecture Recording\n\n\nThursday Nov 9, 2023\n\n\n\n\n\n\n11\n\n\nWeek 11 Lecture Recording\n\n\nThursday Nov 2, 2023\n\n\n\n\n\n\n10\n\n\nWeek 10 Lecture Recording\n\n\nThursday Oct 26, 2023\n\n\n\n\n\n\n9\n\n\nWeek 09 Lecture Recording\n\n\nThursday Oct 19, 2023\n\n\n\n\n\n\n8\n\n\nWeek 08 Lecture Recording\n\n\nThursday Oct 12, 2023\n\n\n\n\n\n\n7\n\n\nWeek 07 Lecture Recording\n\n\nThursday Oct 5, 2023\n\n\n\n\n\n\n6\n\n\nWeek 06 Lecture Recording\n\n\nThursday Sep 28, 2023\n\n\n\n\n\n\n5\n\n\nWeek 05 Lecture Recording\n\n\nThursday Sep 21, 2023\n\n\n\n\n\n\n4\n\n\nWeek 04 Lecture Recording\n\n\nThursday Sep 14, 2023\n\n\n\n\n\n\n3\n\n\nWeek 03 Lecture Recording\n\n\nTuesday Sep 5, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "Open slides in new window →",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
   },
   {
-    "objectID": "recordings/index.html",
-    "href": "recordings/index.html",
-    "title": "Lecture Recordings",
-    "section": "",
-    "text": "The lecture recordings for Fall 2024 will be added here as soon as possible after the end of class.\nYou can view recordings of my lectures from previous semesters here\n\n\n\n\n\n\n\n\n\n\nWeek\n\n\n\nTitle\n\n\n\nLast Updated\n\n\n\n\n\n\n\n\n1\n\n\nWeek 01 Lecture Recording\n\n\nMonday Sep 30, 2024\n\n\n\n\n\n\nNo matching items"
+    "objectID": "w05b/index.html#frequency-tables",
+    "href": "w05b/index.html#frequency-tables",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequency Tables",
+    "text": "Frequency Tables\n\n\n\n\nWhat does Table 1 tell us on its own (before computing proportions in our heads) that is useful for probability?\nAnswer: Not much!\nBut, once we find the overall total, it tells us a lot (everything we need to know!)\n\n\n\n\n\n\nTable 1: A frequency table of HS students(\\(G\\) = grade, \\(H\\) = honors status)Tells us, e.g., 5 honors students in grade 10\n\n\n\n \n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\\(G = 11\\)\n6\n4\n\n\n\\(G = 12\\)\n7\n1\n\n\n\n\n\n\n\n\n\n\nA frequency table where each row corresponds to a grade in a certain senior high school, each column corresponds to honor-student-status (\\(H=1\\) represents honors, \\(H=0\\) represents non-honors), and each cell contains the number of students in that grade with that honors-status",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#why-do-we-need-the-total",
+    "href": "w05b/index.html#why-do-we-need-the-total",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Why Do We Need The Total?",
+    "text": "Why Do We Need The Total?\n\nQ1: Someone asks the probability that a randomly-selected student will be an honor student in 11th grade.\nQ2: Someone asks what proportion of students are honors\nQ3: Someone asks what % of 12th grade are honors\n\nQ1, for example, is asking us for \\(\\Pr(G = 11, H = 1)\\), a question we can answer if we know the joint distribution \\(f_{G,H}(g, h)\\)",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#back-to-the-naïve-definition",
+    "href": "w05b/index.html#back-to-the-naïve-definition",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Back to the Naïve Definition",
+    "text": "Back to the Naïve Definition\nUsing our naïve definition of probability, we can compute this probability using the frequencies in the table as\n\\[\n\\Pr(G = 11, H = 1) = \\frac{\\#[G = 11, H = 1]}{\\#\\text{ Students Total}}\n\\]\nPlugging in the values from Table 1, we obtain the answer:\n\\[\n\\Pr(G = 11, H = 1) = \\frac{4}{33} \\approx 0.121\n\\]",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#frequency-table-probability-table",
+    "href": "w05b/index.html#frequency-table-probability-table",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequency Table → Probability Table",
+    "text": "Frequency Table → Probability Table\n\nWhen we divide by 33, we are normalizing the counts, producing probabilities (normalized counts)\nBy normalizing all cells in the table, we convert our frequency table into a probability table",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#computing-overall-total-by-column",
+    "href": "w05b/index.html#computing-overall-total-by-column",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Computing Overall Total by Column",
+    "text": "Computing Overall Total by Column\nWe could compute the total by summing columns, then summing over our individual column totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\n\\(G = 11\\)\n6\n4\n\n\n\n\\(G = 12\\)\n7\n1\n\n\n\nTotal\n23\n10\n33",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#computing-overall-total-by-row",
+    "href": "w05b/index.html#computing-overall-total-by-row",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Computing Overall Total by Row",
+    "text": "Computing Overall Total by Row\nOr, we could compute the total by summing rows, then summing over our individual row totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n\n\n33",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#bringing-both-methods-together",
+    "href": "w05b/index.html#bringing-both-methods-together",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Bringing Both Methods Together",
+    "text": "Bringing Both Methods Together\n\n\n\nTable 2: The same frequency table as in Table 1, but now with row and column totals representing marginal frequencies\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n23\n10\n33",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#frequencies-to-probabilities",
+    "href": "w05b/index.html#frequencies-to-probabilities",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequencies to Probabilities",
+    "text": "Frequencies to Probabilities\n\n\n\nNow let’s use overall total (33) to convert counts into probabilities:\n\n\n\n\n\nTable 3: Table from prev slide with all values normalized (divided by the total number of obs)\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#one-table-three-distributions",
+    "href": "w05b/index.html#one-table-three-distributions",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "One Table, Three Distributions!",
+    "text": "One Table, Three Distributions!\nNow that we have normalized counts, different pieces of this table give different probability distributions:\n\n\n\nJoint Distribution \\(f_{G,H}(g, h)\\): Look at value in row \\(g\\), col \\(h\\)\nTwo Marginal Distributions\n\\(f_G(g)\\): Look at total for row \\(g\\)\n\\(f_H(h)\\): Look at total for column \\(h\\)\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#summary-joint-marginal",
+    "href": "w05b/index.html#summary-joint-marginal",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Summary: Joint → Marginal",
+    "text": "Summary: Joint → Marginal\n\nNote how marginal distributions were obtained by summing the joint distribution over a particular dimension:\nSumming each column (\\(H = 0\\) and \\(H = 1\\)) produced marginal distribution of \\(H\\):\n\n\n\n\n\n\n\n\\(\\Pr(H = 0, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 0)\\)\n\n\n\n\n\n\n\n\n\n\\(\\Pr(H = 1, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 1)\\)\n\n\n\n\n\n\nSumming each row (\\(G = 10\\), \\(G = 11\\), \\(G = 12\\)) produced marginal distribution of \\(G\\):\n\n\n\n\n\\(\\Pr(G = 10, H = 0)\\)\n+\n\\(\\Pr(G = 10, H = 1)\\)\n=\n\\(\\Pr(G = 10)\\)\n\n\n\\(\\Pr(G = 11, H = 0)\\)\n+\n\\(\\Pr(G = 11, H = 1)\\)\n=\n\\(\\Pr(G = 11)\\)\n\n\n\\(\\Pr(G = 12, H = 0)\\)\n+\n\\(\\Pr(G = 12, H = 1)\\)\n=\n\\(\\Pr(G = 12)\\)",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#whats-missing-conditional-distributions",
+    "href": "w05b/index.html#whats-missing-conditional-distributions",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "What’s Missing? Conditional Distributions",
+    "text": "What’s Missing? Conditional Distributions\n\nConditional distribution does not represent a sum but a slice: we consider e.g. one particular row or one particular column of the table.\n🚨Warning🚨! unlike in joint and marginal cases, when computing conditional distributions we have to renormalize, since we are “entering world” where we only consider subsets of the table where condition is met!\nRecall slide about how all distributions are conditional distributions:\n\n\n\n\n\\(\\Pr(G = 10, H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10, H = 1 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10 \\mid H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\frac{\\Pr(G = 10, H = 1)}{\\Pr(H = 1)} \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1)}{\\#(H = 1)\\text{ 😳}}\n\\end{align*}\n\\]",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#conditional-distributions-from-columns",
+    "href": "w05b/index.html#conditional-distributions-from-columns",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Conditional Distributions from Columns",
+    "text": "Conditional Distributions from Columns\nLet’s extract just the \\(H = 1\\) column:\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n5\n\n\n\\(G = 11\\)\n4\n\n\n\\(G = 12\\)\n1\n\n\nTotal\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{10}{10}\\)\n\n\n\n\n\n\nBefore, 10 was a particular marginal frequency of interest; now 10 is just a total that we use to renormalize",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#conditional-distributions-from-rows",
+    "href": "w05b/index.html#conditional-distributions-from-rows",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Conditional Distributions from Rows",
+    "text": "Conditional Distributions from Rows\nLet’s extract just the \\(G = 10\\) row:\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n5\n10\n15\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{15}\\)\n\\(\\frac{10}{15}\\)\n\\(\\frac{15}{15}\\)\n\n\n\n\n\n\nBefore, 15 was a particular marginal frequency of interest; now 15 is just a total that we use to renormalize",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#discrete-world-summary",
+    "href": "w05b/index.html#discrete-world-summary",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Discrete World Summary",
+    "text": "Discrete World Summary\nWe now have the link between three types of distributions derived from our table:\n\n\n\n\n\n\n\n\n\n\n\nDistribution Type\nHow Many?\nExample Value\n\n\n\n\nJoint Distribution\n1\n\\(\\Pr(G = 11, H = 1) = \\frac{4}{33}\\)\n\n\nMarginal Distributions\n2\n\\(\\Pr(H = 1) = \\frac{10}{33}\\)\n\n\nConditional Distributions\n6\n\\(\\Pr(G = 10 \\mid H = 1) = \\frac{5}{10}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{23}\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{23}\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{23}\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{23}{23}\\)\n\\(\\frac{10}{10}\\)",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/index.html#working-backwards",
+    "href": "w05b/index.html#working-backwards",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Working Backwards",
+    "text": "Working Backwards\n\nHere we started from the joint distribution and derived marginal and conditional distributions\nSame intuition, plus math, lets us go in opposite direction: given marginal and conditional distributions, can derive joint distribution, since (conditional prob defn):\n\n\n\n\n\n\n\\(\\Pr(A \\mid B)\\)\n\\(=\\)\n\\(\\Pr(A, B)\\)\n\n\n\\(\\Pr(B)\\)\n\n\n\n\n\\[\n\\iff\n\\]\n\n\n\n\n\\(\\Pr(A,B)\\)\n\\(=\\)\n\\(\\Pr(A \\mid B)\\)\n\\(\\cdot\\)\n\\(\\Pr(B)\\)\n\n\n\n\n\n\nfrom which we can see that if we know the conditional distribution \\(\\Pr(B \\mid A)\\) and the marginal distribution \\(\\Pr(A)\\), we can combine these (via multiplication) to obtain the joint distribution \\(\\Pr(B,A)\\).",
+    "crumbs": [
+      "Week 5B: Sep 23"
+    ]
+  },
+  {
+    "objectID": "w05b/slides.html#frequency-tables",
+    "href": "w05b/slides.html#frequency-tables",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequency Tables",
+    "text": "Frequency Tables\n\n\n\n\nWhat does Table 1 tell us on its own (before computing proportions in our heads) that is useful for probability?\nAnswer: Not much!\nBut, once we find the overall total, it tells us a lot (everything we need to know!)\n\n\n\n\n\n\n\n \n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\\(G = 11\\)\n6\n4\n\n\n\\(G = 12\\)\n7\n1\n\n\n\n\n\nTable 1: A frequency table of HS students(\\(G\\) = grade, \\(H\\) = honors status)Tells us, e.g., 5 honors students in grade 10\n\n\n\n\n\n\n\nA frequency table where each row corresponds to a grade in a certain senior high school, each column corresponds to honor-student-status (\\(H=1\\) represents honors, \\(H=0\\) represents non-honors), and each cell contains the number of students in that grade with that honors-status"
+  },
+  {
+    "objectID": "w05b/slides.html#why-do-we-need-the-total",
+    "href": "w05b/slides.html#why-do-we-need-the-total",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Why Do We Need The Total?",
+    "text": "Why Do We Need The Total?\n\nQ1: Someone asks the probability that a randomly-selected student will be an honor student in 11th grade.\nQ2: Someone asks what proportion of students are honors\nQ3: Someone asks what % of 12th grade are honors\n\nQ1, for example, is asking us for \\(\\Pr(G = 11, H = 1)\\), a question we can answer if we know the joint distribution \\(f_{G,H}(g, h)\\)"
+  },
+  {
+    "objectID": "w05b/slides.html#back-to-the-naïve-definition",
+    "href": "w05b/slides.html#back-to-the-naïve-definition",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Back to the Naïve Definition",
+    "text": "Back to the Naïve Definition\nUsing our naïve definition of probability, we can compute this probability using the frequencies in the table as\n\\[\n\\Pr(G = 11, H = 1) = \\frac{\\#[G = 11, H = 1]}{\\#\\text{ Students Total}}\n\\]\nPlugging in the values from Table 1, we obtain the answer:\n\\[\n\\Pr(G = 11, H = 1) = \\frac{4}{33} \\approx 0.121\n\\]"
+  },
+  {
+    "objectID": "w05b/slides.html#frequency-table-probability-table",
+    "href": "w05b/slides.html#frequency-table-probability-table",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequency Table → Probability Table",
+    "text": "Frequency Table → Probability Table\n\nWhen we divide by 33, we are normalizing the counts, producing probabilities (normalized counts)\nBy normalizing all cells in the table, we convert our frequency table into a probability table"
+  },
+  {
+    "objectID": "w05b/slides.html#computing-overall-total-by-column",
+    "href": "w05b/slides.html#computing-overall-total-by-column",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Computing Overall Total by Column",
+    "text": "Computing Overall Total by Column\nWe could compute the total by summing columns, then summing over our individual column totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n10\n5\n\n\n\n\\(G = 11\\)\n6\n4\n\n\n\n\\(G = 12\\)\n7\n1\n\n\n\nTotal\n23\n10\n33"
+  },
+  {
+    "objectID": "w05b/slides.html#computing-overall-total-by-row",
+    "href": "w05b/slides.html#computing-overall-total-by-row",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Computing Overall Total by Row",
+    "text": "Computing Overall Total by Row\nOr, we could compute the total by summing rows, then summing over our individual row totals to get 33:\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n\n\n33"
+  },
+  {
+    "objectID": "w05b/slides.html#bringing-both-methods-together",
+    "href": "w05b/slides.html#bringing-both-methods-together",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Bringing Both Methods Together",
+    "text": "Bringing Both Methods Together\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\n\\(G = 10\\)\n10\n5\n15\n\n\n\n\\(G = 11\\)\n6\n4\n10\n\n\n\n\\(G = 12\\)\n7\n1\n8\n\n\n\nTotal\n23\n10\n33\n\n\n\n\n\n\nTable 2: The same frequency table as in Table 1, but now with row and column totals representing marginal frequencies"
+  },
+  {
+    "objectID": "w05b/slides.html#frequencies-to-probabilities",
+    "href": "w05b/slides.html#frequencies-to-probabilities",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Frequencies to Probabilities",
+    "text": "Frequencies to Probabilities\n\n\n\nNow let’s use overall total (33) to convert counts into probabilities:\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\nTable 3: Table from prev slide with all values normalized (divided by the total number of obs)"
+  },
+  {
+    "objectID": "w05b/slides.html#one-table-three-distributions",
+    "href": "w05b/slides.html#one-table-three-distributions",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "One Table, Three Distributions!",
+    "text": "One Table, Three Distributions!\nNow that we have normalized counts, different pieces of this table give different probability distributions:\n\n\n\nJoint Distribution \\(f_{G,H}(g, h)\\): Look at value in row \\(g\\), col \\(h\\)\nTwo Marginal Distributions\n\\(f_G(g)\\): Look at total for row \\(g\\)\n\\(f_H(h)\\): Look at total for column \\(h\\)\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)"
+  },
+  {
+    "objectID": "w05b/slides.html#summary-joint-marginal",
+    "href": "w05b/slides.html#summary-joint-marginal",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Summary: Joint → Marginal",
+    "text": "Summary: Joint → Marginal\n\nNote how marginal distributions were obtained by summing the joint distribution over a particular dimension:\nSumming each column (\\(H = 0\\) and \\(H = 1\\)) produced marginal distribution of \\(H\\):\n\n\n\n\n\n\n\n\\(\\Pr(H = 0, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 0, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 0)\\)\n\n\n\n\n\n\n\n\n\n\\(\\Pr(H = 1, G = 10)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 11)\\)\n\n\n+\n\\(\\Pr(H = 1, G = 12)\\)\n\n\n=\n\\(\\Pr(H = 1)\\)\n\n\n\n\n\n\nSumming each row (\\(G = 10\\), \\(G = 11\\), \\(G = 12\\)) produced marginal distribution of \\(G\\):\n\n\n\n\n\\(\\Pr(G = 10, H = 0)\\)\n+\n\\(\\Pr(G = 10, H = 1)\\)\n=\n\\(\\Pr(G = 10)\\)\n\n\n\\(\\Pr(G = 11, H = 0)\\)\n+\n\\(\\Pr(G = 11, H = 1)\\)\n=\n\\(\\Pr(G = 11)\\)\n\n\n\\(\\Pr(G = 12, H = 0)\\)\n+\n\\(\\Pr(G = 12, H = 1)\\)\n=\n\\(\\Pr(G = 12)\\)"
+  },
+  {
+    "objectID": "w05b/slides.html#whats-missing-conditional-distributions",
+    "href": "w05b/slides.html#whats-missing-conditional-distributions",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "What’s Missing? Conditional Distributions",
+    "text": "What’s Missing? Conditional Distributions\n\nConditional distribution does not represent a sum but a slice: we consider e.g. one particular row or one particular column of the table.\n🚨Warning🚨! unlike in joint and marginal cases, when computing conditional distributions we have to renormalize, since we are “entering world” where we only consider subsets of the table where condition is met!\nRecall slide about how all distributions are conditional distributions:\n\n\n\n\n\\(\\Pr(G = 10, H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10, H = 1 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10)\\)\n\n\\[\n\\begin{align*}\n= &\\Pr(G = 10 \\mid \\Omega) \\\\[0.6em]\n= &\\frac{\\#(G = 10, \\Omega)}{\\#\\text{ Total }(\\Omega)\\text{ ✅}}\n\\end{align*}\n\\]\n\n\n\\(\\Pr(G = 10 \\mid H = 1)\\)\n\n\\[\n\\begin{align*}\n= &\\frac{\\Pr(G = 10, H = 1)}{\\Pr(H = 1)} \\\\[0.6em]\n= &\\frac{\\#(G = 10, H = 1)}{\\#(H = 1)\\text{ 😳}}\n\\end{align*}\n\\]"
+  },
+  {
+    "objectID": "w05b/slides.html#conditional-distributions-from-columns",
+    "href": "w05b/slides.html#conditional-distributions-from-columns",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Conditional Distributions from Columns",
+    "text": "Conditional Distributions from Columns\nLet’s extract just the \\(H = 1\\) column:\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n5\n\n\n\\(G = 11\\)\n4\n\n\n\\(G = 12\\)\n1\n\n\nTotal\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{10}{10}\\)\n\n\n\n\n\n\nBefore, 10 was a particular marginal frequency of interest; now 10 is just a total that we use to renormalize"
+  },
+  {
+    "objectID": "w05b/slides.html#conditional-distributions-from-rows",
+    "href": "w05b/slides.html#conditional-distributions-from-rows",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Conditional Distributions from Rows",
+    "text": "Conditional Distributions from Rows\nLet’s extract just the \\(G = 10\\) row:\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n5\n10\n15\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{5}{15}\\)\n\\(\\frac{10}{15}\\)\n\\(\\frac{15}{15}\\)\n\n\n\n\n\n\nBefore, 15 was a particular marginal frequency of interest; now 15 is just a total that we use to renormalize"
+  },
+  {
+    "objectID": "w05b/slides.html#discrete-world-summary",
+    "href": "w05b/slides.html#discrete-world-summary",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Discrete World Summary",
+    "text": "Discrete World Summary\nWe now have the link between three types of distributions derived from our table:\n\n\n\n\n\n\n\n\n\n\n\nDistribution Type\nHow Many?\nExample Value\n\n\n\n\nJoint Distribution\n1\n\\(\\Pr(G = 11, H = 1) = \\frac{4}{33}\\)\n\n\nMarginal Distributions\n2\n\\(\\Pr(H = 1) = \\frac{10}{33}\\)\n\n\nConditional Distributions\n6\n\\(\\Pr(G = 10 \\mid H = 1) = \\frac{5}{10}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\nTotal\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{5}{33}\\)\n\\(\\frac{15}{33}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{33}\\)\n\\(\\frac{4}{33}\\)\n\\(\\frac{10}{33}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{33}\\)\n\\(\\frac{1}{33}\\)\n\\(\\frac{8}{33}\\)\n\n\nTotal\n\\(\\frac{23}{33}\\)\n\\(\\frac{10}{33}\\)\n\\(\\frac{33}{33}\\)\n\n\n\n\n\n\n\n\n\n\\(H = 0\\)\n\\(H = 1\\)\n\n\n\n\n\\(G = 10\\)\n\\(\\frac{10}{23}\\)\n\\(\\frac{5}{10}\\)\n\n\n\\(G = 11\\)\n\\(\\frac{6}{23}\\)\n\\(\\frac{4}{10}\\)\n\n\n\\(G = 12\\)\n\\(\\frac{7}{23}\\)\n\\(\\frac{1}{10}\\)\n\n\nTotal\n\\(\\frac{23}{23}\\)\n\\(\\frac{10}{10}\\)"
+  },
+  {
+    "objectID": "w05b/slides.html#working-backwards",
+    "href": "w05b/slides.html#working-backwards",
+    "title": "Week 5B: Joint, Marginal, and Conditional Distributions",
+    "section": "Working Backwards",
+    "text": "Working Backwards\n\nHere we started from the joint distribution and derived marginal and conditional distributions\nSame intuition, plus math, lets us go in opposite direction: given marginal and conditional distributions, can derive joint distribution, since (conditional prob defn):\n\n\n\n\n\n\n\\(\\Pr(A \\mid B)\\)\n\\(=\\)\n\\(\\Pr(A, B)\\)\n\n\n\\(\\Pr(B)\\)\n\n\n\n\n\\[\n\\iff\n\\]\n\n\n\n\n\\(\\Pr(A,B)\\)\n\\(=\\)\n\\(\\Pr(A \\mid B)\\)\n\\(\\cdot\\)\n\\(\\Pr(B)\\)\n\n\n\n\n\n\nfrom which we can see that if we know the conditional distribution \\(\\Pr(B \\mid A)\\) and the marginal distribution \\(\\Pr(A)\\), we can combine these (via multiplication) to obtain the joint distribution \\(\\Pr(B,A)\\)."
   },
   {
     "objectID": "writeups/hw1-guide/index.html",
@@ -4352,7 +4338,7 @@
     "href": "writeups/hw1-guide/index.html#approach-b",
     "title": "HW1 Question 2.3 Hints",
     "section": "Approach B",
-    "text": "Approach B\nIf we took our simulation from Solution A, and made the sample even larger, however, we would start to see the differences between the two approaches. For example, here is the result with \\(N = 100K\\):\n\nbig_N &lt;- 100000\nbig_sample_cards &lt;- deck_df |&gt; sample_n(big_N, replace = TRUE)\nbig_sample_hands &lt;- cards_to_hands(big_sample_cards)\nbig_sample_hands$is_4ok &lt;- apply(\n  big_sample_hands,\n  1,\n  check_four_of_kind\n)\nbig_total_4ok &lt;- big_sample_hands$is_4ok |&gt; sum()\nbig_total_4ok / big_N\n\n[1] 0.00048\n\n\nWhich is further away from the value we computed in Question 1.4. Thus, as an alternative approach to finding the answer to this question, we can “start over”, re-generating a collection of hands by sampling without replacement rather than sampling 5 cards independently with replacement.\nRepeating the above analysis but removing the splitting-into-groups-of-5 part (that is, re-interpreting the question so that \\(N\\) is the number of hands, not the number of independently-drawn cards) and replacing it with a sample_one_hand() function that draws 5 cards with replacement, we get the following for the large \\(N = 10000\\):\n\nsample_one_hand &lt;- function() {\n  return(deck_df |&gt; select(rank) |&gt; sample_n(5, replace = FALSE) |&gt; t() |&gt; as.numeric())\n}\nsample_one_hand()\n\n[1]  5 10  2  6  4\n\n\n\nN_hands &lt;- 25000\nhands_df &lt;- replicate(N_hands, sample_one_hand()) |&gt; t() |&gt; as.data.frame()\nnames(hands_df) &lt;- c(\"Card 1\", \"Card 2\", \"Card 3\", \"Card 4\", \"Card 5\")\nhands_df$is_4ok &lt;- apply(hands_df, 1, check_four_of_kind)\ncorrected_total_4ok &lt;- hands_df$is_4ok |&gt; sum()\nprint(corrected_total_4ok)\n\n[1] 5\n\ncorrected_p_4ok &lt;- corrected_total_4ok / N_hands\nprint(format(corrected_p_4ok, scientific=FALSE))\n\n[1] \"0.0002\"\n\n\nSo, with these two approaches in mind, your job is to (a) understand the difference between them as best as possible, and then (b) select one that you think better matches the semantics of the question! Then, in your final submission, you can utilize your result from Q2.1 (if you go with Approach A) or generate new hands (if you go with Approach B), as the “input” to your Q2.3 code."
+    "text": "Approach B\nIf we took our simulation from Solution A, and made the sample even larger, however, we would start to see the differences between the two approaches. For example, here is the result with \\(N = 100K\\):\n\nbig_N &lt;- 100000\nbig_sample_cards &lt;- deck_df |&gt; sample_n(big_N, replace = TRUE)\nbig_sample_hands &lt;- cards_to_hands(big_sample_cards)\nbig_sample_hands$is_4ok &lt;- apply(\n  big_sample_hands,\n  1,\n  check_four_of_kind\n)\nbig_total_4ok &lt;- big_sample_hands$is_4ok |&gt; sum()\nbig_total_4ok / big_N\n\n[1] 0.00046\n\n\nWhich is further away from the value we computed in Question 1.4. Thus, as an alternative approach to finding the answer to this question, we can “start over”, re-generating a collection of hands by sampling without replacement rather than sampling 5 cards independently with replacement.\nRepeating the above analysis but removing the splitting-into-groups-of-5 part (that is, re-interpreting the question so that \\(N\\) is the number of hands, not the number of independently-drawn cards) and replacing it with a sample_one_hand() function that draws 5 cards with replacement, we get the following for the large \\(N = 10000\\):\n\nsample_one_hand &lt;- function() {\n  return(deck_df |&gt; select(rank) |&gt; sample_n(5, replace = FALSE) |&gt; t() |&gt; as.numeric())\n}\nsample_one_hand()\n\n[1] 6 1 5 8 1\n\n\n\nN_hands &lt;- 25000\nhands_df &lt;- replicate(N_hands, sample_one_hand()) |&gt; t() |&gt; as.data.frame()\nnames(hands_df) &lt;- c(\"Card 1\", \"Card 2\", \"Card 3\", \"Card 4\", \"Card 5\")\nhands_df$is_4ok &lt;- apply(hands_df, 1, check_four_of_kind)\ncorrected_total_4ok &lt;- hands_df$is_4ok |&gt; sum()\nprint(corrected_total_4ok)\n\n[1] 5\n\ncorrected_p_4ok &lt;- corrected_total_4ok / N_hands\nprint(format(corrected_p_4ok, scientific=FALSE))\n\n[1] \"0.0002\"\n\n\nSo, with these two approaches in mind, your job is to (a) understand the difference between them as best as possible, and then (b) select one that you think better matches the semantics of the question! Then, in your final submission, you can utilize your result from Q2.1 (if you go with Approach A) or generate new hands (if you go with Approach B), as the “input” to your Q2.3 code."
   },
   {
     "objectID": "writeups/optimization/index.html",
@@ -5002,7 +4988,7 @@
     "href": "w02b/index.html#data-generating-process-test-results",
     "title": "Week 2B: Random Variables",
     "section": "Data-Generating Process: Test Results",
-    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n97 positive tests / 10000 total = 0.0097\n\n\n\n#disp(ppl_df %&gt;% head(50), obs_per_page = 3)\nppl_df |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0",
+    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n94 positive tests / 10000 total = 0.0094\n\n\n\n#disp(ppl_df %&gt;% head(50), obs_per_page = 3)\nppl_df |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5012,7 +4998,7 @@
     "href": "w02b/index.html#zooming-in-on-positive-tests",
     "title": "Week 2B: Random Variables",
     "section": "Zooming In On Positive Tests",
-    "text": "Zooming In On Positive Tests\n\n\n\npos_ppl &lt;- ppl_df %&gt;% filter(test_result == 1)\n#disp(pos_ppl, obs_per_page = 10)\npos_ppl |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n188\n0\n1\n\n\n312\n0\n1\n\n\n346\n0\n1\n\n\n363\n0\n1\n\n\n489\n1\n1\n\n\n529\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)",
+    "text": "Zooming In On Positive Tests\n\n\n\npos_ppl &lt;- ppl_df %&gt;% filter(test_result == 1)\n#disp(pos_ppl, obs_per_page = 10)\npos_ppl |&gt; head()\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n34\n0\n1\n\n\n93\n0\n1\n\n\n146\n0\n1\n\n\n169\n0\n1\n\n\n282\n0\n1\n\n\n366\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5022,7 +5008,7 @@
     "href": "w02b/index.html#zooming-in-on-disease-havers",
     "title": "Week 2B: Random Variables",
     "section": "Zooming In On Disease-Havers",
-    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n489\n1\n1\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 58\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\n\n\n#disp(simulate_disease(5000, 1/10000))\nsimulate_disease(5000, 1/10000)\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 54\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n4270\n1\n1",
+    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n8882\n1\n1\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 58\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n4161\n1\n1\n\n\n\n\n\n\n\n\n#disp(simulate_disease(5000, 1/10000))\nsimulate_disease(5000, 1/10000)\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 43\n\n\n\n\n\n\nid\nhas_disease\ntest_result",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5032,7 +5018,7 @@
     "href": "w02b/index.html#worst-case-worlds",
     "title": "Week 2B: Random Variables",
     "section": "Worst-Case Worlds",
-    "text": "Worst-Case Worlds\n\n\n\nfor (i in seq(1,1000)) {\n  sim_result &lt;- simulate_disease(5000, 1/10000, verbose = FALSE, return_all_detected = FALSE, return_df = FALSE, return_info = TRUE)\n  if (!sim_result$all_detected) {\n    writeLines(paste0(\"World #\",i,\" / 1000 (\",sim_result$num_people,\" people):\"))\n    print(sim_result$df)\n    writeLines('\\n')\n  }\n}\n\nWorld #197 / 1000 (5000 people):\n# A tibble: 3 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   808           1           0\n2  2342           1           1\n3  4089           1           1\n\n\nWorld #242 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4671           1           0\n\n\nWorld #334 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3991           1           0\n\n\nWorld #509 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1280           1           0\n\n\nWorld #914 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4588           1           0\n\nformat(4 / 5000000, scientific = FALSE)\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\nresult_df &lt;- simulate_disease(1000000, 1/10000, verbose = FALSE, return_full_df = TRUE)\nfalse_negatives &lt;- result_df[result_df$has_disease == 1 & result_df$test_result == 0,]\nnum_false_negatives &lt;- nrow(false_negatives)\nwriteLines(paste0(\"False Negatives: \",num_false_negatives,\", Total Cases: \", nrow(result_df)))\n\nFalse Negatives: 1, Total Cases: 1000000\n\nfalse_negative_rate &lt;- num_false_negatives / nrow(result_df)\nfalse_negative_rate_decimal &lt;- format(false_negative_rate, scientific = FALSE)\nwriteLines(paste0(\"False Negative Rate: \", false_negative_rate_decimal))\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)",
+    "text": "Worst-Case Worlds\n\n\n\nfor (i in seq(1,1000)) {\n  sim_result &lt;- simulate_disease(5000, 1/10000, verbose = FALSE, return_all_detected = FALSE, return_df = FALSE, return_info = TRUE)\n  if (!sim_result$all_detected) {\n    writeLines(paste0(\"World #\",i,\" / 1000 (\",sim_result$num_people,\" people):\"))\n    print(sim_result$df)\n    writeLines('\\n')\n  }\n}\n\nWorld #103 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3783           1           0\n\n\nWorld #155 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   107           1           0\n\n\nWorld #301 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3490           1           0\n\n\nWorld #491 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2744           1           0\n\n\nWorld #660 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2668           1           0\n\n\nWorld #717 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   391           1           0\n\n\nWorld #738 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3166           1           0\n\n\nWorld #758 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1961           1           0\n\n\nWorld #894 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2960           1           0\n2  4794           1           1\n\nformat(4 / 5000000, scientific = FALSE)\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\nresult_df &lt;- simulate_disease(1000000, 1/10000, verbose = FALSE, return_full_df = TRUE)\nfalse_negatives &lt;- result_df[result_df$has_disease == 1 & result_df$test_result == 0,]\nnum_false_negatives &lt;- nrow(false_negatives)\nwriteLines(paste0(\"False Negatives: \",num_false_negatives,\", Total Cases: \", nrow(result_df)))\n\nFalse Negatives: 1, Total Cases: 1000000\n\nfalse_negative_rate &lt;- num_false_negatives / nrow(result_df)\nfalse_negative_rate_decimal &lt;- format(false_negative_rate, scientific = FALSE)\nwriteLines(paste0(\"False Negative Rate: \", false_negative_rate_decimal))\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5062,7 +5048,7 @@
     "href": "w02b/index.html#birthday-problem",
     "title": "Week 2B: Random Variables",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n272\n\n\n1\n2\n255\n\n\n1\n3\n122\n\n\n1\n4\n131\n\n\n1\n5\n252\n\n\n1\n6\n82",
+    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n71\n\n\n1\n2\n301\n\n\n1\n3\n152\n\n\n1\n4\n339\n\n\n1\n5\n184\n\n\n1\n6\n227",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5072,7 +5058,7 @@
     "href": "w02b/index.html#section-5",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "# Inefficient version (return_num=FALSE) is for: if you want tibbles of *all* shared bdays for each room\nget_shared_bdays &lt;- function(df, is_grouped=NULL, return_num=FALSE, return_bool=FALSE) {\n  bday_pairs &lt;- tibble()\n  for (i in 1:(nrow(df)-1)) {\n    i_data &lt;- df[i,]\n    i_bday &lt;- i_data$birthday\n    for (j in (i+1):nrow(df)) {\n      j_data &lt;- df[j,]\n      j_bday &lt;- j_data$birthday\n      # Check if they're the same\n      same_bday &lt;- i_bday == j_bday\n      if (same_bday) {\n        if (return_bool) {\n          return(1)\n        }\n        pair_data &lt;- tibble(i=i,j=j,bday=i_bday)\n        if (!is.null(is_grouped)) {\n          i_room &lt;- i_data$room_num\n          pair_data['room'] &lt;- i_room\n        }\n        bday_pairs &lt;- bind_rows(bday_pairs, pair_data)\n      }\n    }\n  }\n  if (return_bool) {\n    return(0)\n  }\n  if (return_num) {\n    return(nrow(bday_pairs))\n  }\n  return(bday_pairs)\n}\n#get_shared_bdays(ppl_df)\nget_shared_bdays(ppl_df)",
+    "text": "# Inefficient version (return_num=FALSE) is for: if you want tibbles of *all* shared bdays for each room\nget_shared_bdays &lt;- function(df, is_grouped=NULL, return_num=FALSE, return_bool=FALSE) {\n  bday_pairs &lt;- tibble()\n  for (i in 1:(nrow(df)-1)) {\n    i_data &lt;- df[i,]\n    i_bday &lt;- i_data$birthday\n    for (j in (i+1):nrow(df)) {\n      j_data &lt;- df[j,]\n      j_bday &lt;- j_data$birthday\n      # Check if they're the same\n      same_bday &lt;- i_bday == j_bday\n      if (same_bday) {\n        if (return_bool) {\n          return(1)\n        }\n        pair_data &lt;- tibble(i=i,j=j,bday=i_bday)\n        if (!is.null(is_grouped)) {\n          i_room &lt;- i_data$room_num\n          pair_data['room'] &lt;- i_room\n        }\n        bday_pairs &lt;- bind_rows(bday_pairs, pair_data)\n      }\n    }\n  }\n  if (return_bool) {\n    return(0)\n  }\n  if (return_num) {\n    return(nrow(bday_pairs))\n  }\n  return(bday_pairs)\n}\n#get_shared_bdays(ppl_df)\nget_shared_bdays(ppl_df)\n\n\n\n\n\ni\nj\nbday\n\n\n\n\n9\n12\n141\n\n\n9\n30\n141\n\n\n12\n30\n141",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5082,7 +5068,7 @@
     "href": "w02b/index.html#section-6",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "Let’s try more rooms…\n\n\n\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n[[1]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7    10   356\n2    13    17   215\n\n[[2]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7    10    73\n2    24    30    53\n\n[[3]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    10    18   363\n2    11    22    97\n\n[[4]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    25   303\n2    17    28    70\n\n[[5]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    28    68\n2     7    15   219\n\n[[6]]\n# A tibble: 0 × 0\n\n[[7]]\n# A tibble: 0 × 0\n\n[[8]]\n# A tibble: 0 × 0\n\n[[9]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    13    16   199\n\n[[10]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    14    21    33\n2    27    29   275\n\n\n\nNumber of shared birthdays per room:\n\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n [1] 2 2 2 2 2 0 0 0 1 2\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\nsum(shared_per_room &gt; 0) / num_rooms\n\n[1] 0.7",
+    "text": "Let’s try more rooms…\n\n\n\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n[[1]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     6    24   313\n\n[[2]]\n# A tibble: 0 × 0\n\n[[3]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    29    67\n2     3    24   200\n\n[[4]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     6    23    88\n2    18    19   115\n\n[[5]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    23    25    50\n\n[[6]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1     7    53\n\n[[7]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7    13   107\n\n[[8]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    18   217\n2     2     3   188\n\n[[9]]\n# A tibble: 0 × 0\n\n[[10]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     5    25    12\n2     8     9   351\n\n\n\nNumber of shared birthdays per room:\n\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n [1] 1 0 2 2 1 1 1 2 0 2\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\nsum(shared_per_room &gt; 0) / num_rooms\n\n[1] 0.8",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5092,7 +5078,7 @@
     "href": "w02b/index.html#section-7",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "How about A THOUSAND ROOMS?\n\n\nnum_rooms_many &lt;- 100\nmany_rooms_df &lt;- gen_bday_rooms(num_rooms_many)\nanyshared_per_room &lt;- many_rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_bool = TRUE))\nanyshared_per_room &lt;- unlist(anyshared_per_room)\nanyshared_per_room\n\n  [1] 1 1 1 1 1 1 1 0 1 0 0 0 1 0 0 1 0 1 1 1 0 1 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1\n [38] 1 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1 1 1 1 0\n [75] 1 1 0 1 0 1 1 1 1 0 1 0 1 1 0 1 1 0 1 1 1 1 1 1 1 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n# And now the probability estimate\nsum(anyshared_per_room &gt; 0) / num_rooms_many\n\n[1] 0.76\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n(exact_solution &lt;- 1 - (prod(seq(337,366))) / (366^30))\n\n[1] 0.7053034",
+    "text": "How about A THOUSAND ROOMS?\n\n\nnum_rooms_many &lt;- 100\nmany_rooms_df &lt;- gen_bday_rooms(num_rooms_many)\nanyshared_per_room &lt;- many_rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_bool = TRUE))\nanyshared_per_room &lt;- unlist(anyshared_per_room)\nanyshared_per_room\n\n  [1] 0 0 0 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1 0 1 0 1 0 1 1 0 0 1 1 1 1 1 1 0 1 1 1\n [38] 1 1 0 1 1 0 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 0 1 0 1 1 1 0 1 1 0 1 1 1\n [75] 1 1 1 1 1 1 1 0 1 1 1 1 0 0 1 1 0 1 1 1 1 1 1 1 1 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n# And now the probability estimate\nsum(anyshared_per_room &gt; 0) / num_rooms_many\n\n[1] 0.74\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n(exact_solution &lt;- 1 - (prod(seq(337,366))) / (366^30))\n\n[1] 0.7053034",
     "crumbs": [
       "Week 2B: Sep 2"
     ]
@@ -5478,35 +5464,35 @@
     "href": "w02b/slides.html#applying-this-to-the-disease-data",
     "title": "Week 2B: Random Variables",
     "section": "Applying This to the Disease Data",
-    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 0\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0\"\n\n\n\n(Foreshadowing Monte Carlo methods)"
+    "text": "Applying This to the Disease Data\n\nIf we want the number of people who have the disease:\n\n\n\nCode\n# Compute the *number* of people who have the disease\nsum(ppl_df$has_disease)\n\n\n[1] 1\n\n\n\nIf we want the proportion of people who have the disease:\n\n\n\nCode\n# Compute the *proportion* of people who have the disease\nmean(ppl_df$has_disease)\n\n\n[1] 1e-04\n\n\n\n(And if you dislike scientific notation like I do…)\n\n\n\nCode\nformat(mean(ppl_df$has_disease), scientific = FALSE)\n\n\n[1] \"0.0001\"\n\n\n\n(Foreshadowing Monte Carlo methods)"
   },
   {
     "objectID": "w02b/slides.html#data-generating-process-test-results",
     "href": "w02b/slides.html#data-generating-process-test-results",
     "title": "Week 2B: Random Variables",
     "section": "Data-Generating Process: Test Results",
-    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n76 positive tests / 10000 total = 0.0076\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0"
+    "text": "Data-Generating Process: Test Results\n\n\nCode\nlibrary(dplyr)\n# Data Generating Process\ntake_test &lt;- function(is_sick) {\n  if (is_sick) {\n    return(rbinom(1,1,p_pos_given_sick))\n  } else {\n    return(rbinom(1,1,p_pos_given_healthy))\n  }\n}\nppl_df['test_result'] &lt;- unlist(lapply(ppl_df$has_disease, take_test))\nnum_positive &lt;- sum(ppl_df$test_result)\np_positive &lt;- mean(ppl_df$test_result)\nwriteLines(paste0(num_positive,\" positive tests / \",num_people,\" total = \",p_positive))\n\n\n97 positive tests / 10000 total = 0.0097\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1\n0\n0\n\n\n2\n0\n0\n\n\n3\n0\n0\n\n\n4\n0\n0\n\n\n5\n0\n0\n\n\n6\n0\n0"
   },
   {
     "objectID": "w02b/slides.html#zooming-in-on-positive-tests",
     "href": "w02b/slides.html#zooming-in-on-positive-tests",
     "title": "Week 2B: Random Variables",
     "section": "Zooming In On Positive Tests",
-    "text": "Zooming In On Positive Tests\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n22\n0\n1\n\n\n75\n0\n1\n\n\n132\n0\n1\n\n\n139\n0\n1\n\n\n181\n0\n1\n\n\n275\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)"
+    "text": "Zooming In On Positive Tests\n\n\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n82\n0\n1\n\n\n161\n0\n1\n\n\n179\n0\n1\n\n\n190\n0\n1\n\n\n252\n0\n1\n\n\n371\n0\n1\n\n\n\n\n\n\n\n\nBo doesn’t have it, and neither do 110 of the 111 total people who tested positive!\nBut, in the real world, we only observe \\(T\\)"
   },
   {
     "objectID": "w02b/slides.html#zooming-in-on-disease-havers",
     "href": "w02b/slides.html#zooming-in-on-disease-havers",
     "title": "Week 2B: Random Variables",
     "section": "Zooming In On Disease-Havers",
-    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 46\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n\n\n\n\n\n\n\nNum with disease: 0\nProportion with disease: 0\nNumber of positive tests: 34\n\n\n\n\n\n\nid\nhas_disease\ntest_result"
+    "text": "Zooming In On Disease-Havers\n\nWhat if we look at only those who actually have the disease? Maybe the cost of 111 people panicking is worth it if we correctly catch those who do have it?\n\n\n\nCode\n#disp(ppl_df[ppl_df$has_disease == 1,])\nppl_df[ppl_df$has_disease == 1,]\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n7260\n1\n1\n\n\n\n\n\n\nIs this always going to be the case?\n\n\n\n\nNum with disease: 2\nProportion with disease: 0.0004\nNumber of positive tests: 41\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n1984\n1\n1\n\n\n4529\n1\n1\n\n\n\n\n\n\n\n\n\nNum with disease: 1\nProportion with disease: 0.0002\nNumber of positive tests: 58\n\n\n\n\n\n\nid\nhas_disease\ntest_result\n\n\n\n\n3255\n1\n1"
   },
   {
     "objectID": "w02b/slides.html#worst-case-worlds",
     "href": "w02b/slides.html#worst-case-worlds",
     "title": "Week 2B: Random Variables",
     "section": "Worst-Case Worlds",
-    "text": "Worst-Case Worlds\n\n\n\n\nWorld #69 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3761           1           0\n\n\nWorld #75 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3388           1           0\n\n\nWorld #148 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   475           1           0\n\n\nWorld #169 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  4471           1           0\n\n\nWorld #777 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1   293           1           1\n2  4628           1           0\n\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\n\nFalse Negatives: 1, Total Cases: 1000000\n\n\nFalse Negative Rate: 0.000001\n\n\n(Perfect match!)"
+    "text": "Worst-Case Worlds\n\n\n\n\nWorld #111 / 1000 (5000 people):\n# A tibble: 3 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  1589           1           1\n2  1901           1           0\n3  4629           1           1\n\n\nWorld #183 / 1000 (5000 people):\n# A tibble: 1 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  3599           1           0\n\n\nWorld #881 / 1000 (5000 people):\n# A tibble: 2 × 3\n     id has_disease test_result\n  &lt;int&gt;       &lt;int&gt;       &lt;int&gt;\n1  2678           1           1\n2  3584           1           0\n\n\n[1] \"0.0000008\"\n\n\n\nHow unlikely is this? Math:\n\\[\n\\begin{align*}\n\\Pr(\\textsf{T}^- \\cap \\textsf{Sick}) &= \\Pr(\\textsf{T}^- \\mid \\textsf{Sick})\\Pr(\\textsf{Sick}) \\\\\n&= (0.01)\\frac{1}{10000} \\\\\n&= \\frac{1}{1000000}\n\\end{align*}\n\\]\nComputers:\n\n\nFalse Negatives: 0, Total Cases: 1000000\n\n\nFalse Negative Rate: 0\n\n\n(Perfect match!)"
   },
   {
     "objectID": "w02b/slides.html#bayes-takeaway",
@@ -5527,28 +5513,28 @@
     "href": "w02b/slides.html#birthday-problem",
     "title": "Week 2B: Random Variables",
     "section": "Birthday Problem",
-    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n262\n\n\n1\n2\n138\n\n\n1\n3\n296\n\n\n1\n4\n91\n\n\n1\n5\n42\n\n\n1\n6\n328"
+    "text": "Birthday Problem\n\n\n\n30 people gather in a room together. What is the probability that two of them share the same birthday?\nAnalytic solution is fun, but requires some thought… Monte Carlo it!\n\n\n\n\nCode\ngen_bday_room &lt;- function(room_num=NULL) {\n  num_people &lt;- 30\n  num_days &lt;- 366\n  ppl_df &lt;- tibble(id=seq(1,num_people))\nbirthdays &lt;- sample(1:num_days, num_people,replace = T)\n  ppl_df['birthday'] &lt;- birthdays\n  if (!is.null(room_num)) {\n    ppl_df &lt;- ppl_df %&gt;% mutate(room_num=room_num) %&gt;% relocate(room_num)\n  }\n  return(ppl_df)\n}\nppl_df &lt;- gen_bday_room(1)\n#disp(ppl_df %&gt;% head())\nppl_df |&gt; head()\n\n\n\n\n\n\nroom_num\nid\nbirthday\n\n\n\n\n1\n1\n232\n\n\n1\n2\n227\n\n\n1\n3\n14\n\n\n1\n4\n191\n\n\n1\n5\n282\n\n\n1\n6\n77"
   },
   {
     "objectID": "w02b/slides.html#section-5",
     "href": "w02b/slides.html#section-5",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "i\nj\nbday\n\n\n\n\n3\n24\n296\n\n\n14\n16\n6"
+    "text": "i\nj\nbday\n\n\n\n\n2\n7\n227\n\n\n6\n22\n77"
   },
   {
     "objectID": "w02b/slides.html#section-6",
     "href": "w02b/slides.html#section-6",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "Let’s try more rooms…\n\n\n\n\nCode\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n\n[[1]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     5    11   134\n\n[[2]]\n# A tibble: 0 × 0\n\n[[3]]\n# A tibble: 0 × 0\n\n[[4]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    23    24   143\n\n[[5]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    24   205\n\n[[6]]\n# A tibble: 3 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    27   357\n2     9    16   300\n3    13    15   159\n\n[[7]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     7     9   115\n\n[[8]]\n# A tibble: 0 × 0\n\n[[9]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    10    15   127\n2    13    16   330\n\n[[10]]\n# A tibble: 0 × 0\n\n\n\nNumber of shared birthdays per room:\n\n\nCode\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n\n [1] 1 0 0 1 1 3 1 0 2 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\n\n[1] 0.6"
+    "text": "Let’s try more rooms…\n\n\n\n\nCode\n# Get tibbles for each room\nlibrary(purrr)\ngen_bday_rooms &lt;- function(num_rooms) {\n  rooms_df &lt;- tibble()\n  for (r in seq(1, num_rooms)) {\n      cur_room &lt;- gen_bday_room(r)\n      rooms_df &lt;- bind_rows(rooms_df, cur_room)\n  }\n  return(rooms_df)\n}\nnum_rooms &lt;- 10\nrooms_df &lt;- gen_bday_rooms(num_rooms)\nrooms_df %&gt;% group_by(room_num) %&gt;% group_map(~ get_shared_bdays(.x, is_grouped=TRUE))\n\n\n[[1]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    22    61\n\n[[2]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    13   255\n2     4    25    81\n\n[[3]]\n# A tibble: 0 × 0\n\n[[4]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    16    27   326\n2    19    21    52\n\n[[5]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3    17   261\n\n[[6]]\n# A tibble: 0 × 0\n\n[[7]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     3     7   148\n2    12    19   210\n\n[[8]]\n# A tibble: 3 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     1    11   201\n2     1    14   201\n3    11    14   201\n\n[[9]]\n# A tibble: 2 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1     2    16   291\n2    11    17   236\n\n[[10]]\n# A tibble: 1 × 3\n      i     j  bday\n  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n1    24    27   307\n\n\n\nNumber of shared birthdays per room:\n\n\nCode\n# Now just get the # shared bdays\nshared_per_room &lt;- rooms_df %&gt;%\n    group_by(room_num) %&gt;%\n    group_map(~ get_shared_bdays(.x, is_grouped = TRUE, return_num=TRUE))\nshared_per_room &lt;- unlist(shared_per_room)\nshared_per_room\n\n\n [1] 1 2 0 2 1 0 2 3 2 1\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared})\\)\n\n\n\n[1] 0.8"
   },
   {
     "objectID": "w02b/slides.html#section-7",
     "href": "w02b/slides.html#section-7",
     "title": "Week 2B: Random Variables",
     "section": "",
-    "text": "How about A THOUSAND ROOMS?\n\n\n\n  [1] 1 0 1 1 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1\n [38] 1 0 1 1 1 0 0 0 1 1 1 1 1 1 1 1 0 1 1 0 0 1 1 1 0 1 0 1 0 0 1 0 1 1 0 0 0\n [75] 0 1 1 0 1 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1 0 1 1 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n\n[1] 0.71\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n\n[1] 0.7053034"
+    "text": "How about A THOUSAND ROOMS?\n\n\n\n  [1] 1 0 1 1 1 0 1 0 1 1 1 1 1 0 1 1 1 1 1 0 1 1 0 1 0 1 0 1 1 1 1 1 1 1 1 0 1\n [38] 1 1 1 1 1 1 1 1 0 1 1 1 0 1 0 1 1 1 1 0 0 0 1 0 1 0 0 1 1 0 1 0 1 1 1 0 0\n [75] 1 0 1 0 0 0 1 1 0 0 0 0 1 1 1 0 1 0 1 1 1 1 1 1 1 0\n\n\n\n\\(\\widehat{\\Pr}(\\text{shared bday})\\)?\n\n\n\n[1] 0.67\n\n\n\nThe analytic solution: \\(\\Pr(\\text{shared} \\mid k\\text{ people in room}) = 1 - \\frac{366!}{366^{k}(366-k)!}\\)\nIn our case: \\(1 - \\frac{366!}{366^{30}(366-30)!} = 1 - \\frac{366!}{366^{30}336!} = 1 - \\frac{\\prod_{i=337}^{366}i}{366^{30}}\\)\nR can juust barely handle these numbers:\n\n\n\n[1] 0.7053034"
   },
   {
     "objectID": "w02b/slides.html#wrapping-up",

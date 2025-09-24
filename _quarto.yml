@@ -33,6 +33,9 @@ website:
       - href: "https://georgetown.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=98022271-76d6-457f-83ee-b1dd00143dbc"
         text: "2024 Recordings <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 75%;'></i>"
         target: "_blank"
+      - href: "https://georgetown.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx?folderID=d146f493-140b-4310-a003-b1b50023f9e2"
+        text: "2023 Recordings <i class='bi bi-box-arrow-up-right ps-1' style='font-size: 75%;'></i>"
+        target: "_blank"
       # - href: index.qmd
       #   text: "<i class='bi bi-house pe-1'></i> Section 03 Home"
       - "---"

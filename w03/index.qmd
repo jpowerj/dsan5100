@@ -71,7 +71,7 @@ source("../dsan-globals/_globals.r")
 $$
 \underbrace{\Pr\left(\bigcup_{i=1}^{\infty}E_i\right)}_{\Pr(E_1\text{ occurs }\vee E_2\text{ occurs } \vee \cdots)} = \underbrace{\sum_{i=1}^{\infty}\Pr(E_i)}_{\Pr(E_1\text{ occurs}) + \Pr(E_2\text{ occurs}) + \cdots}
 $$
-  
+
 :::
 
 * But what does "mutually exclusive" mean...?
@@ -103,7 +103,7 @@ $$
 ![Non-mutually-exclusive sets](images/venn_two_circs.svg){fig-align="center" width="75%"}
 
 :::
-:::
+::::
 
 ## Venn Diagrams: Events (Dice) {.smaller}
 
