@@ -512,7 +512,7 @@ window.Quarto = {
     </ul>
     </div>
 <div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
-<p><em>Updated 2025-09-23, 09:09:01 PM</em></p>
+<p><em>Updated 2025-09-30, 03:24:13 PM</em></p>
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -676,7 +676,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -723,7 +723,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -733,8 +733,8 @@ window.Quarto = {
 \]</span></p>
 </div>
 </div>
-<section id="moving-to-continuous-world" class="level2 crunch-title">
-<h2 class="crunch-title anchored" data-anchor-id="moving-to-continuous-world">Moving to Continuous World</h2>
+<section id="moving-to-continuous-world" class="level2 crunch-title crunch-ul">
+<h2 class="crunch-title crunch-ul anchored" data-anchor-id="moving-to-continuous-world">Moving to Continuous World</h2>
 <ul>
 <li>Intuitions from discrete world <em>do</em> translate into good intuitions for continuous world, in this case!</li>
 <li>Can “move” discrete table into continuous space like Riemann sums “move” discrete sums into integrals:</li>
@@ -745,23 +745,47 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="smoothing-our-example" class="level2 text-95">
-<h2 class="text-95 anchored" data-anchor-id="smoothing-our-example">“Smoothing” Our Example</h2>
+<section id="smoothing-our-example" class="level2 text-95 inline-90">
+<h2 class="text-95 inline-90 anchored" data-anchor-id="smoothing-our-example">“Smoothing” Our Example</h2>
 <ul>
 <li>Instead of discrete <span class="math inline">\(G\)</span> with <span class="math inline">\(\mathcal{R}_G = \{10, 11, 12\}\)</span>, we have <strong>continuous</strong> <span class="math inline">\(G\)</span> with <span class="math inline">\(\mathcal{R}_G = [10,12] \subset \mathbb{R}\)</span> (HS <em>progress</em>)</li>
 <li>Instead of discrete <span class="math inline">\(H\)</span> with <span class="math inline">\(\mathcal{R}_H = \{0, 1\}\)</span>, now we keep track of <strong>continuous</strong> “honors spectrum” <span class="math inline">\(H\)</span> with <span class="math inline">\(\mathcal{R}_H = [0, 1] \subset \mathbb{R}\)</span></li>
 <li>Student near beginning of 10th grade who is at “high end” of honors spectrum: <span class="math inline">\(G = 10.03\)</span> and <span class="math inline">\(H = 0.95\)</span></li>
 </ul>
 </section>
-<section id="smoothing-our-tables" class="level2">
-<h2 class="anchored" data-anchor-id="smoothing-our-tables">“Smoothing” Our Tables</h2>
-<ul>
-<li><strong>Sums</strong> become <strong>integrals</strong></li>
-<li><strong>Re-normalization</strong> (ensuring that <strong>probability mass</strong> values <strong>sum to 1</strong>) becomes ensuring that <strong>probability density</strong> values <strong>integrate to 1</strong>.</li>
-<li>What comes in place of <strong>frequency table</strong>?</li>
-<li>Answer in theory: <strong>Joint pdf</strong></li>
-<li>Answer in practice: Depends on the context 😬</li>
-</ul>
+<section id="smoothing-our-tables" class="level2 text-90 inline-90">
+<h2 class="text-90 inline-90 anchored" data-anchor-id="smoothing-our-tables">“Smoothing” Our Tables</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 32%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Discrete World</th>
+<th>Continuous World</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>How do we get probabilities?</td>
+<td>Sums<br><span class="math inline">\(\Pr(X = 1)\)</span><br><span class="math inline">\(+ \Pr(X = 2) = \frac{2}{6}\)</span></td>
+<td>Integrals<br><span class="math inline">\(\displaystyle\int_{x=20}^{x=21}f_X(x) = 0.4\)</span></td>
+</tr>
+<tr class="even">
+<td>What makes a valid distribution?</td>
+<td><span class="math inline">\(\displaystyle\sum_{x \in \mathcal{R}_X}\Pr(X = x) = 1\)</span></td>
+<td><span class="math inline">\(\displaystyle\int_{x \in \mathcal{R}_X}f_X(x) = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td>How do we model uncertainty about <strong>multiple</strong> variables?</td>
+<td>Frequency table</td>
+<td>Joint pdf</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="continuous-joint-pdfs" class="level2 smaller crunch-title crunch-ul crunch-math">
 <h2 class="smaller crunch-title crunch-ul crunch-math anchored" data-anchor-id="continuous-joint-pdfs">Continuous Joint pdfs</h2>
@@ -929,8 +953,8 @@ f_H(h) &amp;= \int_{10}^{12}f_{G,H}(g, h)\mathrm{d}g = \frac{1}{0.1} \cdot \frac
 \end{align*}
 \]</span></p>
 </section>
-<section id="conditional-distributions-in-continuous-world" class="level2 text-90 title-09">
-<h2 class="text-90 title-09 anchored" data-anchor-id="conditional-distributions-in-continuous-world">Conditional Distributions in Continuous World</h2>
+<section id="conditional-distributions-in-continuous-world" class="level2 text-90 title-08 crunch-title crunch-math crunch-ul">
+<h2 class="text-90 title-08 crunch-title crunch-math crunch-ul anchored" data-anchor-id="conditional-distributions-in-continuous-world">Conditional Distributions in Continuous World</h2>
 <ul>
 <li>We can compute <strong>conditional</strong> pdfs by <strong>renormalizing</strong></li>
 <li>Denominator is no longer integral of the distribution over <strong>all</strong> possible values (hence just the number <span class="math inline">\(1\)</span>), but a <strong>ratio</strong> of <strong>joint distribution</strong> to <strong>marginal distribution</strong> values like:</li>
@@ -938,6 +962,13 @@ f_H(h) &amp;= \int_{10}^{12}f_{G,H}(g, h)\mathrm{d}g = \frac{1}{0.1} \cdot \frac
 <p><span class="math display">\[
 f_{H \mid G}(h | g) = \frac{f_{G,H}(g, h)}{f_G(g)}.
 \]</span></p>
+<div class="text-70">
+<ul>
+<li>At first this is magic… we can use the <em>exact same equation</em> from discrete world?!?</li>
+<li>But then you remember, continuous world was set up as a “hack”, using <strong>area under the curve between two points</strong> rather than <strong>height of the curve at a point</strong> to “port” discrete formulas into continuous world</li>
+<li>Think of how, when mathematicians hit the “wall” of solving <span class="math inline">\(x^2 + 1 = 0\)</span>… They set up a new number <span class="math inline">\(i\)</span> to work with these polynomials using “standard” algebra. Here we set up continuous pdf <span class="math inline">\(f_X(x)\)</span> to work with <strong>continuous</strong> RVs using “standard” probability theory!</li>
+</ul>
+</div>
 </section>
 <section id="you-dont-have-to-stare-helplessly-at-scary-math" class="level2">
 <h2 class="anchored" data-anchor-id="you-dont-have-to-stare-helplessly-at-scary-math">You Don’t Have To Stare Helplessly At Scary Math!</h2>
@@ -1076,8 +1107,8 @@ f_X(v) = \frac{1}{\sigma\sqrt{2\pi}}\bigexp{-\frac{1}{2}\left(\frac{v - \mu}{\si
 \end{align*}
 \]</span></p>
 </section>
-<section id="the-2d-case-in-its-final-form" class="level2 smaller math-90">
-<h2 class="smaller math-90 anchored" data-anchor-id="the-2d-case-in-its-final-form">The 2D Case In Its FINAL FORM</h2>
+<section id="the-2d-case-in-its-final-form" class="level2 smaller math-85">
+<h2 class="smaller math-85 anchored" data-anchor-id="the-2d-case-in-its-final-form">The 2D Case In Its FINAL FORM</h2>
 <p><span class="math display">\[
 f_{\mathbf{X}}(\mathbf{x})
 = C \bigexp{

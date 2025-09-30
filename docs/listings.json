@@ -7,13 +7,13 @@
     "listing": "/writeups/index.html",
     "items": [
       "/writeups/optimization/index.html",
-      "/writeups/lab-6-clarifications/index.html",
       "/writeups/deriving-pdf/index.html",
       "/writeups/marginalization/index.html",
       "/writeups/order-of-integration/index.html",
       "/writeups/conditional-expectation/index.html",
       "/writeups/hw1-guide/index.html",
       "/writeups/sample-space-tibbles/index.html",
+      "/writeups/lab-4-clarifications/index.html",
       "/writeups/computing-probabilities/index.html",
       "/writeups/sampling-from-df/index.html"
     ]

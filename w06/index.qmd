@@ -11,7 +11,7 @@ categories:
   - "Class Sessions"
 format:
   revealjs:
-    footer: "DSAN 5100 W06: Multivariate Distributions"
+    footer: "DSAN 5100 W06: Continuous Multivariate Distributions"
     output-file: slides.html
     df-print: kable
     code-fold: true
@@ -63,26 +63,28 @@ source("../dsan-globals/_globals.r")
 
 {{< include ../_components/discrete-vs-continuous.qmd >}}
 
-## Moving to Continuous World {.crunch-title}
+## Moving to Continuous World {.crunch-title .crunch-ul}
 
 * Intuitions from discrete world *do* translate into good intuitions for continuous world, in this case!
 * Can "move" discrete table into continuous space like Riemann sums "move" discrete sums into integrals:
 
 ![](images/riemann.svg){fig-align="center"}
 
-## "Smoothing" Our Example {.text-95}
+## "Smoothing" Our Example {.text-95 .inline-90}
 
 * Instead of discrete $G$ with $\mathcal{R}_G = \{10, 11, 12\}$, we have **continuous** $G$ with $\mathcal{R}_G = [10,12] \subset \mathbb{R}$ (HS *progress*)
 * Instead of discrete $H$ with $\mathcal{R}_H = \{0, 1\}$, now we keep track of **continuous** "honors spectrum" $H$ with $\mathcal{R}_H = [0, 1] \subset \mathbb{R}$
 * Student near beginning of 10th grade who is at "high end" of honors spectrum: $G = 10.03$ and $H = 0.95$
 
-## "Smoothing" Our Tables
+## "Smoothing" Our Tables {.text-90 .inline-90}
 
-* **Sums** become **integrals**
-* **Re-normalization** (ensuring that **probability mass** values **sum to 1**) becomes ensuring that **probability density** values **integrate to 1**.
-* What comes in place of **frequency table**?
-* Answer in theory: **Joint pdf**
-* Answer in practice: Depends on the context 😬
+| | Discrete World | Continuous World |
+| - | - | - |
+| How do we get probabilities? | Sums<br>$\Pr(X = 1)$<br>$+ \Pr(X = 2) = \frac{2}{6}$ | Integrals<br>$\displaystyle\int_{x=20}^{x=21}f_X(x) = 0.4$ |
+| What makes a valid distribution? | $\displaystyle\sum_{x \in \mathcal{R}_X}\Pr(X = x) = 1$ | $\displaystyle\int_{x \in \mathcal{R}_X}f_X(x) = 1$ |
+| How do we model uncertainty about **multiple** variables? | Frequency table | Joint pdf |
+
+: {tbl-colwidths="[36, 32, 32]"}
 
 ## Continuous Joint pdfs {.smaller .crunch-title .crunch-ul .crunch-math}
 
@@ -228,7 +230,7 @@ f_H(h) &= \int_{10}^{12}f_{G,H}(g, h)\mathrm{d}g = \frac{1}{0.1} \cdot \frac
 \end{align*}
 $$
 
-## Conditional Distributions in Continuous World {.text-90 .title-09}
+## Conditional Distributions in Continuous World {.text-90 .title-08 .crunch-title .crunch-math .crunch-ul}
 
 * We can compute **conditional** pdfs by **renormalizing**
 * Denominator is no longer integral of the distribution over **all** possible values (hence just the number $1$), but a **ratio** of **joint distribution** to **marginal distribution** values like:
@@ -236,6 +238,14 @@ $$
 $$
 f_{H \mid G}(h | g) = \frac{f_{G,H}(g, h)}{f_G(g)}.
 $$
+
+:::: {.text-70}
+
+* At first this is magic... we can use the *exact same equation* from discrete world?!?
+* But then you remember, continuous world was set up as a "hack", using **area under the curve between two points** rather than **height of the curve at a point** to "port" discrete formulas into continuous world
+* Think of how, when mathematicians hit the "wall" of solving $x^2 + 1 = 0$... They set up a new number $i$ to work with these polynomials using "standard" algebra. Here we set up continuous pdf $f_X(x)$ to work with **continuous** RVs using "standard" probability theory!
+
+::::
 
 ## You Don't Have To Stare Helplessly At Scary Math!
 
@@ -370,7 +380,7 @@ $$
 \end{align*}
 $$
 
-## The 2D Case In Its FINAL FORM {.smaller .math-90}
+## The 2D Case In Its FINAL FORM {.smaller .math-85}
 
 $$
 f_{\mathbf{X}}(\mathbf{x})
