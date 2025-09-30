@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jeff Jacobs">
 
-<title>DSAN 5100, Section 01 (Tuesdays) – DSAN 5100-01</title>
+<title>Lab 4 Clarifications – DSAN 5100-01</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,33 +21,66 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ccd81253fefb92e9cd3f9eb5b5d87b54.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bc185b5c5bdbcb35c2eb49d8a876ef70.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ccd81253fefb92e9cd3f9eb5b5d87b54.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -74,36 +108,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" '="" crossorigin="anonymous" referrerpolicy="no-referrer"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css"><script src="./sidebar.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" '="" crossorigin="anonymous" referrerpolicy="no-referrer"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css"><script src="../../sidebar.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -135,7 +140,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="dsan-globals/jjstyles.css">
+<link rel="stylesheet" href="../../dsan-globals/jjstyles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -326,7 +331,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">DSAN 5100: Probabilistic Modeling and Statistical Computing</a> 
+      <a href="../../">DSAN 5100: Probabilistic Modeling and Statistical Computing</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -373,104 +378,104 @@ window.Quarto = {
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w01/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w01/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 1: Aug 29</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w02a/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w02a/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 2A: Sep 1</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w02b/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w02b/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 2B: Sep 2</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w03/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w03/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 3: Sep 9</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w04/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w04/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 4: Sep 16</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w05a/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w05a/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 5A: Sep 22</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w05b/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w05b/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 5B: Sep 23</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w06/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w06/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 6: Sep 30</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w07/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w07/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 7: Oct 7</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w08/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w08/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 8: Oct 14</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w09/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w09/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 9: Oct 21</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w10/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w10/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 10: Oct 28</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w11/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../w11/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 11: Nov 4</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./w12/index.qmdx" class="sidebar-item-text sidebar-link">
+  <a href="../../w12/index.qmdx" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 12: Nov 11</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../../resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Extra Resources</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./writeups/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../writeups/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Extra Writeups</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cheatsheet-math.html" class="sidebar-item-text sidebar-link">
+  <a href="../../cheatsheet-math.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Math Cheatsheet</span></a>
   </div>
 </li>
@@ -493,8 +498,24 @@ window.Quarto = {
 </div></div></nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#images-and-assignment-files" id="toc-images-and-assignment-files" class="nav-link active" data-scroll-target="#images-and-assignment-files">Images and Assignment Files</a></li>
+  <li><a href="#problem-1-seeded-version" id="toc-problem-1-seeded-version" class="nav-link" data-scroll-target="#problem-1-seeded-version">Problem 1: Seeded Version</a>
+  <ul class="collapse">
+  <li><a href="#n-100" id="toc-n-100" class="nav-link" data-scroll-target="#n-100"><span class="math inline">\(N = 100\)</span></a></li>
+  <li><a href="#n-10000" id="toc-n-10000" class="nav-link" data-scroll-target="#n-10000"><span class="math inline">\(N = 10000\)</span></a></li>
+  </ul></li>
+  <li><a href="#problem-2" id="toc-problem-2" class="nav-link" data-scroll-target="#problem-2">Problem 2</a>
+  <ul class="collapse">
+  <li><a href="#shopping-example" id="toc-shopping-example" class="nav-link" data-scroll-target="#shopping-example">Shopping Example</a></li>
+  </ul></li>
+  <li><a href="#problem-3" id="toc-problem-3" class="nav-link" data-scroll-target="#problem-3">Problem 3</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/lab-4-clarifications/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -502,14 +523,30 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">DSAN 5100, Section 01 (Tuesdays)</h1>
-</div>
+<h1 class="title">Lab 4 Clarifications</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Clarifications</div>
+  </div>
+  </div>
 
 
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Jeff Jacobs </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="mailto:jj1088@georgetown.edu" target="_blank"><code>jj1088@georgetown.edu</code></a>
+          </p>
+      </div>
+  </div>
 
 <div class="quarto-title-meta">
 
-    
+      
   
     
   </div>
@@ -519,189 +556,185 @@ window.Quarto = {
 </header>
 
 
-<p>This page collects slides and relevant links for students in <strong>Dr.&nbsp;Purna’s Tuesday section (Section 01)</strong> of <strong>DSAN 5100: Probabilistic Modeling and Statistical Computing</strong>, Fall 2025 at Georgetown University.</p>
-<p>Sections take place in <strong>Car Barn 204</strong> on <strong>Tuesdays</strong> from <strong>3:30pm to 6:00pm</strong>.</p>
-<p>This page is <em>not</em> a replacement for the <strong><a href="https://dsan.georgetown.domains/dsan5100/" target="_blank">Main Course Page</a></strong> or the sections’s <strong><a href="https://georgetown.instructure.com/courses/213710" target="_blank">Canvas Page</a></strong>!</p>
-<p>Use the menu on the left, or the table below, to view resources for a specific week.</p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<table class="quarto-listing-table table table-hover">
+<p>This document contains clarifications for the <a href="https://drive.google.com/drive/folders/1A1NtBCZ7Qg2-63wc2DTvx3XXJpjrjZ7S?usp=sharing" target="_blank">Lab 6 assignment</a>, based on details and/or hints that I’ve found helpful during office hours and email discussions about the assignment!</p>
+<section id="images-and-assignment-files" class="level2">
+<h2 class="anchored" data-anchor-id="images-and-assignment-files">Images and Assignment Files</h2>
+<p>For the core assignment that you’ll need to complete, please make sure that you download:</p>
+<ul>
+<li>The <code>Lab6_assignment.qmd</code> file, as well as</li>
+<li>The <code>images</code> folder,</li>
+</ul>
+<p>and make sure to download these into the same directory. For example, I usually have a directory on my laptop structured so that I can download each assignment into its own subfolder within a folder called <code>dsan5100</code>, so that the path to the <code>.qmd</code> file looks something like (this is the partial output from running <code>tree dsan5100</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> lab06</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span> ├── Lab6_assignment.html</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span> ├── Lab6_assignment.qmd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span> └── images</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     ├── 2023-10-04-16-53-42.png</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     ├── 2023-10-11-08-55-38.png</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     ├── 2023-10-11-08-55-48.png</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     ├── 2023-10-11-08-55-59.png</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     ├── 2023-10-11-08-56-16.png</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">&nbsp;&nbsp;</span>     └── 2023-10-11-08-56-36.png</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="problem-1-seeded-version" class="level2">
+<h2 class="anchored" data-anchor-id="problem-1-seeded-version">Problem 1: Seeded Version</h2>
+<p>The following code is the same as the code in the Lab assignment, but here we <strong>seed</strong> the random number generator so it produces the same exact results every time it is run. (This makes it easier to refer to “the” plots in the problem, when helping in office hours: using <code>set.seed(5100)</code> ensures that the plots are the same between students’ and teachers’ computers!)</p>
+<section id="n-100" class="level3">
+<h3 class="anchored" data-anchor-id="n-100"><span class="math inline">\(N = 100\)</span></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5100</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>one.dice <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dice <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dice)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  sims <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">one.dice</span>())</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(sims)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(sims)<span class="sc">/</span><span class="fu">length</span>(sims)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">table</span>(sims), <span class="at">xlab =</span> <span class="st">'Event'</span>, <span class="at">ylab =</span> <span class="st">'Frequency'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/p1a-seeded-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="n-10000" class="level3">
+<h3 class="anchored" data-anchor-id="n-10000"><span class="math inline">\(N = 10000\)</span></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5100</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>one.dice <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dice <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dice)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  sims <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">one.dice</span>())</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(sims)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(sims)<span class="sc">/</span><span class="fu">length</span>(sims)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">table</span>(sims), <span class="at">xlab =</span> <span class="st">'Event'</span>, <span class="at">ylab =</span> <span class="st">'Frequency'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/p1b-seeded-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-2" class="level2">
+<h2 class="anchored" data-anchor-id="problem-2">Problem 2</h2>
+<p>Since the “Shopping Example” image displays kind of fuzzily, on my screen at least, here is the problem (including the image) just re-written to use HTML rather than image files:</p>
+<section id="shopping-example" class="level3">
+<h3 class="anchored" data-anchor-id="shopping-example">Shopping Example</h3>
+<ul>
+<li>Suppose there are two types of items [My understanding is that this should be <strong>three</strong> types of items] and <span class="math inline">\(n = 3\)</span> customers.</li>
+<li>Possible values are <span class="math inline">\(\{(3,0,0),(2,1,0),(2,0,1), \ldots, (0,1,2), (0,0,3)\}\)</span></li>
+<li>Some values of the joint pmf:
+<ul>
+<li><span class="math inline">\(\Pr((3,0,0)) = 1 \cdot (p_1)^3\)</span></li>
+<li><span class="math inline">\(\Pr((1,2,0)) = 3 \cdot (p_1)(p_2)^2\)</span></li>
+<li><span class="math inline">\(\Pr((1,1,1)) = 6 \cdot (p_1)(p_2)(p_3)\)</span></li>
+</ul></li>
+<li><em>(The factors 1, 3, 6 count the number of ways in which these events can occur)</em></li>
+</ul>
+<div id="tbl-shopping" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-shopping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: The example table given in the image, showing
+</figcaption>
+<div aria-describedby="tbl-shopping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
 <thead>
-<tr>
-
-<th>
-Title
-</th>
-
-<th>
-Date
-</th>
-
+<tr class="header">
+<th>Beer</th>
+<th>Bread</th>
+<th>Coke</th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1756440000000" data-listing-file-modified-sort="1758609674860" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="16" data-listing-title-sort="Week 1: Introduction to the Course" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w01/index.html" class="title listing-title">Week 1: Introduction to the Course</a>
-</td>
-<td>
-<span class="listing-date">Friday, August 29, 2025</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>0</td>
 </tr>
-
-<tr data-index="1" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1756699200000" data-listing-file-modified-sort="1758611206455" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2322" data-listing-title-sort="Week 2A: Introduction to Probabilistic Modeling" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w02a/index.html" class="title listing-title">Week 2A: Introduction to Probabilistic Modeling</a>
-</td>
-<td>
-<span class="listing-date">Monday, September 1, 2025</span>
-</td>
-
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>0</td>
 </tr>
-
-<tr data-index="2" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1756785600000" data-listing-file-modified-sort="1758620447361" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="35" data-listing-word-count-sort="6823" data-listing-title-sort="Week 2B: Random Variables" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w02b/index.html" class="title listing-title">Week 2B: Random Variables</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, September 2, 2025</span>
-</td>
-
+<tr class="odd">
+<td>2</td>
+<td>0</td>
+<td>1</td>
 </tr>
-
-<tr data-index="3" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1757390400000" data-listing-file-modified-sort="1758673343113" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26" data-listing-word-count-sort="5112" data-listing-title-sort="Week 3: Discrete Distributions" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w03/index.html" class="title listing-title">Week 3: Discrete Distributions</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, September 9, 2025</span>
-</td>
-
+<tr class="even">
+<td>0</td>
+<td>3</td>
+<td>0</td>
 </tr>
-
-<tr data-index="4" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1757995200000" data-listing-file-modified-sort="1758610486698" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4274" data-listing-title-sort="Week 4: Continuous Distributions" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w04/index.html" class="title listing-title">Week 4: Continuous Distributions</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, September 16, 2025</span>
-</td>
-
+<tr class="odd">
+<td>0</td>
+<td>2</td>
+<td>1</td>
 </tr>
-
-<tr data-index="5" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1758513600000" data-listing-file-modified-sort="1758611197942" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2204" data-listing-title-sort="Week 5A: Moments and Covariance" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w05a/index.html" class="title listing-title">Week 5A: Moments and Covariance</a>
-</td>
-<td>
-<span class="listing-date">Monday, September 22, 2025</span>
-</td>
-
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>2</td>
 </tr>
-
-<tr data-index="6" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1758600000000" data-listing-file-modified-sort="1758620142045" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2946" data-listing-title-sort="Week 5B: Joint, Marginal, and Conditional Distributions" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w05b/index.html" class="title listing-title">Week 5B: Joint, Marginal, and Conditional Distributions</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, September 23, 2025</span>
-</td>
-
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>2</td>
 </tr>
-
-<tr data-index="7" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1759204800000" data-listing-file-modified-sort="1758654808405" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1692" data-listing-title-sort="Week 6: Multivariate Distributions" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w06/index.html" class="title listing-title">Week 6: Multivariate Distributions</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, September 30, 2025</span>
-</td>
-
+<tr class="even">
+<td>1</td>
+<td>2</td>
+<td>0</td>
 </tr>
-
-<tr data-index="8" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1760414400000" data-listing-file-modified-sort="1758654800114" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1991" data-listing-title-sort="Week 7: Markov Models" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w07/index.html" class="title listing-title">Week 7: Markov Models</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, October 14, 2025</span>
-</td>
-
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>1</td>
 </tr>
-
-<tr data-index="9" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1761019200000" data-listing-file-modified-sort="1758654836408" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="31" data-listing-word-count-sort="6041" data-listing-title-sort="Week 8: Statistical Inference" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w08/index.html" class="title listing-title">Week 8: Statistical Inference</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, October 21, 2025</span>
-</td>
-
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>3</td>
 </tr>
-
-<tr data-index="10" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1761624000000" data-listing-file-modified-sort="1758654874163" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2169" data-listing-title-sort="Week 9: Parameter Estimation" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w09/index.html" class="title listing-title">Week 9: Parameter Estimation</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, October 28, 2025</span>
-</td>
-
-</tr>
-
-<tr data-index="11" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1762232400000" data-listing-file-modified-sort="1758654900541" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3113" data-listing-title-sort="Week 10: Method of Moments and Bootstrap" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w10/index.html" class="title listing-title">Week 10: Method of Moments and Bootstrap</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, November 4, 2025</span>
-</td>
-
-</tr>
-
-<tr data-index="12" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1762837200000" data-listing-file-modified-sort="1758654934742" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="31" data-listing-word-count-sort="6054" data-listing-title-sort="Week 11: Hypothesis Testing" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w11/index.html" class="title listing-title">Week 11: Hypothesis Testing</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, November 11, 2025</span>
-</td>
-
-</tr>
-
-<tr data-index="13" data-categories="Q2xhc3MlMjBTZXNzaW9ucw==" data-listing-date-sort="1763442000000" data-listing-file-modified-sort="1758654979228" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2947" data-listing-title-sort="Week 12: Non-Parametric Statistics" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
- if (href) { window.location=href ; return false; }">
-<td>
-<a href="./w12/index.html" class="title listing-title">Week 12: Non-Parametric Statistics</a>
-</td>
-<td>
-<span class="listing-date">Tuesday, November 18, 2025</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</div>
+</figure>
+</div>
+<p>Let’s say that Molly, Ryan, and Mr.&nbsp;Bob are buying Beer (<span class="math inline">\(X_1\)</span>), Bread (<span class="math inline">\(X_2\)</span>), and Coke (<span class="math inline">\(X_3\)</span>) with probabilities <span class="math inline">\(\left(3/5, 1/5, 1/5\right)\)</span>.</p>
+<ol type="a">
+<li><p>What is the probability that only one of them will buy Beer, two of them will buy Bread, and none of them will buy Coke? Compare the result with the theoretical probability.</p></li>
+<li><p>Do a simulation for this scenario and plot the marginal distribution of <span class="math inline">\(X_1\)</span>.</p></li>
+</ol>
+</section>
+</section>
+<section id="problem-3" class="level2">
+<h2 class="anchored" data-anchor-id="problem-3">Problem 3</h2>
+<p>Here, from what I understand, the problem letters jump from (c) to (e), so that there is no Part (d) for Problem 3.</p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1126,4 +1159,4 @@ Date
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jpowerj/dsan5100/blob/main/writeups/lab-4-clarifications/index.qmd" target="_blank" class="toc-action"><i class="bi bi-github"></i>View source</a></li></ul></div></div></div></footer></body></html>

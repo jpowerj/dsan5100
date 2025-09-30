@@ -1,9 +1,9 @@
 ---
-title: "Lab 6 Clarifications"
+title: "Lab 4 Clarifications"
 author: "Jeff Jacobs"
 institute: "<a href='mailto:jj1088@georgetown.edu' target='_blank'>`jj1088@georgetown.edu`</a>"
-weeknum: 7
-assignment: "Lab 6"
+weeknum: 4
+assignment: "Lab 4"
 format:
   html:
     df-print: kable
@@ -38,6 +38,46 @@ and make sure to download these into the same directory. For example, I usually 
         ├── 2023-10-11-08-55-59.png
         ├── 2023-10-11-08-56-16.png
         └── 2023-10-11-08-56-36.png
+```
+
+## Problem 1: Seeded Version
+
+The following code is the same as the code in the Lab assignment, but here we **seed** the random number generator so it produces the same exact results every time it is run. (This makes it easier to refer to "the" plots in the problem, when helping in office hours: using `set.seed(5100)` ensures that the plots are the same between students' and teachers' computers!)
+
+### $N = 100$
+
+```{r}
+#| label: p1a-seeded
+set.seed(5100)
+one.dice <- function() {
+  dice <- sample(1:6, size = 1, replace = TRUE)
+  return(dice)
+}
+par(mfrow=c(2,2))
+for (i in 1:4) {
+  sims <- replicate(100, one.dice())
+  table(sims)
+  table(sims)/length(sims)
+  plot(table(sims), xlab = 'Event', ylab = 'Frequency')
+}
+```
+
+### $N = 10000$
+
+```{r}
+#| label: p1b-seeded
+set.seed(5100)
+one.dice <- function() {
+  dice <- sample(1:6, size = 1, replace = TRUE)
+  return(dice)
+}
+par(mfrow=c(2,2))
+for (i in 1:4) {
+  sims <- replicate(10000, one.dice())
+  table(sims)
+  table(sims)/length(sims)
+  plot(table(sims), xlab = 'Event', ylab = 'Frequency')
+}
 ```
 
 ## Problem 2

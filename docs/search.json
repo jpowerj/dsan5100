@@ -2418,7 +2418,7 @@
     "href": "writeups/order-of-integration/index.html",
     "title": "Continuous Probability and the Order of Integration",
     "section": "",
-    "text": "Code\nsource(\"../../dsan-globals/_globals.r\")\nProblem 2e on your Lab 5 Assignment, which asks you to:\nis trickier than most of the other parts/problems, in the sense that it really requires us to think carefully about what exactly we’re doing when we take integrals to obtain probabilities from probability density functions. So, in this writeup, I want to walk through that problem step-by-step, showing where the “trickiness” enters into the problem."
+    "text": "Code\nsource(\"../../dsan-globals/_globals.r\")\nConsider the following practice problem: given the joint pdf\n\\[\nf_{X,Y}(x,y) = 3C(x^2 + 2xy^2) = \\frac{1}{44}(x^2 + 2xy^2),\n\\]\nFind the probability \\(\\Pr(X \\leq Y)\\).\nThis is trickier than many of the other problems that you’ve done, which are more “mechanical”, in the sense that it really requires us to think carefully about what exactly we’re doing when we take integrals to obtain probabilities from probability density functions. So, in this writeup, I want to walk through that problem step-by-step, showing where the “trickiness” enters into the problem."
   },
   {
     "objectID": "writeups/order-of-integration/index.html#using-our-intuition-without-geometry",
@@ -5567,7 +5567,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "DSAN 5100, Section 03 (Tuesdays)",
+    "title": "DSAN 5100, Section 01 (Tuesdays)",
     "section": "",
     "text": "This page collects slides and relevant links for students in Dr. Purna’s Tuesday section (Section 01) of DSAN 5100: Probabilistic Modeling and Statistical Computing, Fall 2025 at Georgetown University.\nSections take place in Car Barn 204 on Tuesdays from 3:30pm to 6:00pm.\nThis page is not a replacement for the Main Course Page or the sections’s Canvas Page!\nUse the menu on the left, or the table below, to view resources for a specific week.\n\n\n\n\n\n\n\n\n\n\nTitle\n\n\n\nDate\n\n\n\n\n\n\n\n\nWeek 1: Introduction to the Course\n\n\nFriday, August 29, 2025\n\n\n\n\n\n\nWeek 2A: Introduction to Probabilistic Modeling\n\n\nMonday, September 1, 2025\n\n\n\n\n\n\nWeek 2B: Random Variables\n\n\nTuesday, September 2, 2025\n\n\n\n\n\n\nWeek 3: Discrete Distributions\n\n\nTuesday, September 9, 2025\n\n\n\n\n\n\nWeek 4: Continuous Distributions\n\n\nTuesday, September 16, 2025\n\n\n\n\n\n\nWeek 5A: Moments and Covariance\n\n\nMonday, September 22, 2025\n\n\n\n\n\n\nWeek 5B: Joint, Marginal, and Conditional Distributions\n\n\nTuesday, September 23, 2025\n\n\n\n\n\n\nWeek 6: Multivariate Distributions\n\n\nTuesday, September 30, 2025\n\n\n\n\n\n\nWeek 7: Markov Models\n\n\nTuesday, October 14, 2025\n\n\n\n\n\n\nWeek 8: Statistical Inference\n\n\nTuesday, October 21, 2025\n\n\n\n\n\n\nWeek 9: Parameter Estimation\n\n\nTuesday, October 28, 2025\n\n\n\n\n\n\nWeek 10: Method of Moments and Bootstrap\n\n\nTuesday, November 4, 2025\n\n\n\n\n\n\nWeek 11: Hypothesis Testing\n\n\nTuesday, November 11, 2025\n\n\n\n\n\n\nWeek 12: Non-Parametric Statistics\n\n\nTuesday, November 18, 2025\n\n\n\n\n\n\nNo matching items"
   },
@@ -8219,5 +8219,40 @@
     "title": "Week 12: Non-Parametric Statistics",
     "section": "kruskal.test in R",
     "text": "kruskal.test in R\n\n\nCode\n# kruskal.test(height ~ position, data=players)"
+  },
+  {
+    "objectID": "writeups/lab-4-clarifications/index.html",
+    "href": "writeups/lab-4-clarifications/index.html",
+    "title": "Lab 4 Clarifications",
+    "section": "",
+    "text": "This document contains clarifications for the Lab 6 assignment, based on details and/or hints that I’ve found helpful during office hours and email discussions about the assignment!"
+  },
+  {
+    "objectID": "writeups/lab-4-clarifications/index.html#images-and-assignment-files",
+    "href": "writeups/lab-4-clarifications/index.html#images-and-assignment-files",
+    "title": "Lab 4 Clarifications",
+    "section": "Images and Assignment Files",
+    "text": "Images and Assignment Files\nFor the core assignment that you’ll need to complete, please make sure that you download:\n\nThe Lab6_assignment.qmd file, as well as\nThe images folder,\n\nand make sure to download these into the same directory. For example, I usually have a directory on my laptop structured so that I can download each assignment into its own subfolder within a folder called dsan5100, so that the path to the .qmd file looks something like (this is the partial output from running tree dsan5100):\n├── lab06\n    ├── Lab6_assignment.html\n    ├── Lab6_assignment.qmd\n    └── images\n        ├── 2023-10-04-16-53-42.png\n        ├── 2023-10-11-08-55-38.png\n        ├── 2023-10-11-08-55-48.png\n        ├── 2023-10-11-08-55-59.png\n        ├── 2023-10-11-08-56-16.png\n        └── 2023-10-11-08-56-36.png"
+  },
+  {
+    "objectID": "writeups/lab-4-clarifications/index.html#problem-1-seeded-version",
+    "href": "writeups/lab-4-clarifications/index.html#problem-1-seeded-version",
+    "title": "Lab 4 Clarifications",
+    "section": "Problem 1: Seeded Version",
+    "text": "Problem 1: Seeded Version\nThe following code is the same as the code in the Lab assignment, but here we seed the random number generator so it produces the same exact results every time it is run. (This makes it easier to refer to “the” plots in the problem, when helping in office hours: using set.seed(5100) ensures that the plots are the same between students’ and teachers’ computers!)\n\n\\(N = 100\\)\n\n\nCode\nset.seed(5100)\none.dice &lt;- function() {\n  dice &lt;- sample(1:6, size = 1, replace = TRUE)\n  return(dice)\n}\npar(mfrow=c(2,2))\nfor (i in 1:4) {\n  sims &lt;- replicate(100, one.dice())\n  table(sims)\n  table(sims)/length(sims)\n  plot(table(sims), xlab = 'Event', ylab = 'Frequency')\n}\n\n\n\n\n\n\n\n\n\n\n\n\\(N = 10000\\)\n\n\nCode\nset.seed(5100)\none.dice &lt;- function() {\n  dice &lt;- sample(1:6, size = 1, replace = TRUE)\n  return(dice)\n}\npar(mfrow=c(2,2))\nfor (i in 1:4) {\n  sims &lt;- replicate(10000, one.dice())\n  table(sims)\n  table(sims)/length(sims)\n  plot(table(sims), xlab = 'Event', ylab = 'Frequency')\n}"
+  },
+  {
+    "objectID": "writeups/lab-4-clarifications/index.html#problem-2",
+    "href": "writeups/lab-4-clarifications/index.html#problem-2",
+    "title": "Lab 4 Clarifications",
+    "section": "Problem 2",
+    "text": "Problem 2\nSince the “Shopping Example” image displays kind of fuzzily, on my screen at least, here is the problem (including the image) just re-written to use HTML rather than image files:\n\nShopping Example\n\nSuppose there are two types of items [My understanding is that this should be three types of items] and \\(n = 3\\) customers.\nPossible values are \\(\\{(3,0,0),(2,1,0),(2,0,1), \\ldots, (0,1,2), (0,0,3)\\}\\)\nSome values of the joint pmf:\n\n\\(\\Pr((3,0,0)) = 1 \\cdot (p_1)^3\\)\n\\(\\Pr((1,2,0)) = 3 \\cdot (p_1)(p_2)^2\\)\n\\(\\Pr((1,1,1)) = 6 \\cdot (p_1)(p_2)(p_3)\\)\n\n(The factors 1, 3, 6 count the number of ways in which these events can occur)\n\n\n\n\nTable 1: The example table given in the image, showing\n\n\n\n\n\nBeer\nBread\nCoke\n\n\n\n\n3\n0\n0\n\n\n2\n1\n0\n\n\n2\n0\n1\n\n\n0\n3\n0\n\n\n0\n2\n1\n\n\n0\n1\n2\n\n\n1\n0\n2\n\n\n1\n2\n0\n\n\n1\n1\n1\n\n\n0\n0\n3\n\n\n\n\n\n\nLet’s say that Molly, Ryan, and Mr. Bob are buying Beer (\\(X_1\\)), Bread (\\(X_2\\)), and Coke (\\(X_3\\)) with probabilities \\(\\left(3/5, 1/5, 1/5\\right)\\).\n\nWhat is the probability that only one of them will buy Beer, two of them will buy Bread, and none of them will buy Coke? Compare the result with the theoretical probability.\nDo a simulation for this scenario and plot the marginal distribution of \\(X_1\\)."
+  },
+  {
+    "objectID": "writeups/lab-4-clarifications/index.html#problem-3",
+    "href": "writeups/lab-4-clarifications/index.html#problem-3",
+    "title": "Lab 4 Clarifications",
+    "section": "Problem 3",
+    "text": "Problem 3\nHere, from what I understand, the problem letters jump from (c) to (e), so that there is no Part (d) for Problem 3."
   }
 ]

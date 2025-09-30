@@ -23,15 +23,15 @@ source("../../dsan-globals/_globals.r")
 
 :::
 
-Problem 2e on your Lab 5 Assignment</a>, which asks you to:
+Consider the following practice problem: given the **joint pdf**
 
-::: {.callout-note title="Lab 5 Problem 2e"}
+$$
+f_{X,Y}(x,y) = 3C(x^2 + 2xy^2) = \frac{1}{44}(x^2 + 2xy^2),
+$$
 
-Find the probability $\Pr(X \leq Y)$
+Find the probability $\Pr(X \leq Y)$.
 
-:::
-
-is trickier than most of the other parts/problems, in the sense that it really requires us to think carefully about what exactly we're doing when we take integrals to obtain **probabilities** from **probability density functions**. So, in this writeup, I want to walk through that problem step-by-step, showing where the "trickiness" enters into the problem.
+This is trickier than many of the other problems that you've done, which are more "mechanical", in the sense that it really requires us to think carefully about what exactly we're doing when we take integrals to obtain **probabilities** from **probability density functions**. So, in this writeup, I want to walk through that problem step-by-step, showing where the "trickiness" enters into the problem.
 
 ## Using Our Intuition (Without Geometry)
 

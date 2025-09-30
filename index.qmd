@@ -1,5 +1,5 @@
 ---
-title: "DSAN 5100, Section 03 (Tuesdays)"
+title: "DSAN 5100, Section 01 (Tuesdays)"
 sidebar: mainnav
 listing:
   sort-ui: false
